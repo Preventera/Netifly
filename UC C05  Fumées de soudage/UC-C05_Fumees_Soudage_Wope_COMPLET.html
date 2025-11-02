@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-C05 : Fumées de Soudage | AgenticX5 SafetyGraph</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           WOPE PREMIUM STYLE
+           ========================= */
+        
+        :root {
+            /* Colors */
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --light: #ffffff;
+            --gray: #a0a0b0;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--gray);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            bottom: -250px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            top: -200px;
+            right: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--accent), transparent);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+            border: 1px solid var(--danger);
+            border-radius: 50px;
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 25px 0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .card-content {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Info Box */
+        .info-box {
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-left: 4px solid;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid;
+            position: relative;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .info-box.critical {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .info-box.critical::before {
+            background: var(--danger);
+        }
+
+        .info-box.warning {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .info-box.warning::before {
+            background: var(--warning);
+        }
+
+        .info-box.success {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .info-box.success::before {
+            background: var(--success);
+        }
+
+        .info-box.info {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .info-box.info::before {
+            background: var(--accent);
+        }
+
+        .info-box h3 {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            padding-left: 35px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li:hover {
+            color: var(--light);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            border: 1px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge.critical {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .badge.primary {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge.success {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .badge.warning {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table th {
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--light);
+        }
+
+        .data-table td {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .data-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table code {
+            background: rgba(139, 92, 246, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        /* Architecture Diagram */
+        .architecture-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .architecture-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .architecture-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .architecture-item {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .architecture-item:hover {
+            transform: translateY(-5px);
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+        }
+
+        .architecture-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .architecture-item h4 {
+            font-size: 1.1rem;
+            color: var(--light);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .architecture-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.5;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 50px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 19px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 4px solid var(--dark);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-content {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 10px;
+        }
+
+        /* Stat Box */
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px 0;
+            padding-left: 40px;
+            position: relative;
+            color: var(--gray);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .architecture-flow {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 12px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">AgenticX5</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Vue d'ensemble</a></li>
+                <li><a href="#risk">Risque</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#workflow">Workflow</a></li>
+                <li><a href="#data">Données</a></li>
+                <li><a href="#standards">Normes</a></li>
+                <li><a href="#deployment">Déploiement</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="priority-badge">🔴 PRIORITÉ CRITIQUE</div>
+            <h1 class="hero-title">UC-C05 : Fumées<br>de Soudage</h1>
+            <p class="hero-subtitle">
+                Protection intelligente contre les métaux cancérigènes (Cr(VI), Ni, Mn) avec captation localisée (LEV),
+                monitoring temps réel et conformité multi-normative (ISO 21904, CSA W117.2, OSHA, ACGIH)
+            </p>
+            <div class="grid grid-3" style="margin-top: 50px;">
+                <div class="stat-box">
+                    <div class="stat-number">567</div>
+                    <div class="stat-label">cas cancer poumon/an</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">-55%</div>
+                    <div class="stat-label">maladies respiratoires (cible 18 mois)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">+45%</div>
+                    <div class="stat-label">conformité LEV (cible 18 mois)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Overview -->
+    <section id="overview" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 01</div>
+                <h2 class="section-title">Vue d'Ensemble</h2>
+                <p class="section-description">
+                    Prévention proactive des pathologies respiratoires par captation à la source (LEV),
+                    monitoring dosimétrique et orchestration agentique des contrôles
+                </p>
+            </div>
+
+            <div class="info-box critical">
+                <h3>☠️ Risque Principal : Cancer du Poumon (Groupe 1 IARC)</h3>
+                <p>
+                    <strong>Les fumées de soudage sont classées cancérigènes avérés (Groupe 1 IARC).</strong>
+                    Exposition à des métaux toxiques : Cr(VI) (chrome hexavalent dans inox), Ni (nickel dans alliages),
+                    Mn (manganèse neurotoxique). Pathologies : cancer du poumon, asthme professionnel, sidérose,
+                    parkinsonisme induit par Mn.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Objectifs de la Solution (12-18 mois)</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li><strong>-55% maladies respiratoires</strong> : réduction symptômes irritatifs, asthme, infections</li>
+                        <li><strong>+45% conformité ventilation locale (LEV)</strong> : débits conformes ISO 21904, positionnement optimal</li>
+                        <li>Maintenir expositions TWA 8h sous PEL/TLV (Cr(VI) 5 µg/m³, Mn 0.02-0.1 mg/m³, Ni 0.2-1 mg/m³)</li>
+                        <li>Réduire pics d'exposition > 1.5× seuil de 80% (intervention immédiate)</li>
+                        <li>Assurer conformité multi-normative (ISO 21904, CSA W117.2, COSHH/HSE, EN 481)</li>
+                        <li>Traçabilité complète expositions individuelles (7 ans min.) pour surveillance médicale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">Architecture Recommandée</h3>
+                <div class="architecture-flow">
+                    <div class="architecture-item">
+                        <div class="icon">📡</div>
+                        <h4>IoT Sensors</h4>
+                        <p>Capteurs fumées/métaux par poste + débit/pression LEV temps réel</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">⌚</div>
+                        <h4>Wearables</h4>
+                        <p>Dosimètre personnel métaux (TWA + pics)</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🤖</div>
+                        <h4>Agentic</h4>
+                        <p>Agent LEV + Agent Exposition + RiskPredictor (rotation auto)</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🧠</div>
+                        <h4>Knowledge Graph</h4>
+                        <p>SafetyOntology (métal→limite→action) + SIMDUT + procédés low-fume</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">Modules SafetyGraph</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge primary">Dashboard Environnementaux</div>
+                        <div class="badge primary">Analytics Dashboard</div>
+                        <div class="badge primary">SafetyOntology (VEMP métaux)</div>
+                        <div class="badge primary">RiskPredictor</div>
+                        <div class="badge primary">Context Agent (traçabilité)</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <h3 class="card-title">Actions Immédiates</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge success">Captation LEV optimale (5-10 cm arc)</div>
+                        <div class="badge success">Monitoring TWA + pics temps réel</div>
+                        <div class="badge success">Rotation automatique soudeurs</div>
+                        <div class="badge success">RPE adapté (P100 inox/Mn)</div>
+                        <div class="badge success">Procédés/consommables low-fume</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">Priorité & Impact</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">CRITIQUE</span>
+                        </p>
+                        <p>
+                            Cancer du poumon (Groupe 1 IARC), neurotoxicité (Mn → parkinsonisme),
+                            asthme professionnel. Conformité ISO 21904, CSA W117.2, OSHA/ACGIH.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Risk & Problématique -->
+    <section id="risk" class="section" style="background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 02</div>
+                <h2 class="section-title">Risque & Problématique</h2>
+                <p class="section-description">
+                    Comprendre la toxicité des fumées de soudage et l'impact des métaux (Cr(VI), Ni, Mn)
+                </p>
+            </div>
+
+            <div class="info-box critical">
+                <h3>☠️ Fumées de Soudage : Cancérigène Groupe 1 (IARC)</h3>
+                <p>
+                    <strong>L'IARC (Centre International de Recherche sur le Cancer) classe les fumées de soudage comme cancérigènes avérés (Groupe 1).</strong>
+                    Inhalation de particules ultrafines (< 1 µm) contenant métaux toxiques → cancer du poumon,
+                    maladies respiratoires chroniques, effets neurotoxiques (Mn).
+                </p>
+                <p style="margin-top: 15px;">
+                    <strong>Statistiques :</strong> 567 cas cancer poumon/an attribuables aux fumées de soudage.
+                    Latence 10-30 ans. Risque multiplié x2-3 chez soudeurs vs population générale.
+                </p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚛️</div>
+                        <h3 class="card-title">Chrome Hexavalent (Cr(VI))</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Cancérigène Puissant</h4>
+                        <ul class="feature-list">
+                            <li><strong>Sources</strong> : soudage acier inoxydable, peintures/revêtements chromés</li>
+                            <li><strong>Limite OSHA PEL</strong> : 5 µg/m³ (8h TWA) - très bas</li>
+                            <li><strong>Pathologies</strong> : cancer poumon, ulcérations nasales, dermatites</li>
+                            <li><strong>Mécanisme</strong> : oxydant puissant, dommages ADN directs</li>
+                            <li><strong>Particularité</strong> : forme hexavalente (Cr(VI)) beaucoup plus toxique que trivalente (Cr(III))</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🧠</div>
+                        <h3 class="card-title">Manganèse (Mn)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Neurotoxique</h4>
+                        <ul class="feature-list">
+                            <li><strong>Sources</strong> : baguettes/fils d'apport, hardfacing (rechargement dur)</li>
+                            <li><strong>Limites ACGIH</strong> : 0.1 mg/m³ (inhalable), 0.02 mg/m³ (respirable)</li>
+                            <li><strong>Pathologies</strong> : parkinsonisme induit par Mn, troubles cognitifs, tremblements</li>
+                            <li><strong>Mécanisme</strong> : accumulation ganglions de la base (cerveau), toxicité dopaminergique</li>
+                            <li><strong>Particularité</strong> : fraction respirable (< 4 µm) plus dangereuse car passage barrière hémato-encéphalique</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚗️</div>
+                        <h3 class="card-title">Nickel (Ni)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Allergène & Cancérigène</h4>
+                        <ul class="feature-list">
+                            <li><strong>Sources</strong> : alliages nickel, inox haute teneur Ni, Inconel</li>
+                            <li><strong>Limites</strong> : 0.2 mg/m³ (insoluble ACGIH), 1 mg/m³ (métal OSHA PEL)</li>
+                            <li><strong>Pathologies</strong> : asthme professionnel, dermatites contact, cancer poumon/sinus</li>
+                            <li><strong>Mécanisme</strong> : sensibilisation allergique, inflammation chronique, dommages ADN</li>
+                            <li><strong>Particularité</strong> : formes solubles vs insolubles (toxicité différente)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🏭</div>
+                    <h3 class="card-title">Procédés de Soudage & Niveaux d'Émission</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Procédés à Risque Élevé</h4>
+                            <ul class="feature-list">
+                                <li><strong>MMAW/SMAW (baguette enrobée)</strong> : émissions massives particules, Mn élevé</li>
+                                <li><strong>FCAW (fil fourré)</strong> : panaches denses, métaux multiples</li>
+                                <li><strong>Gougeage arc-air</strong> : concentration métaux extrême, pics courts</li>
+                                <li><strong>Hardfacing (rechargement dur)</strong> : Mn très élevé (→ neurotoxicité)</li>
+                                <li><strong>Soudage inox sans gaz protecteur</strong> : Cr(VI) maximal</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Procédés Plus Propres</h4>
+                            <ul class="feature-list">
+                                <li><strong>GMAW/MIG (fil solide + gaz)</strong> : émissions réduites vs MMAW</li>
+                                <li><strong>GTAW/TIG (tungstène + gaz inerte)</strong> : très peu de fumées si paramètres optimaux</li>
+                                <li><strong>Procédés automatisés/robotisés</strong> : isolation opérateur, LEV centralisé</li>
+                                <li><strong>Consommables low-fume</strong> : baguettes/fils à émissions réduites (ISO 15011)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box critical">
+                <h3>🫁 Pathologies Respiratoires Associées</h3>
+                <div class="grid grid-4" style="margin-top: 20px;">
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Cancer du Poumon</h4>
+                        <p>Groupe 1 IARC. Latence 10-30 ans. Risque x2-3 soudeurs vs population. Synergies Cr(VI)/Ni/fumées.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Asthme Professionnel</h4>
+                        <p>Sensibilisation Ni, Cr, flux. Symptômes : dyspnée, sibilances, oppression thoracique. Irréversible si exposition continue.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Sidérose (Pneumoconiose)</h4>
+                        <p>Dépôts oxydes fer poumons. Radiographie : opacités diffuses. Généralement bénin mais peut évoluer vers fibrose.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Parkinsonisme (Mn)</h4>
+                        <p>Accumulation Mn cerveau → tremblements, rigidité, troubles marche. Exposition chronique Mn > 0.02 mg/m³ respirable.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Impact Organisationnel & Santé</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 10px;">Santé Soudeurs</h4>
+                            <p>Cancer poumon (mortel long terme), asthme professionnel (invalidité), parkinsonisme (Mn), irritations chroniques, infections respiratoires récurrentes.</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 10px;">Coûts Employeur</h4>
+                            <p>Indemnisations cancer professionnel (massives), arrêts maladie, remplacement soudeurs expérimentés, pénalités conformité LEV insuffisante.</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 10px;">Obligations Légales</h4>
+                            <p>ISO 21904 (LEV obligatoire), CSA W117.2 (soudage sécuritaire), OSHA PEL/ACGIH TLV (limites strictes Cr(VI)/Mn/Ni), surveillance médicale.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Solution AgenticX5 -->
+    <section id="solution" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 03</div>
+                <h2 class="section-title">Solution AgenticX5</h2>
+                <p class="section-description">
+                    Orchestration intelligente LEV, monitoring dosimétrique et règles agentiques multi-métaux
+                </p>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🎯 Approche AgenticX5 : LEV + Dosimétrie + Règles Intelligentes</h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 30px;">
+                    Combinaison captation locale (LEV 5-10 cm arc), dosimètres personnels (TWA + pics),
+                    règles agentiques (conformité PEL/TLV), knowledge graph (métal→limite→action)
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Agent 1 : LEV (Local Exhaust Ventilation)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">IoT Débit/Pression</span>
+                            <span class="badge primary">ISO 21904-2</span>
+                        </p>
+                        <p>
+                            Surveillance continue débit/pression LEV (bras flexibles, hottes aspirantes, torches équipées).
+                            Test fumigène visuel périodique (captation panache). Alarme si débit < consigne fabricant (-10%).
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>monitor_LEV(débit, pression); if débit < consigne_fabricant * 0.9 ⇒ alarme(); maintenance_immédiate(); changement_média_filtres();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Agent 2 : Exposition (TWA + Pics)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">Wearables Dosimètre</span>
+                            <span class="badge warning">PEL/TLV Multi-Métaux</span>
+                        </p>
+                        <p>
+                            Dosimètres personnels (Cr(VI), Mn, Ni) sur zone respiratoire. Calcul TWA 8h/10h continu.
+                            Détection pics > 1.5× seuil. Comparaison automatique vs PEL/TLV par métal.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règles Agentiques par Métal</h3>
+                            <p style="margin-bottom: 10px;">
+                                <strong>Cr(VI) prévisionnel > 3 µg/m³ (60% PEL) :</strong><br>
+                                <code>alerte_orange(); rapprocher_buse_LEV(5-10cm); augmenter_débit_LEV(); activer_RPE(P100);</code>
+                            </p>
+                            <p style="margin-bottom: 10px;">
+                                <strong>Mn respirable > 0.02 mg/m³ OU inhalable > 0.1 mg/m³ :</strong><br>
+                                <code>alerte_orange(); optimiser_paramètres_soudage(); rotation_soudeurs(); vérifier_consommables_low-fume();</code>
+                            </p>
+                            <p>
+                                <strong>Ni insoluble > 0.2 mg/m³ (TLV) OU > 1 mg/m³ (PEL) :</strong><br>
+                                <code>alerte_rouge(); arrêt_travaux(); enquête_cause_racine(); RPE_obligatoire(); mesure_contrôle_renforcée();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Agent 3 : RiskPredictor (Anticipation)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Machine Learning</span>
+                            <span class="badge primary">Patterns</span>
+                        </p>
+                        <p>
+                            Analyse historique expositions par procédé, matériau, position soudeur, conditions environnementales.
+                            Identification patterns à risque élevé (ex: MMAW inox position verticale descendante → Cr(VI) pic).
+                            Prédiction expositions futures et recommandations proactives.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if ML_predict(procédé, matériau, position) → risque_élevé ⇒ pré-alerte(); renforcer_LEV_préventif(); proposer_procédé_alternatif(); RPE_préparé();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Agent 4 : SafetyOntology (Métal → Limite → Action)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Knowledge Graph</span>
+                            <span class="badge success">SIMDUT</span>
+                        </p>
+                        <p>
+                            Knowledge graph encode relations : Matériau (inox 304) → Métaux émis (Cr(VI), Ni, Fe) →
+                            Limites réglementaires (PEL/TLV) → Actions requises (LEV obligatoire, RPE P100, rotation).
+                            SIMDUT (fiches sécurité) intégré pour consommables.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>query_KG(matériau="inox304"); retrieve(métaux=[Cr(VI),Ni], limites=[5µg/m³,0.2mg/m³], actions=[LEV_requis, RPE_P100, rotation_4h]);</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Agent 5 : Rotation Automatique Soudeurs</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">Gestion Équipes</span>
+                            <span class="badge warning">Dose Cumulée</span>
+                        </p>
+                        <p>
+                            Lorsque dose cumulée approche 80% limite journalière (TWA 8h), l'agent déclenche rotation automatique
+                            vers tâches moins exposées (GTAW/TIG, soudage automatisé supervisé, préparation pièces).
+                            Optimisation planning pour minimiser exposition collective.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if dose_cumulée_TWA ≥ 80% PEL_journalier ⇒ rotation_préventive(soudeur_id, tâche_faible_exposition); log_événement(); notifier_superviseur();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Agent 6 : Procédés & Consommables Low-Fume</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Optimisation Process</span>
+                            <span class="badge success">ISO 15011</span>
+                        </p>
+                        <p>
+                            Knowledge graph contient base données consommables low-fume (baguettes/fils à émissions réduites ISO 15011).
+                            Recommandations automatiques substitution vers procédés moins émissifs (GMAW vs MMAW, GTAW si qualité requise).
+                            Ajustement paramètres (tension, vitesse fil) pour minimiser fumées.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if exposition_excessive ⇒ proposer_substitution(consommable_low-fume, procédé_alternatif); ajuster_paramètres(tension↓, vitesse_fil↑); valider_qualité_soudure();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">✨</div>
+                    <h3 class="card-title">Bénéfices Clés de l'Approche AgenticX5</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div class="info-box success">
+                            <h3>Prévention Cancer & Neurotoxicité</h3>
+                            <p>LEV optimisé + monitoring TWA multi-métaux → réduction exposition chronique Cr(VI)/Mn/Ni. Prévention cancer poumon, parkinsonisme.</p>
+                        </div>
+                        <div class="info-box success">
+                            <h3>Conformité Multi-Normative</h3>
+                            <p>Respect automatique ISO 21904 (LEV), CSA W117.2 (soudage), OSHA/ACGIH (PEL/TLV), COSHH/HSE. Audit-ready.</p>
+                        </div>
+                        <div class="info-box success">
+                            <h3>Optimisation Opérationnelle</h3>
+                            <p>Rotation intelligente, procédés low-fume, maintenance prédictive LEV. -55% maladies respiratoires, +45% conformité ventilation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Workflow & SOP -->
+    <section id="workflow" class="section" style="background: linear-gradient(180deg, transparent, rgba(236, 72, 153, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 04</div>
+                <h2 class="section-title">Workflow & SOP Opérationnels</h2>
+                <p class="section-description">
+                    Procédures standardisées avant/pendant/après soudage + modes d'intervention agentiques
+                </p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">AVANT Soudage</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Checklist Pré-Job</h4>
+                        <ul class="checklist">
+                            <li>PTW "travaux chauds" signé + consignations LOTO si requis</li>
+                            <li>Vérif LEV : position buse/hotte (5-10 cm arc), test fumigène OK (captation visible)</li>
+                            <li>Débit/pression LEV dans plage consigne (journalisé IoT)</li>
+                            <li>RPE disponible/ajusté (fit-test validé) : P100 min. si inox/Mn</li>
+                            <li>Consommables low-fume sélectionnés (ISO 15011), paramètres optimaux</li>
+                            <li>Dosimètre personnel activé (TWA + pics)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <h3 class="card-title">PENDANT Soudage</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Surveillance Continue</h4>
+                        <ul class="checklist">
+                            <li>Maintenir distance buse LEV - arc : 5-10 cm (selon fabricant)</li>
+                            <li>Éviter courants d'air parasites (portes, ventilateurs) qui dévient panache</li>
+                            <li>Surveiller alarmes IoT (débit LEV, TWA, pics)</li>
+                            <li>Si pic détecté > 1.5× seuil : pause, repositionner LEV, activer RPE, ajuster paramètres</li>
+                            <li>Gestion déchets : bacs filtres, laitiers, chutes métalliques (procédure)</li>
+                            <li>Pas de soufflage à air comprimé (remise en suspension particules) → aspiration HEPA uniquement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">✅</div>
+                        <h3 class="card-title">APRÈS Soudage</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Traçabilité & Maintenance</h4>
+                        <ul class="checklist">
+                            <li>Export données dosimètre vers Analytics (TWA/pics par métal)</li>
+                            <li>Journal débits LEV, anomalies, alarmes (ISO 21904 → 7 ans min.)</li>
+                            <li>Nettoyage poste : aspiration HEPA, vidange bacs, gestion déchets filtres (protocole)</li>
+                            <li>Retour opérateur consigné : irritation, odeur métallique, goût, dyspnée</li>
+                            <li>Si dérive détectée : planifier maintenance préventive LEV (changement média, vérif débit)</li>
+                            <li>Mise à jour KG : exposition cumulée soudeur, procédé, matériau, incidents</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🔄 Modes d'Intervention Agentique</h3>
+                <div class="grid grid-3">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🟢</div>
+                            <h3 class="card-title">Mode Normal</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> TWA < 60% PEL/TLV ET LEV conforme</p>
+                            <p style="margin-top: 10px;">
+                                Monitoring continu. LEV opérationnel (débit consigne). Travaux se poursuivent normalement.
+                                Prélèvements personnels périodiques (EN 481).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🟡</div>
+                            <h3 class="card-title">Mode Préventif</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> 60% ≤ TWA < 100% PEL/TLV OU pic > 1.5× seuil</p>
+                            <p style="margin-top: 10px;">
+                                Alerte orange. Optimiser LEV (rapprocher buse, augmenter débit). Activer RPE. Ajuster procédé/paramètres.
+                                Rotation préventive si dose ≥ 80%.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🔴</div>
+                            <h3 class="card-title">Mode Intervention</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> TWA ≥ PEL/TLV OU LEV défaillant</p>
+                            <p style="margin-top: 10px;">
+                                Alerte rouge. Arrêt travaux. Investigation cause racine (LEV, procédé, matériau). RPE obligatoire.
+                                Maintenance LEV urgente. Re-prélèvement avant reprise.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Test Fumigène (Validation LEV)</h3>
+                </div>
+                <div class="card-content">
+                    <p style="margin-bottom: 15px;">
+                        Test visuel périodique (hebdomadaire/mensuel selon classe travaux) pour vérifier efficacité captation panache fumées.
+                    </p>
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Procédure</h4>
+                            <ul class="feature-list">
+                                <li>Positionner buse LEV à distance normale (5-10 cm zone soudage)</li>
+                                <li>Générer fumée test (tube fumigène, huile sur surface chaude)</li>
+                                <li>Observer captation : panache doit être aspiré intégralement vers buse</li>
+                                <li>Si dérive fumée ≥ 20% → ajuster position/débit, re-tester</li>
+                                <li>Photographier/filmer test pour traçabilité (ISO 21904)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Critères Acceptation</h4>
+                            <ul class="feature-list">
+                                <li><strong>OK</strong> : ≥ 95% panache capté, pas de dérive vers zone respiratoire</li>
+                                <li><strong>Ajustement requis</strong> : 80-95% capté → repositionner/augmenter débit</li>
+                                <li><strong>Non conforme</strong> : < 80% capté → maintenance LEV urgente, arrêt travaux</li>
+                                <li>Journal résultats tests (date, opérateur, résultat, actions) → 7 ans</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Données & Architecture -->
+    <section id="data" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 05</div>
+                <h2 class="section-title">Données & Architecture Technique</h2>
+                <p class="section-description">
+                    Sources de données, capteurs IoT, dosimètres wearables, méthodes analytiques
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📡</div>
+                        <h3 class="card-title">1. IoT Poste (LEV + Fumées)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Capteurs Temps Réel</h4>
+                        <ul class="feature-list">
+                            <li><strong>Débit/Pression LEV</strong> : manomètres digitaux, débitmètres, monitoring continu vs consigne fabricant</li>
+                            <li><strong>Capteurs particulaires</strong> : PM1/PM2.5/PM10 (proxy fumées), détection pics</li>
+                            <li><strong>Capteurs métaux</strong> : XRF portable (Cr, Ni, Mn, Fe) - semi-quantitatif, déclencheur prélèvement</li>
+                            <li><strong>Température/Humidité</strong> : conditions ambiantes (influence échantillonnage EN 481)</li>
+                            <li><strong>Fréquence</strong> : temps réel (1-5 min), logs permanents</li>
+                            <li><strong>Localisation</strong> : chaque poste soudage + zones adjacentes (migration fumées)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⌚</div>
+                        <h3 class="card-title">2. Wearables (Dosimètres Personnels)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Prélèvement Zone Respiratoire</h4>
+                        <ul class="feature-list">
+                            <li><strong>Type</strong> : dosimètre gravimétrique (pompes basse pression) + badge électronique</li>
+                            <li><strong>Méthode</strong> : EN 481 (fractions inhalable/respirable), filtres MCE 0.8 µm</li>
+                            <li><strong>Analyse</strong> : OSHA ID-125G (métaux par ICP-AES ou AA)</li>
+                            <li><strong>Métriques</strong> : TWA 8h/10h (Cr(VI), Mn, Ni, Fe), pics (max 15 min)</li>
+                            <li><strong>Fréquence</strong> : quotidien (travaux inox/Mn), hebdomadaire (acier doux), après alarmes IoT</li>
+                            <li><strong>Utilité</strong> : dose personnelle réelle, conformité PEL/TLV, traçabilité 7 ans</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">3. Historiques & Contexte</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Données Enrichissement ML</h4>
+                        <ul class="feature-list">
+                            <li><strong>Procédés</strong> : MMAW, FCAW, GMAW, GTAW, gougeage, paramètres (voltage, ampérage, vitesse)</li>
+                            <li><strong>Matériaux</strong> : nuances acier (doux, inox 304/316, alliages Ni), épaisseurs, revêtements</li>
+                            <li><strong>Consommables</strong> : baguettes/fils (marque, type, émissions ISO 15011)</li>
+                            <li><strong>Positions soudage</strong> : plat (PA), horizontal (PB), vertical (PF/PG), plafond (PE)</li>
+                            <li><strong>Incidents santé</strong> : symptômes rapportés (irritation, dyspnée), arrêts maladie, consultations</li>
+                            <li><strong>Maintenance LEV</strong> : changements filtres, débits mesurés, défaillances</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔬</div>
+                        <h3 class="card-title">4. Méthodes Analytiques</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Normes & Protocoles</h4>
+                        <ul class="feature-list">
+                            <li><strong>EN 481</strong> : définitions fractions inhalable (< 100 µm) / respirable (< 4 µm)</li>
+                            <li><strong>OSHA ID-125G</strong> : métaux par ICP-AES (Cr, Ni, Mn, Fe, Zn, Cu, etc.)</li>
+                            <li><strong>NIOSH 7300/7303</strong> : métaux par ICP ou AA (méthodes alternatives)</li>
+                            <li><strong>ISO 15011</strong> : classification consommables selon taux émission fumées</li>
+                            <li><strong>Labo accrédité</strong> : ISO/IEC 17025, délais < 5 jours ouvrables</li>
+                            <li><strong>QA/QC</strong> : blancs terrain, duplicatas, matériaux référence certifiés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🏗️ Architecture Système AgenticX5 - UC-C05</h3>
+                <div class="architecture-flow">
+                    <div class="architecture-item">
+                        <div class="icon">📊</div>
+                        <h4>Ingestion Layer</h4>
+                        <p>IoT LEV → MQTT → Kafka<br>Wearables → API REST<br>Labo → CSV/API</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🤖</div>
+                        <h4>Agentic Layer</h4>
+                        <p>Agent LEV (débit/pression)<br>Agent Exposition (TWA/pics)<br>RiskPredictor (ML)<br>Rotation auto</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🧠</div>
+                        <h4>Knowledge Graph</h4>
+                        <p>SafetyOntology (métal→action)<br>SIMDUT consommables<br>Procédés low-fume<br>Registre 7 ans</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">📱</div>
+                        <h4>Interface Layer</h4>
+                        <p>Dashboard temps réel<br>Alertes push LEV/TWA<br>Rapports Analytics<br>Mobile apps terrain</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🔐</div>
+                    <h3 class="card-title">Confidentialité & Sécurité Données</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Protection Données Personnelles</h4>
+                            <ul class="feature-list">
+                                <li>Anonymisation données santé (Loi 25 QC, GDPR UE)</li>
+                                <li>Chiffrement AES-256 bout-en-bout</li>
+                                <li>Accès RBAC : HSE, médecin travail, superviseurs uniquement</li>
+                                <li>Stockage Canada (souveraineté données)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Conformité Réglementaire</h4>
+                            <ul class="feature-list">
+                                <li>Conservation ≥7 ans (ISO 21904) expositions + LEV</li>
+                                <li>Audits traçables (logs immuables)</li>
+                                <li>Exports conformité (CNESST, OSHA, ISO 45001)</li>
+                                <li>Consentement éclairé soudeurs (dosimètrie)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Standards & Normes -->
+    <section id="standards" class="section" style="background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 06</div>
+                <h2 class="section-title">Standards & Normes</h2>
+                <p class="section-description">
+                    Matrice de conformité multi-normative : ISO, CSA, OSHA, ACGIH, COSHH/HSE
+                </p>
+            </div>
+
+            <div class="info-box info">
+                <h3>📜 Cadre Réglementaire & Normatif</h3>
+                <p>
+                    La gestion des fumées de soudage est encadrée par des normes techniques (ISO 21904 LEV, CSA W117.2),
+                    limites d'exposition (OSHA PEL, ACGIH TLV), guides pratiques (COSHH/HSE), méthodes analytiques (EN 481, OSHA ID-125G).
+                    Le système AgenticX5 intègre automatiquement toutes ces exigences.
+                </p>
+            </div>
+
+            <!-- MATRICE DE CONFORMITÉ -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Standard / Réf.</th>
+                        <th>Exigence clé</th>
+                        <th>Règle AgenticX5</th>
+                        <th>Capteurs / Données</th>
+                        <th>Seuils / Paramètres</th>
+                        <th>Action automatisée</th>
+                        <th>Preuve / Traçabilité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ISO 21904 -->
+                    <tr>
+                        <td><strong>ISO 21904-1/-2</strong><br>(captation / tests)</td>
+                        <td>Efficacité séparation + contrôle LEV</td>
+                        <td>Agent <strong>LEV</strong> surveille débit/pression</td>
+                        <td>IoT débit/pression, test fumigène</td>
+                        <td>Débit ≥ consigne fabricant ; alarme à −10%</td>
+                        <td>Ticket maintenance / changement média</td>
+                        <td>Journal débits + photo fumigène (7 ans)</td>
+                    </tr>
+
+                    <!-- CSA W117.2 -->
+                    <tr>
+                        <td><strong>CSA W117.2:19</strong><br>(soudage)</td>
+                        <td>Ventilation, EPI/RPE, pratiques</td>
+                        <td>Playbook LEV + RPE + PTW</td>
+                        <td>Liste EPI/RPE, PTW « chaud »</td>
+                        <td>RPE requis si inox/Cr(VI) ou dépassement</td>
+                        <td>Blocage job si RPE non validé</td>
+                        <td>PTW signé + log RPE (fit)</td>
+                    </tr>
+
+                    <!-- PEL/TLV Cr(VI) -->
+                    <tr>
+                        <td><strong>OSHA PEL Cr(VI)</strong></td>
+                        <td>TWA 8h ≤ 5 µg/m³</td>
+                        <td>Agent <strong>Exposition</strong> calcule TWA Cr(VI)</td>
+                        <td>Dosimètre perso (EN 481), analyse ID-125G</td>
+                        <td>Alerte orange à 3 µg/m³ (60% PEL)</td>
+                        <td>Rapprocher LEV, RPE P100, rotation</td>
+                        <td>Rapport Analytics + signature HSE</td>
+                    </tr>
+
+                    <!-- PEL/TLV Mn -->
+                    <tr>
+                        <td><strong>ACGIH TLV Mn</strong></td>
+                        <td>Inhalable 0.1 mg/m³ ; Respirable 0.02 mg/m³</td>
+                        <td>Agent <strong>Exposition</strong> calcule TWA Mn</td>
+                        <td>Dosimètre (fractions EN 481), analyse ID-125G</td>
+                        <td>Alerte si ≥ TLV respirable 0.02 mg/m³</td>
+                        <td>Optimiser procédé, rotation, RPE</td>
+                        <td>Rapport Analytics (hebdo)</td>
+                    </tr>
+
+                    <!-- PEL/TLV Ni -->
+                    <tr>
+                        <td><strong>ACGIH TLV Ni</strong><br><strong>OSHA PEL Ni</strong></td>
+                        <td>TLV 0.2 mg/m³ (insoluble) ; PEL 1 mg/m³ (métal)</td>
+                        <td>Agent <strong>Exposition</strong> calcule TWA Ni</td>
+                        <td>Dosimètre inhalable (EN 481), ID-125G</td>
+                        <td>Alerte rouge si ≥ 0.2 mg/m³ (TLV)</td>
+                        <td>Arrêt, enquête, RPE, contrôles ++</td>
+                        <td>Rapport incident + actions correctives</td>
+                    </tr>
+
+                    <!-- EN 481 -->
+                    <tr>
+                        <td><strong>EN 481</strong><br>(fractions)</td>
+                        <td>Échantillonnage conforme</td>
+                        <td>Méthodes inhalable/respirable</td>
+                        <td>Pompes/porte-filtres, débit</td>
+                        <td>Débits/médias conformes EN 481</td>
+                        <td>Validation méthode</td>
+                        <td>Fiche prélèvement (labo ISO 17025)</td>
+                    </tr>
+
+                    <!-- COSHH/HSE -->
+                    <tr>
+                        <td><strong>COSHH/HSE</strong><br>(guides UK)</td>
+                        <td>Formation, maintenance, RPE</td>
+                        <td>Modules e-learning + planning PM</td>
+                        <td>LMS + GMAO</td>
+                        <td>100% formés / PM à l'heure</td>
+                        <td>Relance automatique</td>
+                        <td>Registre formation + GMAO</td>
+                    </tr>
+
+                    <!-- ISO 15011 -->
+                    <tr>
+                        <td><strong>ISO 15011</strong><br>(émissions fumes)</td>
+                        <td>Classification consommables low-fume</td>
+                        <td>KG SafetyOntology (consommables)</td>
+                        <td>Base données ISO 15011 + SIMDUT</td>
+                        <td>Taux émission (mg/kg métal déposé)</td>
+                        <td>Recommandation substitution</td>
+                        <td>Registre consommables (traçabilité)</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="7" style="padding: 25px; background: rgba(139, 92, 246, 0.05);">
+                            <strong style="font-size: 1.1rem; color: var(--light);">Formules & Flux</strong><br>
+                            <div style="margin-top: 15px; line-height: 2;">
+                                • <em>TWA 8h/10h</em> : <code>TWA = (Σ C<sub>i</sub> × T<sub>i</sub>) / durée_shift</code> (C en µg/m³ ou mg/m³, T en heures)<br>
+                                • <em>Chaîne décisionnelle</em> : <code>IoT_LEV_alert → test_fumigène → prélèvement_personnel(EN481, ID-125G) → TWA vs PEL/TLV → actions_agentiques</code><br>
+                                • <em>Conservation dossiers</em> : expositions + débits LEV + tests fumigènes ≥ <strong>7 ans</strong> (ISO 21904-2)
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="grid grid-2" style="margin-top: 40px;">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">✅</div>
+                        <h3 class="card-title">Conformité Automatique via KG</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            Le <strong>Knowledge Graph SafetyOntology</strong> AgenticX5 encode relations :
+                        </p>
+                        <ul class="feature-list">
+                            <li>Matériau (inox 304) → Métaux (Cr(VI), Ni) → Limites (5 µg/m³, 0.2 mg/m³) → Actions (LEV, RPE P100)</li>
+                            <li>Procédé (MMAW) → Émissions élevées → Consommables low-fume recommandés (ISO 15011)</li>
+                            <li>Position (vertical descendant) → Risque pic → LEV renforcé + RPE préventif</li>
+                            <li>Inférence : Si matériau = inox ET procédé = MMAW → alerte préventive Cr(VI)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔄</div>
+                        <h3 class="card-title">Mise à Jour Automatique Normes</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            Les limites PEL/TLV évoluent (ex: TLV Mn abaissé 2021). AgenticX5 permet :
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Veille réglementaire</strong> : monitoring OSHA, ACGIH, ISO, CSA</li>
+                            <li><strong>Injection auto</strong> : nouvelles limites dans KG sans redéploiement</li>
+                            <li><strong>Notification proactive</strong> : alertes équipes avant entrée vigueur</li>
+                            <li><strong>Rétrocompatibilité</strong> : historique limites pour audits passés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Déploiement & KPIs -->
+    <section id="deployment" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 07</div>
+                <h2 class="section-title">Déploiement & KPIs</h2>
+                <p class="section-description">
+                    Roadmap implémentation, indicateurs performance, checklists opérationnelles
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">KPIs Cibles (12-18 mois)</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div class="stat-box">
+                            <div class="stat-number">≥95%</div>
+                            <div class="stat-label">Conformité LEV (tests & journaux)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">≥98%</div>
+                            <div class="stat-label">Postes ≤ PEL/TLV</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">-80%</div>
+                            <div class="stat-label">Pics > 1.5× seuil</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-3" style="margin-top: 30px;">
+                        <div class="stat-box">
+                            <div class="stat-number">-40%</div>
+                            <div class="stat-label">Symptômes irritatifs</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">-25%</div>
+                            <div class="stat-label">Arrêts/consultations respiratoires</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">≥90%</div>
+                            <div class="stat-label">Maintenances proactives (avant alarme rouge)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 1 : Audit & Baseline (Semaines 1-4)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Inventaire</span>
+                            <span class="badge primary">Mesures Initiales</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Inventaire postes soudage</strong> : procédés, matériaux, fréquence, durée</li>
+                            <li><strong>Audit LEV existant</strong> : débits, positions, état filtres, historique maintenance</li>
+                            <li><strong>Campagne mesures baseline</strong> : prélèvements personnels (EN 481, ID-125G) tous soudeurs</li>
+                            <li><strong>Cartographie risques</strong> : identifier postes Cr(VI), Mn, Ni élevés</li>
+                            <li><strong>Gap analysis RPE</strong> : fit-tests, disponibilité P100, procédures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 2 : Installation IoT + Wearables (Semaines 5-8)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Infrastructure</span>
+                            <span class="badge success">Calibration</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Installation capteurs LEV</strong> : débit/pression sur chaque bras/hotte (1 capteur/poste)</li>
+                            <li><strong>Installation capteurs fumées</strong> : particulaires/métaux zones soudage</li>
+                            <li><strong>Distribution dosimètres</strong> : wearables personnels (formation port + maintenance)</li>
+                            <li><strong>Configuration réseau</strong> : MQTT/Kafka, connectivité temps réel</li>
+                            <li><strong>Setup dashboards</strong> : temps réel superviseurs + mobile apps soudeurs</li>
+                            <li><strong>Configuration KG</strong> : SafetyOntology (métal→action), SIMDUT, procédés low-fume</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 3 : Pilote & Ajustements (Semaines 9-16)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">Validation</span>
+                            <span class="badge warning">Optimisation</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Pilote 2-3 postes</strong> : inox (Cr(VI)), hardfacing (Mn), alliages Ni</li>
+                            <li><strong>Monitoring continu</strong> : 8 semaines IoT + dosimètres quotidiens/hebdomadaires</li>
+                            <li><strong>Validation LEV</strong> : tests fumigènes, corrélation débits vs expositions</li>
+                            <li><strong>Ajustement règles agentiques</strong> : seuils alertes, rotations, procédés alternatifs</li>
+                            <li><strong>Formation soudeurs</strong> : LEV optimal (5-10 cm), RPE, procédures alarmes</li>
+                            <li><strong>Tests procédés low-fume</strong> : substitution consommables, ajustement paramètres</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 4 : Déploiement Complet (Semaines 17-24)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Production</span>
+                            <span class="badge primary">Scaling</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Roll-out complet</strong> : extension tous postes soudage (fabrication, maintenance, chantiers)</li>
+                            <li><strong>Formation généralisée</strong> : tous soudeurs, superviseurs, préventionnistes, maintenance</li>
+                            <li><strong>SOP documentés</strong> : procédures avant/pendant/après, tests fumigènes, gestion alarmes</li>
+                            <li><strong>Audits conformité</strong> : ISO 21904, CSA W117.2, OSHA/ACGIH readiness</li>
+                            <li><strong>Rapports automatiques</strong> : exports mensuels (TWA, pics, LEV, rotations)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 5 : Amélioration Continue (Continu)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Optimisation</span>
+                            <span class="badge primary">Évolution</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Support 24/7</strong> : hotline technique, maintenance préventive LEV/capteurs</li>
+                            <li><strong>Calibration périodique</strong> : validation semestrielle capteurs vs labo accrédité</li>
+                            <li><strong>Veille réglementaire</strong> : mises à jour PEL/TLV, nouvelles normes ISO/CSA</li>
+                            <li><strong>Optimisation ML</strong> : amélioration prédictions RiskPredictor, réduction faux positifs</li>
+                            <li><strong>Extensions</strong> : nouveaux procédés (laser, friction stir), métaux (Al, Ti, Cu)</li>
+                            <li><strong>Revue annuelle</strong> : audit KPIs, ROI, conformité, satisfaction soudeurs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">✅</div>
+                    <h3 class="card-title">Checklist Express Déploiement</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Technique</h4>
+                            <ul class="checklist">
+                                <li>IoT LEV + fumées installé & calibré</li>
+                                <li>Dosimètres wearables distribués (formation OK)</li>
+                                <li>Dashboards temps réel opérationnels</li>
+                                <li>KG SafetyOntology configuré (métaux/limites/actions)</li>
+                                <li>Labo accrédité partenaire (EN 481, ID-125G)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Organisationnel</h4>
+                            <ul class="checklist">
+                                <li>Soudeurs formés (LEV, RPE, alarmes)</li>
+                                <li>SOP avant/pendant/après documentés</li>
+                                <li>Tests fumigènes planifiés (mensuel)</li>
+                                <li>Procédures rotation définies</li>
+                                <li>RPE P100 disponible (fit-tests validés)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Conformité</h4>
+                            <ul class="checklist">
+                                <li>ISO 21904 (LEV) + CSA W117.2 intégrés</li>
+                                <li>PEL/TLV Cr(VI)/Mn/Ni dans règles agentic</li>
+                                <li>Traçabilité 7 ans (expositions + LEV)</li>
+                                <li>Rapports CNESST/OSHA automatisés</li>
+                                <li>Surveillance médicale déclenchée (si requis)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">AgenticX5 SafetyGraph</div>
+                <p class="footer-text">
+                    Intelligence agentique au service de la sécurité et santé au travail.<br>
+                    Protection proactive, conformité automatique, optimisation continue.
+                </p>
+                <p style="color: var(--gray); margin-top: 30px; font-size: 0.9rem;">
+                    UC-C05 : Fumées de Soudage (Cr(VI), Ni, Mn) © 2025 GenAISafety | Preventera<br>
+                    Conformité : ISO 21904, CSA W117.2, OSHA PEL, ACGIH TLV, COSHH/HSE, EN 481
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Génération particules animées
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Navigation smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Effet parallax léger sur orbes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const orbs = document.querySelectorAll('.orb');
+            orbs.forEach((orb, index) => {
+                const speed = 0.05 + (index * 0.02);
+                orb.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

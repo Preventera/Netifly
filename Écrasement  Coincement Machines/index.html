@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-P03: Écrasement / Coincement Machines | AgenticX5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Orbes animés */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            background: #dc2626;
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: #ea580c;
+            bottom: -150px;
+            left: -150px;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 450px;
+            height: 450px;
+            background: #f59e0b;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            50% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+            75% {
+                transform: translate(30px, 50px) scale(1.05);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .uc-badge {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-badge {
+            background: rgba(220, 38, 38, 0.2);
+            border: 2px solid #dc2626;
+            color: #fca5a5;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+            }
+        }
+
+        h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #fca5a5, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .nav-btn {
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(71, 85, 105, 0.7);
+            border-color: rgba(148, 163, 184, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-color: #dc2626;
+            color: white;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .card-icon {
+            font-size: 32px;
+        }
+
+        .card-title {
+            font-size: 28px;
+            color: #fca5a5;
+            font-weight: 700;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .data-table th {
+            background: rgba(220, 38, 38, 0.2);
+            color: #fca5a5;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .data-table td {
+            padding: 15px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            color: #e2e8f0;
+        }
+
+        .data-table tr:hover {
+            background: rgba(51, 65, 85, 0.3);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #dc2626;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fca5a5, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Architecture Cards */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .arch-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s;
+        }
+
+        .arch-card:hover {
+            transform: translateY(-5px);
+            border-color: #dc2626;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .arch-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .arch-icon {
+            font-size: 32px;
+        }
+
+        .arch-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fca5a5;
+        }
+
+        .arch-description {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid #dc2626;
+        }
+
+        .feature-icon {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Workflow Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #dc2626, #991b1b);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 19px;
+            width: 24px;
+            height: 24px;
+            background: #dc2626;
+            border-radius: 50%;
+            border: 3px solid #0f172a;
+        }
+
+        .timeline-content {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fca5a5;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Scenario Cards */
+        .scenario-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .scenario-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fca5a5;
+        }
+
+        .scenario-badge {
+            background: rgba(220, 38, 38, 0.2);
+            color: #fca5a5;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Demo Interactive */
+        .demo-container {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .machine-zone {
+            background: rgba(20, 20, 30, 0.8);
+            border: 3px solid #dc2626;
+            border-radius: 12px;
+            height: 400px;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .danger-zone {
+            position: absolute;
+            background: rgba(220, 38, 38, 0.2);
+            border: 2px dashed #dc2626;
+            animation: dangerPulse 2s infinite;
+        }
+
+        @keyframes dangerPulse {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .worker-icon {
+            position: absolute;
+            font-size: 40px;
+            cursor: move;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .status-label {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .status-value {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .status-safe {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #86efac;
+        }
+
+        .status-warning {
+            background: rgba(234, 179, 8, 0.2);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+
+        .status-danger {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            color: #fca5a5;
+        }
+
+        /* ROI Cards */
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .roi-card {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .roi-value {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #86efac, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .roi-label {
+            color: #cbd5e1;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .roi-desc {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .nav {
+                position: static;
+            }
+
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .machine-zone {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orbes animés -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="uc-badge">UC-P03 • PRÉVENTION</div>
+                <div class="priority-badge">
+                    <span>🔴</span>
+                    <span>PRIORITÉ CRITIQUE</span>
+                </div>
+            </div>
+            <h1>Écrasement / Coincement Machines</h1>
+            <p class="subtitle">
+                Système intelligent de détection d'intrusion et arrêt d'urgence automatique pour prévenir écrasements/coincements • 
+                1,421 incidents scie circulaire seule • Architecture VISION + WEARABLES + AGENTIC + IoT + KG • 
+                Conformité RSST, CSA Z432, OSHA 1910.212, ISO 13849-1
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('overview')">📊 Vue d'ensemble</button>
+            <button class="nav-btn" onclick="showSection('standards')">📋 Normes & Standards</button>
+            <button class="nav-btn" onclick="showSection('architecture')">🏗️ Architecture</button>
+            <button class="nav-btn" onclick="showSection('workflow')">⚙️ Workflow</button>
+            <button class="nav-btn" onclick="showSection('scenarios')">🎭 Scénarios</button>
+            <button class="nav-btn" onclick="showSection('demo')">🎮 Démo Interactive</button>
+            <button class="nav-btn" onclick="showSection('roi')">💰 ROI & Impact</button>
+        </div>
+
+        <!-- Section: Vue d'ensemble -->
+        <div id="overview" class="content-section active">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2 class="card-title">Vue d'Ensemble - UC-P03</h2>
+                </div>
+                
+                <table class="data-table">
+                    <tr>
+                        <th style="width: 25%;">Dimension</th>
+                        <th>Détails</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Risque/Problématique</strong></td>
+                        <td>Machines industrielles dangereuses (1,421 incidents scie circulaire seule au Québec, top 5 équipements dangereux)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Action/Solution</strong></td>
+                        <td>Détection proximité dangereuse + arrêt d'urgence automatique multi-critères</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Données Utilisées</strong></td>
+                        <td>
+                            • <strong>Vision:</strong> Détection corps/mains zones rouges (computer vision temps réel)<br>
+                            • <strong>Capteurs proximité:</strong> Rideaux lumineux laser/radar (AOPD Type 4)<br>
+                            • <strong>Wearables:</strong> Bracelet RFID/UWB localisation temps réel<br>
+                            • <strong>Logs machine:</strong> SCADA, états machines, cycles opération<br>
+                            • <strong>Historiques:</strong> Base incidents écrasements CNESST (2015-2024)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>
+                            <strong>VISION + WEARABLES + AGENTIC + KG + IoT</strong><br>
+                            • Vision: Détection intrusion zone rouge temps réel<br>
+                            • Wearables: Localisation UWB précision <50cm<br>
+                            • IoT: Capteurs proximité laser/radar (IEC 61496)<br>
+                            • Agentic: Décision arrêt urgence multi-critères (ISO 13850)<br>
+                            • KG: Relations équipement→dangers→EPI (Neo4j)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modules SafetyGraph</strong></td>
+                        <td>
+                            • Dashboard Équipements-Risques (vue temps réel)<br>
+                            • RiskPredictor (scoring machine par dangerosité)<br>
+                            • Neo4j Bridge (graphe équipements-zones-dangers)<br>
+                            • ML Pipeline (patterns accidents historiques)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROI Estimé</strong></td>
+                        <td>
+                            <strong>Réduction 60% écrasements</strong><br>
+                            Coût moyen incident: 78,000$ CAD<br>
+                            Économies annuelles: ~468K$ (10 incidents évités)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Priorité</strong></td>
+                        <td><span style="color: #fca5a5; font-weight: 700;">🔴 CRITIQUE</span> (top 5 équipements dangereux industriels)</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">📈 Statistiques Clés</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1,421</div>
+                        <div class="stat-label">Incidents Scie Circulaire<br>(Québec 2015-2024)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">Top 5</div>
+                        <div class="stat-label">Équipements Dangereux<br>(CNESST)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">78K$</div>
+                        <div class="stat-label">Coût Moyen Incident<br>Amputation: 250K$ CAD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">&lt;100ms</div>
+                        <div class="stat-label">Temps Réaction Requis<br>(détection→arrêt)</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🎯 Objectifs du Système AgenticX5-UC-P03</h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Détection intrusion &lt;100ms:</strong> Vision AI + rideaux lumineux détectent corps/mains zones rouges</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Arrêt sécurisé automatique:</strong> Conformité ISO 13850 (arrêt urgence) + ISO 13849-1 (PLr e)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Multi-critères fusion:</strong> Vision + proximité + UWB wearables = triple redondance</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Conformité réglementaire:</strong> RSST machines, CSA Z432, OSHA 1910.212, ISO 13857 distances</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Traçabilité incidents:</strong> Logs Neo4j immutables (preuve conformité légale)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section: Normes & Standards -->
+        <div id="standards" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📋</span>
+                    <h2 class="card-title">Normes & Standards Applicables</h2>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 20px 0 15px 0;">🇨🇦 Québec</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⚖️</div>
+                            <div class="arch-title">RSST</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Règlement sur la santé et la sécurité du travail</strong></p>
+                            <p style="margin-top: 8px;">Articles machines industrielles: obligations protecteurs fixes, dispositifs sécurité, maintien distances sécurité.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📚</div>
+                            <div class="arch-title">CNESST/IRSST</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Guide Protecteurs Fixes & Distances</strong></p>
+                            <p style="margin-top: 8px;">Guide technique: positionnement protecteurs, calcul distances sécurité, mesures prévention écrasements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🇨🇦 Canada (CSA)</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🛡️</div>
+                            <div class="arch-title">CSA Z432:2023</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Protection des Machines</strong></p>
+                            <p style="margin-top: 8px;">Norme canadienne référence: analyse risques, hiérarchie mesures, dispositifs verrouillage, rideaux lumineux, arrêts urgence.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⚙️</div>
+                            <div class="arch-title">CSA Z142 (R2024)</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Presses Mécaniques</strong></p>
+                            <p style="margin-top: 8px;">Exigences spécifiques presses: dispositifs bi-manuels, protecteurs réglables, systèmes détection coincement.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">CSA Z434 (R2024)</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Robots Industriels</strong></p>
+                            <p style="margin-top: 8px;">Sécurité robots collaboratifs: surveillance arrêt sécurisé (SSM), limitation puissance/force (PFL), surveillance vitesse/séparation (SSM).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🇺🇸 USA (OSHA / ANSI)</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🏛️</div>
+                            <div class="arch-title">OSHA 1910.212</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Machine Guarding (General)</strong></p>
+                            <p style="margin-top: 8px;">Exigences générales protection machines: points pincement, rotation, coupe doivent être protégés par protecteurs fixes/mobiles.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🪵</div>
+                            <div class="arch-title">OSHA 1910.213</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Machines à Bois</strong></p>
+                            <p style="margin-top: 8px;">Normes spécifiques scies circulaires, toupies: protecteurs lames, poussoirs, distances sécurité, dispositifs anti-rebond.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📊</div>
+                            <div class="arch-title">ANSI B11.0:2023</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Risk Assessment & Reduction</strong></p>
+                            <p style="margin-top: 8px;">Méthodologie analyse risques machines: identification dangers, évaluation risques, hiérarchie mesures contrôle.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">✅</div>
+                            <div class="arch-title">ANSI B11.19:2019</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Mesures Réduction Risques</strong></p>
+                            <p style="margin-top: 8px;">Standards validation mesures sécurité: tests dispositifs, certification systèmes protection, procédures vérification.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🌐 Normes Internationales (ISO/IEC)</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🎯</div>
+                            <div class="arch-title">ISO 12100</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Sécurité Machines (Principes)</strong></p>
+                            <p style="margin-top: 8px;">Norme cadre: principes conception sécuritaire, réduction risques intrinsèques, protections collectives/individuelles.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⚡</div>
+                            <div class="arch-title">ISO 13849-1</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Parties Systèmes Commande</strong></p>
+                            <p style="margin-top: 8px;">Performance Level Required (PLr): calcul fiabilité systèmes sécurité. UC-P03 nécessite PLr = e (le plus élevé).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📏</div>
+                            <div class="arch-title">ISO 13857</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Distances de Sécurité</strong></p>
+                            <p style="margin-top: 8px;">Tableaux distances minimales empêcher atteinte zones dangereuses (bras, doigts, pieds): ex. protecteur 1800mm = zone atteignable 850mm.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⏱️</div>
+                            <div class="arch-title">ISO 13855</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Positionnement Dispositifs Protection</strong></p>
+                            <p style="margin-top: 8px;">Calcul distances sécurité rideaux lumineux: S = (K × T) + C (K=vitesse approche 1.6m/s, T=temps réponse, C=constante 8mm).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🔒</div>
+                            <div class="arch-title">ISO 14120</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Protecteurs (Conception)</strong></p>
+                            <p style="margin-top: 8px;">Types protecteurs: fixes (démontage outil), mobiles (verrouillage), réglables. Résistance mécanique, ouvertures maximales.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🛑</div>
+                            <div class="arch-title">ISO 13850</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Arrêt d'Urgence</strong></p>
+                            <p style="margin-top: 8px;">Fonction arrêt urgence: catégorie 0 (coupure immédiate) ou 1 (arrêt contrôlé puis coupure). Bouton rouge champignon accessible.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🔦</div>
+                            <div class="arch-title">IEC 61496</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>AOPD (Rideaux Lumineux)</strong></p>
+                            <p style="margin-top: 8px;">Classification dispositifs optoélectroniques: Type 2 (contrôle périodique), Type 4 (autocontrôle continu, redondance). UC-P03 utilise Type 4.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">ISO 10218-1</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Robots Industriels (Sécurité)</strong></p>
+                            <p style="margin-top: 8px;">Exigences robots: arrêts protecteur, modes réduits, limitation force/couple, systèmes détection collision.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Architecture -->
+        <div id="architecture" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏗️</span>
+                    <h2 class="card-title">Architecture Technique AgenticX5-UC-P03</h2>
+                </div>
+
+                <p style="margin-bottom: 20px; color: #cbd5e1; font-size: 16px;">
+                    Architecture multi-capteurs avec fusion de données temps réel pour détection intrusion &lt;100ms et arrêt sécurisé automatique.
+                </p>
+
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">👁️</div>
+                            <div class="arch-title">VISION AI</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Computer Vision Temps Réel</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Détection corps/mains zones rouges</li>
+                                <li>Tracking trajectoires humaines (Kalman filter)</li>
+                                <li>Classification postures dangereuses</li>
+                                <li>Estimation vitesse approche (ISO 13855)</li>
+                                <li>Caméras 3D stéréo (depth sensing)</li>
+                                <li>Latence: 30-50ms (CNN optimisé GPU)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⌚</div>
+                            <div class="arch-title">WEARABLES</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Localisation Ultra-Précise</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Bracelets UWB (Ultra-Wideband)</li>
+                                <li>Précision: &lt;50cm (Real-Time Location)</li>
+                                <li>Fréquence mise à jour: 10 Hz</li>
+                                <li>Détection proximité zones dangereuses</li>
+                                <li>Alertes vibrantes préventives</li>
+                                <li>Batterie: autonomie 12h (rechargeable)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">AGENTIC</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Décision Multi-Critères</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Fusion capteurs (Vision + UWB + Laser)</li>
+                                <li>Algorithme consensus Bayésien</li>
+                                <li>Seuils dynamiques adaptatifs</li>
+                                <li>Déclenchement arrêt urgence (ISO 13850)</li>
+                                <li>Logs décisions (traçabilité légale)</li>
+                                <li>Temps décision: &lt;20ms</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📡</div>
+                            <div class="arch-title">IoT SENSORS</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Capteurs Proximité Industriels</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Rideaux lumineux Type 4 (IEC 61496)</li>
+                                <li>Radars Doppler 24 GHz (zones mobiles)</li>
+                                <li>Lidars 2D/3D (mapping environnement)</li>
+                                <li>Capteurs force/couple (robots)</li>
+                                <li>Surveillance état machine (SCADA)</li>
+                                <li>Certification SIL 3 (Safety Integrity)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🧠</div>
+                            <div class="arch-title">KNOWLEDGE GRAPH</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Ontologie Sécurité Machines</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Relations Machine→Dangers→EPI</li>
+                                <li>Graphe zones critiques (Neo4j)</li>
+                                <li>Historique incidents (patterns ML)</li>
+                                <li>Traçabilité conformité réglementaire</li>
+                                <li>Requêtes Cypher temps réel</li>
+                                <li>Immutabilité logs (preuve légale)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">🔄 Flux de Données Intégré</h3>
+                <div style="background: rgba(51, 65, 85, 0.4); border-radius: 12px; padding: 25px; border: 1px solid rgba(148, 163, 184, 0.2);">
+                    <pre style="color: #cbd5e1; font-family: monospace; line-height: 1.8; overflow-x: auto;">
+Capteurs → Edge Processing → Fusion Multi-Capteurs → Décision Agentic → Arrêt Machine
+
+1. VISION (30ms)     ──┐
+2. WEARABLES (10ms)  ──┼──> FUSION BAYÉSIENNE (20ms) ──> DÉCISION (5ms) ──> ARRÊT (10ms)
+3. LASER (5ms)       ──┘
+4. SCADA (continu)   ──────────────────────────────────> LOGS NEO4J (immutable)
+
+TOTAL LATENCE: &lt;100ms (conforme ISO 13855)
+REDONDANCE: Triple capteurs (Vision + UWB + Laser) = sécurité maximale
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Workflow -->
+        <div id="workflow" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚙️</span>
+                    <h2 class="card-title">Workflow Détection & Arrêt d'Urgence</h2>
+                </div>
+
+                <p style="margin-bottom: 25px; color: #cbd5e1; font-size: 16px;">
+                    Séquence complète détection intrusion → analyse risque → arrêt sécurisé en &lt;100ms (conformité ISO 13855).
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">T+0ms: Détection Intrusion</div>
+                            <div class="timeline-desc">
+                                <strong>Capteurs:</strong> Vision AI détecte main approche zone rouge scie circulaire. 
+                                Rideaux lumineux Type 4 interrompus (faisceau coupé). Wearable UWB confirme position travailleur à 1.2m machine.
+                                <br><strong>Sortie:</strong> 3 signaux déclencheurs convergents → alerte fusion multi-capteurs.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">T+30ms: Analyse Multi-Critères</div>
+                            <div class="timeline-desc">
+                                <strong>Agentic Fusion:</strong> Algorithme Bayésien pondère 3 sources (Vision 40%, Laser 35%, UWB 25%). 
+                                Calcul probabilité intrusion: P=0.95 (seuil critique 0.80). Estimation temps contact: 80ms (vitesse approche 1.5m/s).
+                                <br><strong>Décision:</strong> Risque ÉLEVÉ → déclenchement arrêt urgence requis.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">T+50ms: Commande Arrêt Urgence</div>
+                            <div class="timeline-desc">
+                                <strong>Signal contrôle:</strong> Agentic envoie commande arrêt Catégorie 0 (ISO 13850) au PLC sécurité. 
+                                Relais SIL 3 coupent alimentation moteur scie. Freinage électromagnétique activé. Alarme sonore déclenchée.
+                                <br><strong>Latence communication:</strong> 15ms (bus CAN Safety).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">T+80ms: Arrêt Machine Confirmé</div>
+                            <div class="timeline-desc">
+                                <strong>État machine:</strong> Moteur scie arrêté, lame en décélération (inertie). Vitesse lame passe de 3600 RPM à 200 RPM. 
+                                Zone rouge sécurisée. Capteurs SCADA confirment arrêt. Vision AI vérifie immobilité lame.
+                                <br><strong>Résultat:</strong> Aucun contact travailleur-lame. Incident évité.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">T+95ms: Traçabilité & Alertes</div>
+                            <div class="timeline-desc">
+                                <strong>Logs immutables:</strong> Neo4j enregistre événement (timestamp, capteurs, décision, résultat). 
+                                Notification superviseur (SMS + dashboard). Alerte wearable (vibration forte). Photo Vision AI capturée (preuve).
+                                <br><strong>Conformité:</strong> Traçabilité totale conforme RSST (registre événements sécurité).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Post-Incident: Analyse & Amélioration</div>
+                            <div class="timeline-desc">
+                                <strong>ML Pipeline:</strong> Incident ajouté base entraînement. Patterns analysés (heure, poste, tâche, expérience). 
+                                RiskPredictor re-entraîné avec nouvelle donnée. Recommandations préventives générées (ex: formation supplémentaire, modification procédure).
+                                <br><strong>Boucle amélioration:</strong> Système apprend continuellement des quasi-accidents.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">⚡ Performance Temporelle</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">30ms</div>
+                        <div class="stat-label">Détection Vision AI</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">20ms</div>
+                        <div class="stat-label">Fusion Multi-Capteurs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15ms</div>
+                        <div class="stat-label">Communication PLC</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30ms</div>
+                        <div class="stat-label">Arrêt Machine</div>
+                    </div>
+                    <div class="stat-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.2)); border-color: #22c55e;">
+                        <div class="stat-value" style="background: linear-gradient(135deg, #86efac, #22c55e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">95ms</div>
+                        <div class="stat-label" style="color: #86efac;">LATENCE TOTALE (conforme ISO 13855: &lt;100ms requis)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Scénarios -->
+        <div id="scenarios" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎭</span>
+                    <h2 class="card-title">Scénarios Réalistes UC-P03</h2>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">Scénario 1: Scie Circulaire - Maintenance Lame</div>
+                        <div class="scenario-badge">CRITIQUE</div>
+                    </div>
+                    <div style="color: #cbd5e1; line-height: 1.8;">
+                        <p style="margin-bottom: 12px;"><strong>Contexte:</strong> Menuiserie industrielle, scie circulaire 3600 RPM, travailleur expérimenté (12 ans), maintenance préventive lame.</p>
+                        
+                        <p style="margin-bottom: 12px;"><strong>⚠️ Situation Dangereuse:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>09:35 - Travailleur désactive protecteur mobile (accès lame)</li>
+                            <li>09:36 - Main droite approche lame (vérification usure dents)</li>
+                            <li>09:36:15 - Main à 25cm lame en rotation (oubli arrêt moteur)</li>
+                            <li>09:36:16 - Vision AI détecte intrusion zone rouge (confiance 0.92)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>🤖 Intervention AgenticX5:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>T+0ms: Rideaux lumineux interrompus + Vision AI alerte</li>
+                            <li>T+25ms: Fusion confirme risque (P=0.94, vitesse approche 0.8m/s)</li>
+                            <li>T+45ms: Commande arrêt urgence Catégorie 0 envoyée</li>
+                            <li>T+75ms: Moteur coupé, freinage électromagnétique activé</li>
+                            <li>T+90ms: Lame immobilisée (3600→0 RPM en 15ms)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>✅ Résultat:</strong> Main s'arrête à 8cm lame immobile. <strong>Amputation évitée</strong> (coût économisé: 250K$ CAD + trauma psychologique).</p>
+
+                        <p style="margin-bottom: 12px;"><strong>📋 Actions Post-Incident:</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>Notification superviseur immédiate (SMS + dashboard)</li>
+                            <li>Photo Vision AI archivée (preuve conformité)</li>
+                            <li>Enquête analysée par ML Pipeline (pattern "maintenance lame")</li>
+                            <li>Formation rappel procédure LOTO générée automatiquement</li>
+                            <li>Modification procédure: verrouillage obligatoire avant maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">Scénario 2: Presse Hydraulique - Coincement Main</div>
+                        <div class="scenario-badge">CRITIQUE</div>
+                    </div>
+                    <div style="color: #cbd5e1; line-height: 1.8;">
+                        <p style="margin-bottom: 12px;"><strong>Contexte:</strong> Usine métallurgie, presse 200 tonnes, opérateur 3 ans expérience, cycle automatique pièces.</p>
+                        
+                        <p style="margin-bottom: 12px;"><strong>⚠️ Situation Dangereuse:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>14:22 - Opérateur place pièce métal dans moule inférieur</li>
+                            <li>14:22:10 - Main gauche retire pièce défectueuse (geste rapide)</li>
+                            <li>14:22:12 - Cycle descente presse démarré (commande bi-manuelle relâchée)</li>
+                            <li>14:22:13 - Main encore dans zone coincement (140mm hauteur presse)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>🤖 Intervention AgenticX5:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>T+0ms: Rideaux lumineux 3D détectent main zone danger</li>
+                            <li>T+15ms: Vision AI confirme (tracking main temps réel)</li>
+                            <li>T+30ms: Wearable UWB valide position critique (précision 35cm)</li>
+                            <li>T+50ms: Fusion décide arrêt urgence (triple confirmation)</li>
+                            <li>T+65ms: Électrovanne hydraulique fermée (arrêt descente)</li>
+                            <li>T+80ms: Presse immobilisée à 95mm (main à 140mm = 45mm sécurité)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>✅ Résultat:</strong> Main retirée sans contact. <strong>Écrasement évité</strong> (coût économisé: 85K$ CAD + arrêt production).</p>
+
+                        <p style="margin-bottom: 12px;"><strong>📋 Analyse Causale ML:</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>Pattern identifié: "geste rapide retrait pièce défectueuse"</li>
+                            <li>Recommandation: modifier séquence (inspection visuelle AVANT placement)</li>
+                            <li>Formation générée: "Dangers cycle automatique presses"</li>
+                            <li>Mise à jour procédure: bouton pause obligatoire si retrait pièce</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">Scénario 3: Robot Collaboratif - Collision Opérateur</div>
+                        <div class="scenario-badge">MODÉRÉ</div>
+                    </div>
+                    <div style="color: #cbd5e1; line-height: 1.8;">
+                        <p style="margin-bottom: 12px;"><strong>Contexte:</strong> Assemblage automobile, cobot UR10 (charge 10kg), opération picking & placing composants.</p>
+                        
+                        <p style="margin-bottom: 12px;"><strong>⚠️ Situation Dangereuse:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>11:15 - Opérateur entre zone collaborative robot (SSM actif)</li>
+                            <li>11:15:08 - Robot en mouvement rapide (vitesse 1.2m/s)</li>
+                            <li>11:15:10 - Opérateur s'approche étagère (distraction smartphone)</li>
+                            <li>11:15:12 - Trajectoire robot croise position opérateur (distance 60cm)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>🤖 Intervention AgenticX5:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>T+0ms: Lidar 2D détecte opérateur zone collaborative (scan 25Hz)</li>
+                            <li>T+20ms: Vision AI confirme posture (debout, mouvement latéral)</li>
+                            <li>T+40ms: Prédiction trajectoire: collision probable dans 1.5s</li>
+                            <li>T+60ms: Agentic envoie commande ralentissement robot (SSM → vitesse 0.25m/s)</li>
+                            <li>T+80ms: Robot réduit vitesse 80% (ISO 10218 limite 0.5m/s zone SSM)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>✅ Résultat:</strong> Robot ralenti à temps, distance maintenue &gt;50cm. <strong>Collision évitée</strong> (conforme ISO/TS 15066 limites biomécanique).</p>
+
+                        <p style="margin-bottom: 12px;"><strong>📋 Amélioration Continue:</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>Incident "distraction smartphone" ajouté base patterns</li>
+                            <li>Recommandation: zone interdiction téléphones (signalisation)</li>
+                            <li>RiskPredictor ajuste scoring "distraction opérateur" (+15%)</li>
+                            <li>Campagne sensibilisation générée automatiquement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Démo Interactive -->
+        <div id="demo" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎮</span>
+                    <h2 class="card-title">Démo Interactive - Détection Intrusion</h2>
+                </div>
+
+                <div class="demo-container">
+                    <h3 style="color: #fca5a5; margin-bottom: 15px;">🏭 Zone Machine Industrielle</h3>
+                    <p style="color: #cbd5e1; margin-bottom: 20px;">
+                        Déplacez le travailleur (🧑) vers la machine. Observez la détection automatique et l'arrêt d'urgence lorsqu'il entre dans la zone rouge.
+                    </p>
+
+                    <div class="machine-zone" id="machineZone">
+                        <!-- Zone dangereuse -->
+                        <div class="danger-zone" style="left: 40%; top: 20%; width: 30%; height: 60%; border-radius: 8px;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fca5a5; font-weight: 700;">
+                                ⚠️<br>ZONE ROUGE<br>Scie Circulaire
+                            </div>
+                        </div>
+
+                        <!-- Machine (scie) -->
+                        <div style="position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); font-size: 80px;">
+                            ⚙️
+                        </div>
+
+                        <!-- Travailleur (déplaçable) -->
+                        <div class="worker-icon" id="worker" style="left: 10%; top: 45%;">
+                            🧑
+                        </div>
+
+                        <!-- Capteurs -->
+                        <div style="position: absolute; left: 5%; top: 5%; color: #fca5a5; font-size: 24px;" title="Caméra Vision AI">
+                            📷
+                        </div>
+                        <div style="position: absolute; right: 5%; top: 5%; color: #fca5a5; font-size: 24px;" title="Rideau Lumineux">
+                            💡
+                        </div>
+                        <div style="position: absolute; left: 5%; bottom: 5%; color: #fca5a5; font-size: 24px;" title="Capteur UWB">
+                            📡
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="control-btn" onclick="moveWorkerToSafe()">🟢 Position Sécuritaire</button>
+                        <button class="control-btn" onclick="moveWorkerToDanger()">🔴 Intrusion Zone Rouge</button>
+                        <button class="control-btn" onclick="resetDemo()">🔄 Réinitialiser</button>
+                    </div>
+
+                    <div class="status-display">
+                        <h4 style="color: #fca5a5; margin-bottom: 15px;">📊 État Système Temps Réel</h4>
+                        <div class="status-item">
+                            <span class="status-label">Vision AI:</span>
+                            <span id="visionStatus" class="status-value status-safe">✓ Surveillance Active</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Rideaux Lumineux:</span>
+                            <span id="curtainStatus" class="status-value status-safe">✓ Aucune Intrusion</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Wearable UWB:</span>
+                            <span id="wearableStatus" class="status-value status-safe">✓ Distance Sécuritaire</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">État Machine:</span>
+                            <span id="machineStatus" class="status-value status-safe">✓ Opération Normale (3600 RPM)</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Décision Agentic:</span>
+                            <span id="agenticStatus" class="status-value status-safe">✓ Aucune Action Requise</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 3px solid #3b82f6;">
+                        <p style="color: #93c5fd; font-size: 14px;">
+                            <strong>💡 Instructions:</strong> Cette démo simule le système de détection multi-capteurs AgenticX5. 
+                            Lorsque le travailleur entre dans la zone rouge, les 3 systèmes (Vision AI, Rideaux Lumineux, Wearables) 
+                            détectent l'intrusion et déclenchent l'arrêt d'urgence automatique en &lt;100ms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: ROI & Impact -->
+        <div id="roi" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💰</span>
+                    <h2 class="card-title">ROI & Impact Économique UC-P03</h2>
+                </div>
+
+                <h3 style="color: #fca5a5; margin-bottom: 20px;">💵 Analyse Financière (Usine 500 Travailleurs)</h3>
+                
+                <div class="roi-grid">
+                    <div class="roi-card">
+                        <div class="roi-value">+405%</div>
+                        <div class="roi-label">ROI sur 3 ans</div>
+                        <div class="roi-desc">Retour sur investissement: 5.05x</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-value">7.1 mois</div>
+                        <div class="roi-label">Payback Period</div>
+                        <div class="roi-desc">Seuil rentabilité atteint</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-value">983K$</div>
+                        <div class="roi-label">Économies Annuelles</div>
+                        <div class="roi-desc">Total bénéfices CAD/an</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">📊 Détail Économies Annuelles</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">585K$</div>
+                        <div class="stat-label">Réduction Incidents<br>(-60% écrasements)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">215K$</div>
+                        <div class="stat-label">Productivité<br>(+12% uptime machines)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">125K$</div>
+                        <div class="stat-label">Primes Assurance<br>(-18% CNESST)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">58K$</div>
+                        <div class="stat-label">Conformité Audits<br>(+40% efficacité)</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">💼 Détail Investissement (3 ans)</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>Composante</th>
+                        <th>Coût</th>
+                        <th>Détail</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Matériel Capteurs</strong></td>
+                        <td>285K$ CAD</td>
+                        <td>Caméras 3D (45K$), Rideaux lumineux Type 4 (85K$), Wearables UWB (65K$), Lidars/Radars (55K$), Serveurs Edge (35K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licences Logicielles</strong></td>
+                        <td>175K$ CAD</td>
+                        <td>AgenticX5 (75K$), Neo4j Enterprise (45K$), Vision AI (35K$), ML Pipeline (20K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Installation & Intégration</strong></td>
+                        <td>145K$ CAD</td>
+                        <td>Ingénierie (65K$), Installation physique (45K$), Configuration SCADA (25K$), Tests commissioning (10K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formation & Change Mgmt</strong></td>
+                        <td>45K$ CAD</td>
+                        <td>Formation opérateurs (25K$), Formation maintenance (15K$), Documentation (5K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Maintenance Annuelle</strong></td>
+                        <td>95K$ CAD</td>
+                        <td>Support technique (45K$), Mises à jour logicielles (25K$), Calibration capteurs (15K$), Consommables (10K$)</td>
+                    </tr>
+                    <tr style="background: rgba(220, 38, 38, 0.1); font-weight: 700;">
+                        <td><strong>TOTAL INVESTISSEMENT (3 ans)</strong></td>
+                        <td><strong>650K$ CAD</strong></td>
+                        <td>Capex (650K$) + Opex (285K$ sur 3 ans) = 935K$ total</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">🎯 Métriques de Performance</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📉</div>
+                            <div class="arch-title">-60%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Réduction Écrasements</strong></p>
+                            <p style="margin-top: 8px;">De 10 incidents/an à 4 incidents/an. Prévention: 6 écrasements évités annuellement (585K$ économisés).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⚡</div>
+                            <div class="arch-title">&lt;100ms</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Latence Détection→Arrêt</strong></p>
+                            <p style="margin-top: 8px;">95ms moyenne (conforme ISO 13855). 99.7% incidents évités grâce temps réaction optimal.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🎯</div>
+                            <div class="arch-title">99.4%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Précision Détection</strong></p>
+                            <p style="margin-top: 8px;">Fusion triple capteurs (Vision + Laser + UWB). Faux positifs &lt;0.6% (acceptable niveau SIL 3).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📈</div>
+                            <div class="arch-title">+12%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Uptime Machines</strong></p>
+                            <p style="margin-top: 8px;">Moins arrêts urgence non justifiés. Maintenance prédictive zones critiques (215K$ gain productivité).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 30px 0 20px 0;">🌟 Bénéfices Intangibles</h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Culture Sécurité:</strong> Confiance travailleurs augmentée (+25% satisfaction sondages). Perception technologie comme alliée protection.</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Réputation HSE:</strong> Certification Excellence Sécurité CNESST. Avantage compétitif appels d'offres (critère HSE= +15% score).</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Défense Juridique:</strong> Traçabilité immutable Neo4j = preuve due diligence. Protection litiges (-80% risque condamnation).</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Innovation Leadership:</strong> Reconnaissance industrie 4.0 (prix innovation manufacturière). Attraction talents (jeunes ingénieurs SST).</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Scalabilité:</strong> Architecture modulaire (ajout nouvelles machines <2 jours). ROI améliore avec expansion (économies échelle).</span>
+                    </li>
+                </ul>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15)); border-radius: 12px; border: 2px solid #22c55e;">
+                    <h4 style="color: #86efac; margin-bottom: 15px; font-size: 20px;">✅ Conclusion ROI UC-P03</h4>
+                    <p style="color: #cbd5e1; line-height: 1.8; margin-bottom: 12px;">
+                        <strong>Investissement AgenticX5-UC-P03 est hautement rentable:</strong> payback 7.1 mois, ROI +405% sur 3 ans. 
+                        Au-delà chiffres, système sauve vies humaines (6 écrasements évités/an) et améliore culture sécurité organisationnelle.
+                    </p>
+                    <p style="color: #cbd5e1; line-height: 1.8;">
+                        Conformité réglementaire totale (RSST, CSA Z432, OSHA 1910.212, ISO 13849-1) + traçabilité immutable = protection juridique maximale. 
+                        <strong>Recommandation:</strong> déploiement prioritaire UC-P03 pour toutes machines top 5 dangers industriels.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation entre sections
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Afficher la section sélectionnée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Mettre à jour les boutons de navigation
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Variables pour la démo interactive
+        let workerInDanger = false;
+        const worker = document.getElementById('worker');
+        const machineZone = document.getElementById('machineZone');
+        let isDragging = false;
+
+        // Déplacer le travailleur (drag & drop)
+        worker.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const rect = machineZone.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Limiter dans la zone
+                const maxX = rect.width - 40;
+                const maxY = rect.height - 40;
+                
+                const newX = Math.max(0, Math.min(x, maxX));
+                const newY = Math.max(0, Math.min(y, maxY));
+                
+                worker.style.left = newX + 'px';
+                worker.style.top = newY + 'px';
+                
+                checkDangerZone();
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+
+        // Vérifier si le travailleur est dans la zone rouge
+        function checkDangerZone() {
+            const workerRect = worker.getBoundingClientRect();
+            const zoneRect = machineZone.getBoundingClientRect();
+            
+            // Calcul approximatif zone rouge (40% à 70% largeur, 20% à 80% hauteur)
+            const dangerLeft = zoneRect.left + (zoneRect.width * 0.40);
+            const dangerRight = zoneRect.left + (zoneRect.width * 0.70);
+            const dangerTop = zoneRect.top + (zoneRect.height * 0.20);
+            const dangerBottom = zoneRect.top + (zoneRect.height * 0.80);
+            
+            const workerCenterX = workerRect.left + workerRect.width / 2;
+            const workerCenterY = workerRect.top + workerRect.height / 2;
+            
+            const inDanger = (workerCenterX >= dangerLeft && workerCenterX <= dangerRight &&
+                            workerCenterY >= dangerTop && workerCenterY <= dangerBottom);
+            
+            if (inDanger && !workerInDanger) {
+                workerInDanger = true;
+                triggerEmergencyStop();
+            } else if (!inDanger && workerInDanger) {
+                workerInDanger = false;
+                resetToSafe();
+            }
+        }
+
+        // Déclencher l'arrêt d'urgence
+        function triggerEmergencyStop() {
+            document.getElementById('visionStatus').textContent = '⚠️ INTRUSION DÉTECTÉE';
+            document.getElementById('visionStatus').className = 'status-value status-danger';
+            
+            document.getElementById('curtainStatus').textContent = '⚠️ FAISCEAU INTERROMPU';
+            document.getElementById('curtainStatus').className = 'status-value status-danger';
+            
+            document.getElementById('wearableStatus').textContent = '⚠️ DISTANCE CRITIQUE';
+            document.getElementById('wearableStatus').className = 'status-value status-danger';
+            
+            document.getElementById('machineStatus').textContent = '🛑 ARRÊT D\'URGENCE';
+            document.getElementById('machineStatus').className = 'status-value status-danger';
+            
+            document.getElementById('agenticStatus').textContent = '⚠️ ARRÊT DÉCLENCHÉ (<100ms)';
+            document.getElementById('agenticStatus').className = 'status-value status-warning';
+        }
+
+        // Réinitialiser à l'état sécuritaire
+        function resetToSafe() {
+            document.getElementById('visionStatus').textContent = '✓ Surveillance Active';
+            document.getElementById('visionStatus').className = 'status-value status-safe';
+            
+            document.getElementById('curtainStatus').textContent = '✓ Aucune Intrusion';
+            document.getElementById('curtainStatus').className = 'status-value status-safe';
+            
+            document.getElementById('wearableStatus').textContent = '✓ Distance Sécuritaire';
+            document.getElementById('wearableStatus').className = 'status-value status-safe';
+            
+            document.getElementById('machineStatus').textContent = '✓ Opération Normale (3600 RPM)';
+            document.getElementById('machineStatus').className = 'status-value status-safe';
+            
+            document.getElementById('agenticStatus').textContent = '✓ Aucune Action Requise';
+            document.getElementById('agenticStatus').className = 'status-value status-safe';
+        }
+
+        // Boutons de contrôle
+        function moveWorkerToSafe() {
+            worker.style.left = '10%';
+            worker.style.top = '45%';
+            checkDangerZone();
+        }
+
+        function moveWorkerToDanger() {
+            worker.style.left = '50%';
+            worker.style.top = '40%';
+            checkDangerZone();
+        }
+
+        function resetDemo() {
+            moveWorkerToSafe();
+            workerInDanger = false;
+            resetToSafe();
+        }
+
+        // Initialisation
+        window.addEventListener('load', function() {
+            checkDangerZone();
+        });
+    </script>
+</body>
+</html>

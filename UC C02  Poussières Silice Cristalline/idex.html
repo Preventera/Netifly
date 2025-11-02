@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-C02 : Poussières - Silice Cristalline | AgenticX5 SafetyGraph</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           WOPE PREMIUM STYLE
+           ========================= */
+        
+        :root {
+            /* Colors */
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --light: #ffffff;
+            --gray: #a0a0b0;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--gray);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            bottom: -250px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            top: -200px;
+            right: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--accent), transparent);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+            border: 1px solid var(--danger);
+            border-radius: 50px;
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 25px 0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .card-content {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Info Box */
+        .info-box {
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-left: 4px solid;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid;
+            position: relative;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .info-box.critical {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .info-box.critical::before {
+            background: var(--danger);
+        }
+
+        .info-box.warning {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .info-box.warning::before {
+            background: var(--warning);
+        }
+
+        .info-box.success {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .info-box.success::before {
+            background: var(--success);
+        }
+
+        .info-box.info {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .info-box.info::before {
+            background: var(--accent);
+        }
+
+        .info-box h3 {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            padding-left: 35px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li:hover {
+            color: var(--light);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            border: 1px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge.critical {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .badge.primary {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge.success {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .badge.warning {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table th {
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--light);
+        }
+
+        .data-table td {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .data-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table code {
+            background: rgba(139, 92, 246, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        /* Architecture Diagram */
+        .architecture-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .architecture-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .architecture-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .architecture-item {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .architecture-item:hover {
+            transform: translateY(-5px);
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+        }
+
+        .architecture-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .architecture-item h4 {
+            font-size: 1.1rem;
+            color: var(--light);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .architecture-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.5;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 50px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 19px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 4px solid var(--dark);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-content {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 10px;
+        }
+
+        /* Stat Box */
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .architecture-flow {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 12px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">AgenticX5</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Vue d'ensemble</a></li>
+                <li><a href="#risk">Risque</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#workflow">Workflow</a></li>
+                <li><a href="#data">Données</a></li>
+                <li><a href="#standards">Normes</a></li>
+                <li><a href="#deployment">Déploiement</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="priority-badge">🔴 PRIORITÉ CRITIQUE</div>
+            <h1 class="hero-title">UC-C02 : Poussières<br>Silice Cristalline</h1>
+            <p class="hero-subtitle">
+                Protection intelligente contre la silicose (maladie irréversible) avec monitoring temps réel,
+                dosimétrie personnelle et conformité multi-juridictionnelle (QC/CA/USA)
+            </p>
+            <div class="grid grid-3" style="margin-top: 50px;">
+                <div class="stat-box">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Cas/an Construction</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0.025</div>
+                    <div class="stat-label">mg/m³ TLV ACGIH</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0.05</div>
+                    <div class="stat-label">mg/m³ VEMP Québec</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Overview -->
+    <section id="overview" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 01</div>
+                <h2 class="section-title">Vue d'Ensemble</h2>
+                <p class="section-description">
+                    Prévention proactive de la silicose par monitoring continu des concentrations,
+                    dosimétrie personnelle et orchestration agentique des contrôles
+                </p>
+            </div>
+
+            <div class="info-box critical">
+                <h3>🚨 Risque Principal : Silicose</h3>
+                <p>
+                    <strong>Maladie pulmonaire irréversible et mortelle à long terme.</strong>
+                    156 cas/an dans la construction au Québec. Exposition chronique à la silice cristalline
+                    respirable (RCS) provenant du sciage, meulage, perçage de béton, pierre, mortier, granit.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Objectifs de la Solution</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li>Prévenir l'exposition chronique à la silice cristalline respirable</li>
+                        <li>Maintenir les niveaux TWA 8h sous les VEMP (0.05 mg/m³ QC) et TLV (0.025 mg/m³)</li>
+                        <li>Assurer la conformité multi-juridictionnelle (RSST, CSTC, OSHA 1926.1153/1910.1053)</li>
+                        <li>Orchestrer les contrôles techniques (méthodes humides, aspiration HEPA, ventilation)</li>
+                        <li>Gérer automatiquement les rotations et l'utilisation d'EPR selon la dose cumulée</li>
+                        <li>Traçabilité complète pour audits réglementaires et surveillance médicale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">Architecture Recommandée</h3>
+                <div class="architecture-flow">
+                    <div class="architecture-item">
+                        <div class="icon">📡</div>
+                        <h4>IoT Sensors</h4>
+                        <p>Capteurs PM2.5/PM10 par zone + détection proxy temps réel</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">⌚</div>
+                        <h4>Wearables</h4>
+                        <p>Dosimètre personnel RCS + tracking durée/tâche</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🤖</div>
+                        <h4>Agentic</h4>
+                        <p>Calcul dose TWA 8h + règles alerte + rotation auto</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🧠</div>
+                        <h4>Knowledge Graph</h4>
+                        <p>VEMP/PEL/TLV + procédés + EPI + méthodes analytiques</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">Modules SafetyGraph</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge primary">Module Construction HSE</div>
+                        <div class="badge primary">Dashboard Environnementaux</div>
+                        <div class="badge primary">Analytics Dashboard</div>
+                        <div class="badge primary">SafetyOntology</div>
+                        <div class="badge primary">CSTC 3.25 Compliance</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <h3 class="card-title">Actions Immédiates</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge success">Monitoring concentration silice</div>
+                        <div class="badge success">Protection respiratoire adaptée</div>
+                        <div class="badge success">Méthodes humides obligatoires</div>
+                        <div class="badge success">Aspiration locale HEPA</div>
+                        <div class="badge success">Rotation automatique</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">Priorité & Impact</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">CRITIQUE</span>
+                        </p>
+                        <p>
+                            Maladie mortelle à long terme, irréversible. Conformité RSSM art. 2.10.5.
+                            Prévention absolue requise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Risk & Problématique -->
+    <section id="risk" class="section" style="background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 02</div>
+                <h2 class="section-title">Risque & Problématique</h2>
+                <p class="section-description">
+                    Comprendre les mécanismes, les sources d'exposition et l'impact de la silice cristalline
+                </p>
+            </div>
+
+            <div class="info-box critical">
+                <h3>⚠️ Silicose : Maladie Irréversible</h3>
+                <p>
+                    La silicose est une pneumoconiose causée par l'inhalation de poussières de silice cristalline respirable (RCS).
+                    Les particules fines (< 10 µm) pénètrent profondément dans les poumons et provoquent une fibrose pulmonaire
+                    progressive et irréversible. <strong>La maladie peut évoluer même après cessation de l'exposition.</strong>
+                </p>
+                <p style="margin-top: 15px;">
+                    <strong>Statistiques Québec :</strong> 156 cas/an dans le secteur de la construction (données CNESST).
+                    Latence de 10-30 ans entre exposition et diagnostic. <strong>Aucun traitement curatif disponible.</strong>
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🏗️</div>
+                        <h3 class="card-title">Sources d'Exposition</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Matériaux Contenant Silice (CSTC 3.25.2)</h4>
+                        <ul class="feature-list">
+                            <li><strong>Béton</strong> : sciage, meulage, perçage, démolition</li>
+                            <li><strong>Mortier</strong> : mélange, application, retrait</li>
+                            <li><strong>Pierre naturelle</strong> : taille, polissage, installation</li>
+                            <li><strong>Brique</strong> : coupe, ajustement, pose</li>
+                            <li><strong>Granit/Quartz</strong> : comptoirs, revêtements</li>
+                            <li><strong>Ardoise</strong> : toiture, revêtements muraux</li>
+                            <li><strong>Sable de sablage</strong> : décapage surfaces</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚙️</div>
+                        <h3 class="card-title">Opérations à Risque Élevé</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Tâches Génératrices de Poussières</h4>
+                        <ul class="feature-list">
+                            <li><strong>Sciage à sec</strong> : génération massive de poussières respirables</li>
+                            <li><strong>Meulage</strong> : particules fines en suspension</li>
+                            <li><strong>Perçage</strong> : concentration locale élevée</li>
+                            <li><strong>Démolition</strong> : dispersion large de poussières</li>
+                            <li><strong>Sablage au sable</strong> : exposition extrême (interdit plusieurs juridictions)</li>
+                            <li><strong>Balayage à sec</strong> : remise en suspension</li>
+                            <li><strong>Manipulation matériaux pulvérulents</strong> : sacs ciment, mortier sec</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🫁</div>
+                    <h3 class="card-title">Progression de la Maladie</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div class="info-box warning">
+                            <h3>Phase 1 : Silicose Simple</h3>
+                            <p>Nodules pulmonaires visibles à la radiographie. Souvent asymptomatique. Peut rester stable pendant des années.</p>
+                        </div>
+                        <div class="info-box critical">
+                            <h3>Phase 2 : Silicose Compliquée</h3>
+                            <p>Fibrose massive progressive (FMP). Essoufflement, toux, fatigue. Incapacité progressive à l'effort.</p>
+                        </div>
+                        <div class="info-box critical">
+                            <h3>Phase 3 : Insuffisance Respiratoire</h3>
+                            <p>Détresse respiratoire chronique. Oxygénothérapie. Décès par insuffisance respiratoire ou complications (TB, cancer).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Facteurs de Risque & Aggravation</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Facteurs d'Exposition</h4>
+                            <ul class="feature-list">
+                                <li><strong>Concentration</strong> : niveaux de RCS dans l'air (mg/m³)</li>
+                                <li><strong>Durée</strong> : années d'exposition cumulée</li>
+                                <li><strong>Taille particules</strong> : fraction respirable (< 10 µm) plus dangereuse</li>
+                                <li><strong>Absence contrôles</strong> : pas de méthodes humides/aspiration</li>
+                                <li><strong>Milieux confinés</strong> : accumulation dans espaces clos</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Facteurs Aggravants</h4>
+                            <ul class="feature-list">
+                                <li><strong>Tabagisme</strong> : risque multiplié x2-3</li>
+                                <li><strong>Tuberculose</strong> : association fréquente (silicotuberculose)</li>
+                                <li><strong>Exposition mixte</strong> : diesel, amiante, fumées soudage</li>
+                                <li><strong>Maladies auto-immunes</strong> : sclérodermie, polyarthrite</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box critical">
+                <h3>💀 Impact Organisationnel & Humain</h3>
+                <div class="grid grid-3" style="margin-top: 20px;">
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Santé Travailleurs</h4>
+                        <p>Décès prématuré, invalidité permanente, qualité de vie dégradée, comorbidités (TB, cancer poumon +30%)</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Coûts Employeur</h4>
+                        <p>Indemnisations CNESST massives, pénalités réglementaires, arrêts chantier, image réputation</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Conformité Légale</h4>
+                        <p>RSST Annexe 1 (VEMP), CSTC 3.25, OSHA 1926.1153/1910.1053 (USA), surveillance médicale obligatoire</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Solution AgenticX5 -->
+    <section id="solution" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 03</div>
+                <h2 class="section-title">Solution AgenticX5</h2>
+                <p class="section-description">
+                    Orchestration intelligente de la prévention par monitoring temps réel et règles agentiques
+                </p>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🎯 Approche AgenticX5 : Prévention Multi-Couches</h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 30px;">
+                    Combinaison de capteurs IoT (proxy particules), dosimètres wearables (RCS personnel),
+                    règles agentiques (conformité VEMP/PEL/TLV) et knowledge graph (procédés/EPI/normes)
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 1 : Détection Proxy par IoT</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">IoT Sensors</span>
+                            <span class="badge primary">PM2.5 / PM10</span>
+                        </p>
+                        <p>
+                            Capteurs de particules (PM2.5, PM10) installés dans les zones de travail pour détecter
+                            les pics d'activité générant des poussières. <strong>Ces capteurs ne mesurent pas la silice cristalline</strong>
+                            mais servent de proxy pour déclencher des vérifications gravimétriques.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if PM2.5 > seuil_interne ⇒ alerte_vérification(); exiger_prélèvement_gravimétrique(NIOSH7500/ID142);</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 2 : Dosimétrie Personnelle RCS</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Wearables</span>
+                            <span class="badge primary">Dosimètre Personnel</span>
+                        </p>
+                        <p>
+                            Dosimètres portés par les travailleurs suivent la durée (T<sub>i</sub>) et l'exposition estimée (C<sub>i</sub>)
+                            pour chaque tâche. Calcul continu du TWA 8h selon : <strong>TWA8 = (Σ C<sub>i</sub> × T<sub>i</sub>) / 8h</strong>
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if TWA8 ≥ 0.025 mg/m³ (TLV) ⇒ alerte_précoce(); renforcer_contrôles();</code><br>
+                                <code>if TWA8 ≥ 0.05 mg/m³ (VEMP/PEL) ⇒ non_conformité(); rotation_immédiate(); EPR_obligatoire();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 3 : Identification Automatique Matériaux à Risque</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Knowledge Graph</span>
+                            <span class="badge primary">CSTC 3.25.2</span>
+                        </p>
+                        <p>
+                            Le knowledge graph contient la liste des matériaux présumés contenir de la silice (CSTC 3.25.2).
+                            Dès qu'un procédé implique ces matériaux, le protocole silice est activé automatiquement.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if matériau ∈ {ardoise, béton, brique, granit, mortier, pierre, quartz, sable} ⇒ activer_protocole_silice();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 4 : Orchestration Contrôles Techniques</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Méthodes Humides</span>
+                            <span class="badge success">Aspiration HEPA</span>
+                            <span class="badge success">Ventilation</span>
+                        </p>
+                        <p>
+                            Selon le type d'opération (sciage, meulage, perçage), l'agent orchestre automatiquement
+                            les contrôles techniques requis : méthodes humides, aspiration locale HEPA, ventilation générale.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if tâche = sciage_béton ⇒ require_méthode_humide() + aspiration_HEPA() + ventilation();</code><br>
+                                <code>if secteur = construction && tâche ∈ Tableau1_OSHA ⇒ appliquer_mesures_prescriptives();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 5 : Sélection Automatique EPR</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">EPR Respiratoire</span>
+                            <span class="badge warning">Facteur Protection</span>
+                        </p>
+                        <p>
+                            En fonction de la concentration estimée/mesurée, l'agent recommande le niveau de protection
+                            respiratoire approprié : N95/P100 (FP 10), demi-masque (FP 10-50), masque complet (FP 50+).
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if concentration ≤ 0.5 mg/m³ ⇒ EPR(N95, FP≥10);</code><br>
+                                <code>if concentration > 0.5 mg/m³ ⇒ EPR(P100 + demi-masque, FP≥10);</code><br>
+                                <code>if concentration > 5 mg/m³ ⇒ EPR(masque_complet, FP≥50) + contrôles_ingénierie_renforcés();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 6 : Rotation Automatique & Traçabilité</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">Rotation</span>
+                            <span class="badge primary">Traçabilité CNESST/OSHA</span>
+                        </p>
+                        <p>
+                            Lorsque la dose cumulée approche les limites (Action Level 0.025 mg/m³ ou PEL 0.05 mg/m³),
+                            l'agent déclenche automatiquement une rotation vers tâches à faible exposition. Tous les événements
+                            sont enregistrés pour conformité réglementaire et surveillance médicale.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if dose_journalière ≥ 80% VEMP ⇒ rotation_préventive(); log_événement(CNESST, OSHA);</code><br>
+                                <code>if exposition_annuelle > Action_Level ⇒ déclencher_surveillance_médicale();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">✨</div>
+                    <h3 class="card-title">Bénéfices Clés de l'Approche AgenticX5</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div class="info-box success">
+                            <h3>Prévention Proactive</h3>
+                            <p>Détection précoce avant dépassement VEMP/PEL. Évite l'exposition chronique menant à la silicose.</p>
+                        </div>
+                        <div class="info-box success">
+                            <h3>Conformité Multi-Juridictionnelle</h3>
+                            <p>Respect automatique RSST, CSTC, OSHA 1926.1153/1910.1053, ACGIH TLV. Audit-ready.</p>
+                        </div>
+                        <div class="info-box success">
+                            <h3>Optimisation Ressources</h3>
+                            <p>Rotation intelligente, EPR juste-nécessaire, contrôles ciblés. Réduction coûts indemnisations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Workflow Agentique -->
+    <section id="workflow" class="section" style="background: linear-gradient(180deg, transparent, rgba(236, 72, 153, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 04</div>
+                <h2 class="section-title">Workflow Agentique</h2>
+                <p class="section-description">
+                    Cycle temps réel de monitoring, analyse, action et apprentissage
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 1 : Ingestion Multi-Sources</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">IoT</span>
+                            <span class="badge primary">Wearables</span>
+                            <span class="badge primary">Gravimétrie</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Capteurs IoT</strong> : PM2.5/PM10 par zone (proxy particules)</li>
+                            <li><strong>Dosimètres personnels</strong> : durée (T<sub>i</sub>) + concentration estimée (C<sub>i</sub>)</li>
+                            <li><strong>Analyses gravimétriques</strong> : XRD (NIOSH 7500 / OSHA ID-142) pour validation périodique</li>
+                            <li><strong>Formulaires terrain</strong> : tâches, matériaux, contrôles appliqués (CSTC 3.25)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 2 : Calcul Dose & Scoring Risque</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">TWA 8h</span>
+                            <span class="badge warning">Dose Cumulée</span>
+                        </p>
+                        <div class="info-box info">
+                            <h3>Formule TWA 8h</h3>
+                            <p>
+                                <strong>TWA8 = (Σ C<sub>i</sub> × T<sub>i</sub>) / 8h</strong><br>
+                                où C<sub>i</sub> = concentration RCS (mg/m³) pour tâche <em>i</em>, T<sub>i</sub> = durée tâche <em>i</em> (heures)
+                            </p>
+                        </div>
+                        <ul class="feature-list" style="margin-top: 15px;">
+                            <li><strong>Score risque faible</strong> : TWA8 < 0.025 mg/m³ (sous TLV ACGIH) → monitoring continu</li>
+                            <li><strong>Score risque modéré</strong> : 0.025 ≤ TWA8 < 0.05 mg/m³ (Action Level) → alerte + contrôles renforcés</li>
+                            <li><strong>Score risque élevé</strong> : TWA8 ≥ 0.05 mg/m³ (VEMP/PEL) → rotation immédiate + EPR + investigation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 3 : Orchestration Actions Correctives</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Contrôles Ingénierie</span>
+                            <span class="badge warning">EPR</span>
+                            <span class="badge critical">Rotation</span>
+                        </p>
+                        <div class="grid grid-2">
+                            <div class="info-box success">
+                                <h3>Contrôles Techniques Prioritaires</h3>
+                                <ul class="feature-list">
+                                    <li>Activer méthodes humides (arrosage continu)</li>
+                                    <li>Aspiration locale HEPA sur outils</li>
+                                    <li>Ventilation générale renforcée</li>
+                                    <li>Confinement zone (si possible)</li>
+                                    <li>Interdire balayage à sec</li>
+                                </ul>
+                            </div>
+                            <div class="info-box warning">
+                                <h3>Protections Complémentaires</h3>
+                                <ul class="feature-list">
+                                    <li>EPR adapté (N95/P100 min. FP 10)</li>
+                                    <li>Formation port EPR + fit testing</li>
+                                    <li>Rotation si dose ≥ 80% limite</li>
+                                    <li>Réduction durée exposition</li>
+                                    <li>Pause/repos en zone propre</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 4 : Traçabilité & Conformité</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Logs</span>
+                            <span class="badge primary">Audits</span>
+                            <span class="badge primary">Surveillance Médicale</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Enregistrement automatique</strong> : toutes mesures, alertes, actions, rotations</li>
+                            <li><strong>Rapports conformité</strong> : RSST, CSTC 3.25, OSHA 1926.1153/1910.1053</li>
+                            <li><strong>Dossiers travailleurs</strong> : historique exposition cumulée pour surveillance médicale</li>
+                            <li><strong>Audits CNESST/OSHA</strong> : exports PDF/Excel prêts pour inspections</li>
+                            <li><strong>Déclenchement surveillance médicale</strong> : si exposition ≥ Action Level (0.025 mg/m³ OSHA)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 5 : Apprentissage & Amélioration Continue</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Machine Learning</span>
+                            <span class="badge primary">Optimisation</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Corrélation proxy/gravimétrie</strong> : ajuster facteurs correction PM2.5/PM10 → RCS</li>
+                            <li><strong>Patterns exposition</strong> : identifier tâches/matériaux/outils à risque élevé</li>
+                            <li><strong>Efficacité contrôles</strong> : mesurer réduction après méthodes humides/aspiration</li>
+                            <li><strong>Prédiction risque</strong> : anticiper dépassements avant qu'ils surviennent</li>
+                            <li><strong>Optimisation rotations</strong> : planification intelligente pour minimiser exposition collective</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🔄 Modes d'Intervention Agentique</h3>
+                <div class="grid grid-3">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🟢</div>
+                            <h3 class="card-title">Mode Monitoring</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> TWA8 < 0.025 mg/m³</p>
+                            <p style="margin-top: 10px;">
+                                Surveillance continue via IoT + wearables. Validation gravimétrique périodique (mensuelle/trimestrielle).
+                                Pas d'alerte, situation normale.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🟡</div>
+                            <h3 class="card-title">Mode Préventif</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> 0.025 ≤ TWA8 < 0.05 mg/m³</p>
+                            <p style="margin-top: 10px;">
+                                Alerte précoce. Renforcement contrôles (méthodes humides, aspiration). EPR recommandé.
+                                Surveillance rapprochée (hebdomadaire).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🔴</div>
+                            <h3 class="card-title">Mode Intervention</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> TWA8 ≥ 0.05 mg/m³</p>
+                            <p style="margin-top: 10px;">
+                                Non-conformité VEMP/PEL. Rotation immédiate. EPR obligatoire. Investigation cause racine.
+                                Plan action correctif + surveillance médicale.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Données & Architecture -->
+    <section id="data" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 05</div>
+                <h2 class="section-title">Données & Architecture Technique</h2>
+                <p class="section-description">
+                    Sources de données, capteurs, méthodes analytiques et intégration système
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📡</div>
+                        <h3 class="card-title">1. IoT Sensors (Proxy Particules)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Capteurs PM2.5 / PM10</h4>
+                        <ul class="feature-list">
+                            <li><strong>Type</strong> : Capteurs optiques de particules (OPC)</li>
+                            <li><strong>Localisation</strong> : Zones de travail, ateliers, chantiers</li>
+                            <li><strong>Métriques</strong> : Concentration particules (µg/m³), tendances horaires</li>
+                            <li><strong>Fréquence</strong> : Temps réel (1-5 min)</li>
+                            <li><strong>Utilité</strong> : Détection proxy (ne quantifie pas RCS) → déclencheur vérification gravimétrique</li>
+                            <li><strong>Limitations</strong> : Pas de distinction silice cristalline / autres particules</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⌚</div>
+                        <h3 class="card-title">2. Wearables (Dosimétrie Personnelle)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Dosimètres RCS Portés</h4>
+                        <ul class="feature-list">
+                            <li><strong>Type</strong> : Dosimètre gravimétrique (cyclone + filtre 37 mm) ou badge électronique</li>
+                            <li><strong>Porteur</strong> : Travailleur individuel (zone respiratoire)</li>
+                            <li><strong>Métriques</strong> : Durée tâche (T<sub>i</sub>), concentration estimée (C<sub>i</sub>), TWA 8h cumulé</li>
+                            <li><strong>Fréquence</strong> : Continu pendant shift, analyse gravimétrique post-shift</li>
+                            <li><strong>Utilité</strong> : Dose personnelle réelle, conformité VEMP/PEL/TLV</li>
+                            <li><strong>Standard</strong> : ISO 7708 (fraction respirable), NIOSH 7500 / OSHA ID-142 (analyse XRD)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔬</div>
+                        <h3 class="card-title">3. Analyses Gravimétriques (Validation)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Méthodes Labo XRD</h4>
+                        <ul class="feature-list">
+                            <li><strong>Méthode NIOSH 7500</strong> : Diffraction rayons X (XRD), quartz/cristobalite</li>
+                            <li><strong>Méthode OSHA ID-142</strong> : XRD alternative, même principe</li>
+                            <li><strong>Prélèvement</strong> : Cyclone (fraction respirable) + filtre 37 mm PVC</li>
+                            <li><strong>Débit</strong> : 2.5 L/min, durée 8h (TWA)</li>
+                            <li><strong>Fréquence</strong> : Mensuelle/trimestrielle (validation proxy) + après alertes</li>
+                            <li><strong>Utilité</strong> : Quantification exacte RCS, ajustement facteurs correction</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">4. Formulaires Terrain (Contexte)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Saisie Manuelle Superviseurs</h4>
+                        <ul class="feature-list">
+                            <li><strong>Tâches effectuées</strong> : Sciage, meulage, perçage, démolition, etc.</li>
+                            <li><strong>Matériaux manipulés</strong> : Béton, mortier, pierre, granit, brique, etc.</li>
+                            <li><strong>Contrôles appliqués</strong> : Méthodes humides, aspiration HEPA, ventilation</li>
+                            <li><strong>EPR utilisés</strong> : Type, facteur protection, fit test OK</li>
+                            <li><strong>Durée exposition</strong> : Heures par tâche/zone</li>
+                            <li><strong>Incidents</strong> : Pannes aspiration, oubli méthode humide, etc.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🏗️ Architecture Système AgenticX5 - UC-C02</h3>
+                <div class="architecture-flow">
+                    <div class="architecture-item">
+                        <div class="icon">📊</div>
+                        <h4>Ingestion Layer</h4>
+                        <p>IoT → Kafka → Timeseries DB<br>Wearables → MQTT → PostgreSQL<br>Labo → API REST → PostgreSQL</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🤖</div>
+                        <h4>Agentic Layer</h4>
+                        <p>Calcul TWA 8h<br>Règles VEMP/PEL/TLV<br>Orchestration actions<br>ML prédiction</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🧠</div>
+                        <h4>Knowledge Graph</h4>
+                        <p>Normes (RSST/CSTC/OSHA)<br>Matériaux/Procédés<br>EPI/Contrôles<br>Méthodes analytiques</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">📱</div>
+                        <h4>Interface Layer</h4>
+                        <p>Dashboard temps réel<br>Alertes push<br>Rapports conformité<br>Mobile apps terrain</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🔐</div>
+                    <h3 class="card-title">Confidentialité & Sécurité Données</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Protection Données Personnelles</h4>
+                            <ul class="feature-list">
+                                <li>Anonymisation données santé (selon Loi 25 QC)</li>
+                                <li>Chiffrement bout-en-bout (AES-256)</li>
+                                <li>Accès restrictif (RBAC) : médecin, RH, SST uniquement</li>
+                                <li>Stockage Canada (souveraineté données)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Conformité Réglementaire</h4>
+                            <ul class="feature-list">
+                                <li>Conservation 30 ans (OSHA) / permanente (silicose)</li>
+                                <li>Audits traçables (logs immuables)</li>
+                                <li>Exports conformité (CNESST, OSHA, ISO 45001)</li>
+                                <li>Consentement éclairé travailleurs (wearables)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Standards & Normes -->
+    <section id="standards" class="section" style="background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 06</div>
+                <h2 class="section-title">Standards & Normes</h2>
+                <p class="section-description">
+                    Conformité multi-juridictionnelle : Québec, Canada, USA, normes internationales
+                </p>
+            </div>
+
+            <div class="info-box info">
+                <h3>📜 Cadre Réglementaire Multi-Juridictionnel</h3>
+                <p>
+                    La gestion de la silice cristalline respirable (RCS) est encadrée par de nombreuses normes
+                    et réglementations au Québec, Canada et USA. Le système AgenticX5 intègre automatiquement
+                    toutes ces exigences via le knowledge graph et les règles agentiques.
+                </p>
+            </div>
+
+            <!-- TABLEAU FOURNI PAR L'UTILISATEUR -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Norme / Standard</th>
+                        <th>Juridiction</th>
+                        <th>Limite / Seuil (8 h TWA)</th>
+                        <th>Portée & Exigences clés (FR / EN)</th>
+                        <th>Règle Agentic (pseudo-code)</th>
+                        <th>Référence (titre officiel)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Québec -->
+                    <tr>
+                        <td><strong>RSST – Annexe 1 (VEMP)</strong></td>
+                        <td>Québec</td>
+                        <td>
+                            Quartz: <strong>0,05 mg/m³</strong><br>
+                            Cristobalite: <strong>0,05 mg/m³</strong>
+                        </td>
+                        <td>
+                            FR: Valeurs d'exposition moyenne pondérée (8 h). Obligations de prévention et contrôle des poussières sur chantiers.<br>
+                            EN: Québec OELs (8-h TWA). Employer duty to control RCS on construction/industrial sites.
+                        </td>
+                        <td>
+                            <code>if TWA8 ≥ 0.05 mg/m³ ⇒ non_conformité(); renforcer_controles(); EPR_obligatoire(); rotation();</code>
+                        </td>
+                        <td>RSST – Annexe 1, Valeurs d'exposition admissibles</td>
+                    </tr>
+
+                    <!-- Québec CSTC -->
+                    <tr>
+                        <td><strong>CSTC – Travaux émettant de la silice (Sous-sec. 3.25)</strong></td>
+                        <td>Québec (construction)</td>
+                        <td>—</td>
+                        <td>
+                            FR: Matériaux présumés, méthodes humides, aspiration locale, planification, surveillance.<br>
+                            EN: Presumed silica materials, wet methods, LEV, planning and supervision requirements.
+                        </td>
+                        <td>
+                            <code>if tâche ∈ {sciage, meulage, perçage béton, mortier, granit} ⇒ activer_mode_silice();</code>
+                        </td>
+                        <td>Code de sécurité pour les travaux de construction</td>
+                    </tr>
+
+                    <!-- Canada CCOHS -->
+                    <tr>
+                        <td><strong>CCOHS/CCHST – Silica (guides)</strong></td>
+                        <td>Canada (guide)</td>
+                        <td>Référence TLV ACGIH</td>
+                        <td>
+                            FR: Conseils sur choix des EPR (N95/P100), contrôle à la source, hygiène.<br>
+                            EN: Respirator selection, source control, hygiene practices.
+                        </td>
+                        <td>
+                            <code>if TWA8 ≥ 0.025 mg/m³ ⇒ recommander_EPR(FP≥10) + mesures_ingenierie();</code>
+                        </td>
+                        <td>CCOHS – Silica, Quartz</td>
+                    </tr>
+
+                    <!-- OSHA Construction -->
+                    <tr>
+                        <td><strong>OSHA 29 CFR 1926.1153 – Respirable Crystalline Silica (Construction)</strong></td>
+                        <td>USA</td>
+                        <td>
+                            PEL: <strong>0,050 mg/m³</strong><br>
+                            Action level: <strong>0,025 mg/m³</strong>
+                        </td>
+                        <td>
+                            FR: Tableau 1 (méthodes préscriptives) ou évaluation objective; contrôle, EPR, surveillance médicale, registres.<br>
+                            EN: Table 1 controls or objective data; medical surveillance & records.
+                        </td>
+                        <td>
+                            <code>if secteur=construction && tâche_tableau1 ⇒ appliquer_mesures_tableau1(); else ⇒ mesurer&évaluer();</code>
+                        </td>
+                        <td>OSHA 1926.1153 (Construction)</td>
+                    </tr>
+
+                    <!-- OSHA General Industry -->
+                    <tr>
+                        <td><strong>OSHA 29 CFR 1910.1053 – Respirable Crystalline Silica (General Industry)</strong></td>
+                        <td>USA</td>
+                        <td>
+                            PEL: <strong>0,050 mg/m³</strong><br>
+                            Action level: <strong>0,025 mg/m³</strong>
+                        </td>
+                        <td>
+                            FR: Évaluation exposition, contrôle à la source, EPR, formation, surveillance médicale, tenue des dossiers.<br>
+                            EN: Exposure assessment, controls, respirators, medical surveillance, records.
+                        </td>
+                        <td>
+                            <code>if TWA8 ≥ 0.025 ⇒ plan_réduction(); if TWA8 ≥ 0.05 ⇒ EPR+ingénierie+rotation;</code>
+                        </td>
+                        <td>OSHA 1910.1053 (General Industry)</td>
+                    </tr>
+
+                    <!-- ACGIH TLV -->
+                    <tr>
+                        <td><strong>ACGIH TLV-TWA (RCS – Quartz/Christobalite)</strong></td>
+                        <td>International (recommandé)</td>
+                        <td><strong>0,025 mg/m³</strong> (respirable)</td>
+                        <td>
+                            FR: Valeur plus protectrice; base de déclenchement précoce d'actions.<br>
+                            EN: More protective threshold; good early action trigger.
+                        </td>
+                        <td>
+                            <code>if TWA8 ≥ 0.025 ⇒ alerte_precoce(); renforcer_controles();</code>
+                        </td>
+                        <td>ACGIH TLV® for RCS (Quartz/Christobalite)</td>
+                    </tr>
+
+                    <!-- Méthodes analytiques -->
+                    <tr>
+                        <td><strong>NIOSH 7500 / OSHA ID-142 – Analyse RCS (XRD)</strong></td>
+                        <td>Méthodes labo</td>
+                        <td>— (méthodes d'analyse)</td>
+                        <td>
+                            FR: Prélèvement fraction respirable (cyclone), filtre 37 mm; analyse <strong>XRD</strong> (quartz, cristobalite).<br>
+                            EN: Personal respirable sampling (cyclone), 37-mm filter; <strong>XRD</strong> analysis for quartz/cristobalite.
+                        </td>
+                        <td>
+                            <code>if capteurs_proxy↑ ⇒ exiger_prélèvement(NIOSH7500/ID142); valider_dose();</code>
+                        </td>
+                        <td>NIOSH Method 7500 / OSHA ID-142 (XRD)</td>
+                    </tr>
+
+                    <!-- Définition des fractions -->
+                    <tr>
+                        <td><strong>ISO 7708 – Fractions inhalable/thoracique/respirable</strong></td>
+                        <td>ISO</td>
+                        <td>— (définitions/critères)</td>
+                        <td>
+                            FR: Cadre de référence pour choisir les têtes d'échantillonnage/cyclones et interpréter la <strong>fraction respirable</strong>.<br>
+                            EN: Reference for sampler/cyclone selection and respirable fraction interpretation.
+                        </td>
+                        <td>
+                            <code>require sampler_compliance(ISO7708_respirables);</code>
+                        </td>
+                        <td>ISO 7708:1995 (ou édition la plus récente)</td>
+                    </tr>
+                </tbody>
+
+                <!-- Formules utiles -->
+                <tfoot>
+                    <tr>
+                        <td colspan="6" style="padding: 25px; background: rgba(139, 92, 246, 0.05);">
+                            <strong style="font-size: 1.1rem; color: var(--light);">Formules & Règles d'Escalade (FR / EN)</strong><br>
+                            <div style="margin-top: 15px; line-height: 2;">
+                                • <em>TWA 8 h</em> : <code>TWA8 = (Σ C<sub>i</sub> × T<sub>i</sub>) / 8h</code> (C en mg/m³, T en heures).<br>
+                                • <em>Règles d'escalade</em> : <code>if TWA8 ≥ 0.025 mg/m³ ⇒ action précoce (TLV)</code> ; <code>if TWA8 ≥ 0.05 mg/m³ ⇒ non-conformité (QC/OSHA PEL)</code>.<br>
+                                • <em>Qualité de mesure</em> : utiliser prélèvement personnel fraction respirable (ISO 7708) + analyse XRD (NIOSH 7500 / OSHA ID-142).
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="grid grid-2" style="margin-top: 40px;">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">✅</div>
+                        <h3 class="card-title">Conformité Automatique via KG</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            Le <strong>Knowledge Graph</strong> AgenticX5 encode toutes les normes ci-dessus sous forme de règles formelles :
+                        </p>
+                        <ul class="feature-list">
+                            <li>Nœuds : Normes (RSST, CSTC, OSHA) ↔ Limites (VEMP, PEL, TLV) ↔ Juridictions</li>
+                            <li>Relations : "s'applique_à" (Québec, USA), "exige" (contrôles techniques)</li>
+                            <li>Propriétés : Seuils numériques (0.025, 0.05 mg/m³), dates entrée vigueur</li>
+                            <li>Inférence : Si matériau = béton ET juridiction = QC → appliquer CSTC 3.25 + RSST Annexe 1</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔄</div>
+                        <h3 class="card-title">Mise à Jour Automatique Normes</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            Les normes évoluent (ex: VEMP silice QC passée de 0.10 à 0.05 mg/m³ en 2024). AgenticX5 permet :
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Veille réglementaire</strong> : monitoring sites CNESST, OSHA, ACGIH</li>
+                            <li><strong>Injection automatique</strong> : nouvelles règles dans KG sans redéploiement code</li>
+                            <li><strong>Notification équipes</strong> : alertes proactives avant entrée en vigueur</li>
+                            <li><strong>Rétrocompatibilité</strong> : historique règles pour audits passés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Déploiement -->
+    <section id="deployment" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 07</div>
+                <h2 class="section-title">Déploiement & Implémentation</h2>
+                <p class="section-description">
+                    Roadmap déploiement, prérequis techniques, formation et support
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 1 : Préparation & Audit (Semaines 1-4)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Audit Terrain</span>
+                            <span class="badge primary">Gap Analysis</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Inventaire matériaux</strong> : identifier tous les matériaux contenant silice (CSTC 3.25.2)</li>
+                            <li><strong>Cartographie tâches</strong> : sciage, meulage, perçage par zone/chantier</li>
+                            <li><strong>Audit contrôles actuels</strong> : méthodes humides, aspiration, EPR (gap analysis)</li>
+                            <li><strong>Baseline exposition</strong> : prélèvements gravimétriques initiaux (NIOSH 7500)</li>
+                            <li><strong>Formation équipes</strong> : sensibilisation risques silice, protocoles CSTC</li>
+                            <li><strong>Validation technique</strong> : infrastructure IoT, réseau, alimentation capteurs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 2 : Installation & Calibration (Semaines 5-8)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">IoT</span>
+                            <span class="badge success">Wearables</span>
+                            <span class="badge success">Intégration</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Installation capteurs IoT</strong> : PM2.5/PM10 par zone (5-10 capteurs/chantier)</li>
+                            <li><strong>Distribution dosimètres</strong> : wearables personnels + formation port</li>
+                            <li><strong>Configuration réseau</strong> : MQTT/Kafka, connectivité terrain (4G/5G/WiFi)</li>
+                            <li><strong>Calibration capteurs</strong> : validation vs analyses gravimétriques labo</li>
+                            <li><strong>Setup dashboards</strong> : interfaces temps réel superviseurs + mobile apps</li>
+                            <li><strong>Configuration KG</strong> : injection normes RSST/CSTC/OSHA + procédés spécifiques</li>
+                            <li><strong>Tests end-to-end</strong> : simulation alerte, rotation, traçabilité</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 3 : Pilote & Ajustements (Semaines 9-16)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">Pilote</span>
+                            <span class="badge warning">Validation</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Lancement pilote</strong> : 1-2 zones/chantiers à risque élevé (béton, granit)</li>
+                            <li><strong>Monitoring continu</strong> : 8 semaines de données IoT + wearables + gravimétrie</li>
+                            <li><strong>Corrélation proxy/RCS</strong> : ajuster facteurs correction PM2.5/PM10 → RCS</li>
+                            <li><strong>Validation règles agentiques</strong> : vérifier alertes, rotations, EPR recommandés</li>
+                            <li><strong>Formation continue</strong> : feedback terrain, ajustements protocoles</li>
+                            <li><strong>Ajustements ML</strong> : entraînement modèles prédictifs sur données réelles</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 4 : Déploiement Complet (Semaines 17-24)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Production</span>
+                            <span class="badge primary">Scaling</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Roll-out complet</strong> : extension à tous chantiers/zones concernés</li>
+                            <li><strong>Formation généralisée</strong> : tous superviseurs, opérateurs, préventionnistes</li>
+                            <li><strong>Procédures opérationnelles</strong> : SOP documentés (avant/pendant/après shift)</li>
+                            <li><strong>Audits conformité</strong> : vérifications CNESST/OSHA readiness</li>
+                            <li><strong>Rapports automatiques</strong> : exports mensuels (exposition, alertes, rotations)</li>
+                            <li><strong>Amélioration continue</strong> : cycle feedback → ajustements → déploiement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 5 : Maintenance & Évolution (Continu)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Support</span>
+                            <span class="badge primary">Évolution</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Support 24/7</strong> : hotline technique, maintenance préventive capteurs</li>
+                            <li><strong>Calibration périodique</strong> : validation annuelle capteurs vs labo accrédité</li>
+                            <li><strong>Veille réglementaire</strong> : mise à jour normes (RSST, OSHA) dans KG</li>
+                            <li><strong>Optimisation ML</strong> : amélioration prédictions, réduction faux positifs</li>
+                            <li><strong>Extensions fonctionnelles</strong> : intégration nouveaux capteurs, nouvelles juridictions</li>
+                            <li><strong>Revue annuelle</strong> : audit performance, ROI, conformité</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🛠️</div>
+                        <h3 class="card-title">Prérequis Techniques</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Infrastructure Minimale</h4>
+                        <ul class="feature-list">
+                            <li><strong>Connectivité</strong> : WiFi/4G/5G sur chantiers, bande passante ≥ 10 Mbps</li>
+                            <li><strong>Alimentation</strong> : 110-240V AC ou batteries longue durée (capteurs autonomes)</li>
+                            <li><strong>Serveurs</strong> : Cloud AWS/Azure/GCP ou on-premise (si souveraineté données)</li>
+                            <li><strong>Stockage</strong> : PostgreSQL (relationnel) + Neo4j (KG) + InfluxDB (timeseries)</li>
+                            <li><strong>Sécurité</strong> : VPN, chiffrement AES-256, RBAC, audits logs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">👥</div>
+                        <h3 class="card-title">Formation & Support</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Programme Complet</h4>
+                        <ul class="feature-list">
+                            <li><strong>Formation initiale</strong> : 2 jours (risques silice, utilisation système, dashboards)</li>
+                            <li><strong>Certification utilisateurs</strong> : opérateurs, superviseurs, préventionnistes</li>
+                            <li><strong>Documentation</strong> : guides terrain, vidéos, FAQ, troubleshooting</li>
+                            <li><strong>Hotline technique</strong> : 24/7, SLA < 4h (incidents critiques)</li>
+                            <li><strong>Webinaires réguliers</strong> : nouvelles fonctionnalités, best practices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <h3>✅ Checklist Déploiement Réussi</h3>
+                <div class="grid grid-3" style="margin-top: 20px;">
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Technique</h4>
+                        <ul class="feature-list">
+                            <li>Infrastructure validée (IoT, réseau, serveurs)</li>
+                            <li>Capteurs calibrés vs labo accrédité</li>
+                            <li>Dashboards opérationnels temps réel</li>
+                            <li>Intégration ERP/HSE existants (optionnel)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Organisationnel</h4>
+                        <ul class="feature-list">
+                            <li>Équipes formées & certifiées</li>
+                            <li>SOP documentés & accessibles</li>
+                            <li>Protocoles alerte/rotation définis</li>
+                            <li>Partenariat labo gravimétrie établi</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Conformité</h4>
+                        <ul class="feature-list">
+                            <li>Normes QC/CA/USA intégrées (KG)</li>
+                            <li>Traçabilité CNESST/OSHA audit-ready</li>
+                            <li>Surveillance médicale déclenchée si requis</li>
+                            <li>Rapports conformité automatisés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">AgenticX5 SafetyGraph</div>
+                <p class="footer-text">
+                    Intelligence agentique au service de la sécurité et santé au travail.<br>
+                    Prévention proactive, conformité automatique, traçabilité complète.
+                </p>
+                <p style="color: var(--gray); margin-top: 30px; font-size: 0.9rem;">
+                    UC-C02 : Poussières - Silice Cristalline © 2025 GenAISafety | Preventera<br>
+                    Conformité : RSST (QC), CSTC (QC), OSHA 1926.1153/1910.1053 (USA), ACGIH TLV, ISO 7708
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript pour particules et navigation -->
+    <script>
+        // Génération particules animées
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Navigation smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Effet parallax léger sur orbes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const orbs = document.querySelectorAll('.orb');
+            orbs.forEach((orb, index) => {
+                const speed = 0.05 + (index * 0.02);
+                orb.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

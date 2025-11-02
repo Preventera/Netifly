@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-E04: Fatigue Musculaire Générale | AgenticX5 SafetyGraph</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Orbes flottants animés */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, transparent 70%);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(251, 146, 60, 0.3) 0%, transparent 70%);
+            bottom: -15%;
+            right: -10%;
+            animation-delay: 7s;
+        }
+
+        .orb3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.3) 0%, transparent 70%);
+            top: 40%;
+            right: 10%;
+            animation-delay: 14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 30px) scale(0.9); }
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(251, 146, 60, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .uc-badge {
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .priority-badge {
+            background: rgba(234, 179, 8, 0.2);
+            border: 2px solid #eab308;
+            color: #fde047;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fca5a5 0%, #fdba74 50%, #fde047 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #fef2f2;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Sections de contenu */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        /* Table des données */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(251, 146, 60, 0.2) 100%);
+            color: #fde047;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .data-table th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        .data-table th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            color: #cbd5e1;
+        }
+
+        .data-table tr:hover {
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        /* Liste à puces personnalisée */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid #ef4444;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(239, 68, 68, 0.1);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            color: #f97316;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Architecture modules */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .arch-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(251, 146, 60, 0.05) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .arch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+
+        .arch-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .arch-icon {
+            font-size: 28px;
+        }
+
+        .arch-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fca5a5;
+        }
+
+        .arch-description {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Timeline workflow */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #ef4444 0%, #f97316 50%, #eab308 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ef4444;
+            border: 3px solid #0f172a;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
+        }
+
+        .timeline-time {
+            color: #f97316;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .timeline-content h4 {
+            color: #fca5a5;
+            margin-bottom: 10px;
+        }
+
+        /* Alert boxes */
+        .alert-box {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            align-items: flex-start;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .alert-warning {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #86efac;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        /* Demo simulation */
+        .demo-container {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .metric-card {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fca5a5 0%, #fdba74 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-trend {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .trend-up {
+            color: #f87171;
+        }
+
+        .trend-down {
+            color: #86efac;
+        }
+
+        /* Controls simulation */
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .control-label {
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(148, 163, 184, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Chart canvas */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            height: 300px;
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-normal {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+
+        .status-warning {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #fde047;
+        }
+
+        .status-critical {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .nav {
+                position: static;
+            }
+
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orbes animés -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="uc-badge">UC-E04 • ERGONOMIE</div>
+                <div class="priority-badge">
+                    <span>🟡</span>
+                    <span>PRIORITÉ HAUTE</span>
+                </div>
+            </div>
+            <h1>Fatigue Musculaire Générale</h1>
+            <p class="subtitle">
+                Monitoring biométrique en temps réel (FC, HRV, température) avec modèle charge-récupération 
+                pour prévenir l'accumulation de fatigue et optimiser les performances • 
+                Architecture WEARABLES + ML + AGENTIC + KG
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('overview')">📊 Vue d'ensemble</button>
+            <button class="nav-btn" onclick="showSection('standards')">📋 Normes & Standards</button>
+            <button class="nav-btn" onclick="showSection('architecture')">🏗️ Architecture</button>
+            <button class="nav-btn" onclick="showSection('workflow')">⚙️ Workflow</button>
+            <button class="nav-btn" onclick="showSection('scenarios')">🎭 Scénarios</button>
+            <button class="nav-btn" onclick="showSection('demo')">🎮 Démo Interactive</button>
+            <button class="nav-btn" onclick="showSection('roi')">💰 ROI & Impact</button>
+        </div>
+
+        <!-- Section: Vue d'ensemble -->
+        <div id="overview" class="content-section active">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2 class="card-title">Vue d'Ensemble - UC-E04</h2>
+                </div>
+                
+                <table class="data-table">
+                    <tr>
+                        <th style="width: 25%;">Dimension</th>
+                        <th>Détails</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Risque/Problématique</strong></td>
+                        <td>Accumulation fatigue musculaire générale (précurseur TMS, baisse performance, incidents)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Action/Solution</strong></td>
+                        <td>Monitoring charge physique + récupération optimisée via biométrie temps réel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Données Utilisées</strong></td>
+                        <td>
+                            • <strong>Wearables:</strong> FC (fréquence cardiaque), HRV (variabilité cardiaque), température cutanée<br>
+                            • <strong>IMU:</strong> Activité physique, métabolisme énergétique<br>
+                            • <strong>Échelles RPE:</strong> Rate of Perceived Exertion (subjectif)<br>
+                            • <strong>Environnement:</strong> WBGT (indice chaleur), humidité relative<br>
+                            • <strong>Récupération:</strong> Sommeil, pauses, nutrition
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>
+                            <strong>WEARABLES + AGENTIC + ML + KG</strong><br>
+                            • Wearables: Bracelet FC/HRV + capteur T°<br>
+                            • ML: Modèle charge-récupération (TRIMP score)<br>
+                            • Agentic: Ajustement intensité tâches + rotation dynamique<br>
+                            • KG: Relations charge→fatigue→incidents
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modules SafetyGraph</strong></td>
+                        <td>
+                            • <strong>BehaviorX Module 7:</strong> Métriques performance & engagement<br>
+                            • <strong>Analytics Dashboard:</strong> Charge cumulée, tendances<br>
+                            • <strong>RiskPredictor:</strong> Prédiction fatigue à 24-72h<br>
+                            • <strong>Dashboard Temporalité:</strong> Patterns hebdo/mensuels
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROI Estimé</strong></td>
+                        <td>
+                            • Réduction 25% incidents liés fatigue<br>
+                            • Productivité: +12% (optimisation charge)<br>
+                            • Absentéisme: -18%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Priorité</strong></td>
+                        <td><span class="priority-badge">🟡 HAUTE (prévention primaire)</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎯</span>
+                    <h2 class="card-title">Enjeux & Objectifs</h2>
+                </div>
+                
+                <div class="alert-box alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <div>
+                        <strong>Problématique Critique</strong>
+                        <p>La fatigue musculaire générale est un facteur de risque majeur sous-estimé. Elle précède de nombreux TMS, 
+                        augmente le risque d'accident de 3-5x, et réduit la productivité de 15-25%. Les approches traditionnelles 
+                        (observation, questionnaires) détectent la fatigue trop tard, une fois les symptômes installés.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🎯 Objectifs du Système UC-E04</h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Détection précoce:</strong> Identifier l'accumulation de fatigue 24-48h AVANT les symptômes via biomarqueurs (FC, HRV)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Quantification objective:</strong> Score TRIMP (charge) + indices de récupération (sommeil, HRV matinale)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Interventions proactives:</strong> Micro-pauses automatiques, rotation tâches, allégement charge</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Optimisation récupération:</strong> Recommandations personnalisées (durée pauses, étirements, hydratation)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Conformité ergonomique:</strong> Alignement CSA Z1004, ISO 8996/9886, NIOSH FRM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section: Normes & Standards -->
+        <div id="standards" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📋</span>
+                    <h2 class="card-title">Normes & Standards Applicables</h2>
+                </div>
+                
+                <div class="alert-box alert-info">
+                    <span class="alert-icon">ℹ️</span>
+                    <div>
+                        <strong>Couverture Réglementaire Complète</strong>
+                        <p>UC-E04 s'appuie sur un cadre normatif solide couvrant Québec, Canada, USA et normes internationales 
+                        (ISO, ACGIH, NIOSH) pour la mesure de la charge métabolique, la contrainte thermique et la surveillance physiologique.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🇨🇦 Québec / Canada</h3>
+                
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">⚖️</div>
+                        <div class="arch-title">RSST / LSST (Québec)</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Cadre général SST</strong> - Obligations de prévention, organisation du travail, adaptation des tâches</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Base légale pour justifier micro-pauses et rotations basées sur données de fatigue.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: Légis Québec - RSST, LSST
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🔧</div>
+                        <div class="arch-title">CSA Z1004:2024</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Workplace Ergonomics - Management & Implementation</strong></p>
+                        <p style="margin-top: 10px;">Standard de management ergonomique (PDCA) pour structurer programme, indicateurs et revues.</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Framework PDCA pour Dashboards charge cumulée & RiskPredictor.
+                        </div>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+if program_type == "fatigue_management":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# CSA Z1004 PDCA cycle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;plan: define_workload_metrics(TRIMP, HRV_baseline)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;do: monitor_continuous(wearables_data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;check: analyze_trends(weekly, monthly)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;act: adjust_workload_if_fatigue_threshold_exceeded()
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: CSA Group - Z1004:2024
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🛡️</div>
+                        <div class="arch-title">Energy Safety Canada - FRM Guideline</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Fatigue Risk Management (FRM)</strong></p>
+                        <p style="margin-top: 10px;">Guide pratique pour bâtir un programme fatigue (facteurs de risque, contrôles, formation, suivi).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Structure pour identifier facteurs (horaires, charge, récupération) et mettre en place contrôles.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: energysafetycanada.com - FRM Guideline
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">🇺🇸 USA / Référentiels de Fond</h3>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🔬</div>
+                        <div class="arch-title">NIOSH - Center for Work and Fatigue Research</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Recherche scientifique & solutions FRMS</strong></p>
+                        <p style="margin-top: 10px;">Ressources de recherche et solutions Fatigue Risk Management Systems (FRMS) pour gérer la fatigue 
+                        (horaires atypiques, charge, récupération).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Evidence-based pour modèle ML charge-récupération et seuils d'intervention.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: CDC - NIOSH Work and Fatigue Research
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">📊</div>
+                        <div class="arch-title">ANSI/ASSP Z10.0</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>OSH Management Systems</strong></p>
+                        <p style="margin-top: 10px;">Cadre de Système de Management SST (SMS) pour intégrer la fatigue comme risque opérationnel 
+                        (objectifs, audits, amélioration continue).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Framework SMS pour intégrer fatigue dans politique SST, objectifs mesurables, audits.
+                        </div>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# ANSI/ASSP Z10.0 Integration<br>
+SMS_objective: "Reduce fatigue-related incidents by 25% YoY"<br>
+KPI_1: avg_TRIMP_score < 150 (daily)<br>
+KPI_2: HRV_recovery_ratio > 0.85 (weekly)<br>
+audit_frequency: monthly_dashboard_review()
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: ASSP - Z10.0 Standard
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">🌍 ISO / ACGIH (Mesure Charge, Contrainte Thermique, Biométrie)</h3>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🔥</div>
+                        <div class="arch-title">ISO 8996:2021</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Détermination du Métabolisme Énergétique</strong></p>
+                        <p style="margin-top: 10px;">Méthodes pour estimer la charge métabolique (W/m², MET - niveaux d'activité).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Input clé pour modèle charge-récupération (TRIMP-like). Estimation métabolisme selon tâche.
+                        </div>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# ISO 8996 - Métabolisme par activité<br>
+MET_levels = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"repos": 1.0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"leger": 2.0-2.9,  # marche lente, travail assis<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"modere": 3.0-5.9,  # marche rapide, manutention legere<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"intense": 6.0-8.9,  # course, levage lourd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"tres_intense": ≥9.0  # effort maximal<br>
+}<br>
+<br>
+# Seuil UC-E04<br>
+if MET ≥ 4.0 for >30 min:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;schedule_micro_break(duration=2-3 min, frequency=every_30_min)
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: ISO 8996:2021
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">💓</div>
+                        <div class="arch-title">ISO 9886:2004</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Évaluation de la Contrainte Thermique par Mesures Physiologiques</strong></p>
+                        <p style="margin-top: 10px;">Protocole pour mesurer FC (fréquence cardiaque), températures centrale/cutanée, pertes hydriques.</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Cadre l'usage FC/HR et interprétation HRV comme indicateur complémentaire de fatigue.
+                        </div>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# ISO 9886 - Surveillance physiologique<br>
+collect_HR(per_ISO_9886_methods)<br>
+compute_HRV_trend(RMSSD, SDNN)<br>
+<br>
+# Seuil alerte fatigue<br>
+if sustained_HR_above_baseline AND HRV_below_baseline:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fatigue_flag = True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;recommend_recovery(micro_sieste, etirements, charge_reduite)
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: ISO 9886:2004
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🌡️</div>
+                        <div class="arch-title">ISO 7243:2017 + ACGIH TLV®</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Indice WBGT (Wet Bulb Globe Temperature) + Seuils Stress Thermique</strong></p>
+                        <p style="margin-top: 10px;"><strong>ISO 7243:</strong> Méthode screening chaleur (WBGT) pour détecter risque thermique.</p>
+                        <p style="margin-top: 8px;"><strong>ACGIH TLV:</strong> Seuils WBGT et stratégies (travail/repos, hydratation, acclimatation).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application UC-E04:</strong> Lier contrainte thermique (facteur aggravant majeur fatigue) à déclencheurs allégement/pauses/hydratation.
+                        </div>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# ISO 7243 + ACGIH TLV - Contrainte thermique<br>
+if WBGT ≥ seuil_ACGIH(charge_travail=modere):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Exemple: WBGT ≥28°C pour travail modéré<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apply_work_rest_schedule(75% travail, 25% repos/heure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hydration_prompt(every_15_min)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cooling_break(ombre, ventilation)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_exposition_pauses(Analytics_Dashboard)
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Références: ISO 7243:2017, ACGIH TLV® Heat Stress
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🔗</span>
+                    <h2 class="card-title">Mappage Normes → Architecture UC-E04</h2>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Normes/Standards</th>
+                            <th>Application Concrète</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>WEARABLES</strong><br><span style="font-size: 12px; color: #94a3b8;">FC, HRV, T°, IMU</span></td>
+                            <td>ISO 9886<br>ISO 8996<br>ISO 7243</td>
+                            <td>
+                                • Mesurer FC (ISO 9886)<br>
+                                • Estimer métabolisme via IMU (ISO 8996)<br>
+                                • Surveiller WBGT si chaleur (ISO 7243)<br>
+                                <strong>→ Règle:</strong> Si MET élevé + FC soutenue + WBGT↑ ⇒ micro-pause/rotation
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>ML</strong><br><span style="font-size: 12px; color: #94a3b8;">Charge-Récupération</span></td>
+                            <td>ISO 8996<br>ACGIH TLV<br>NIOSH FRM</td>
+                            <td>
+                                • Indice TRIMP = f(durée × intensité FC)<br>
+                                • Enrichi métabolisme (ISO 8996)<br>
+                                • Exposition chaleur (WBGT/ACGIH)<br>
+                                <strong>→ Sortie:</strong> Score fatigue + reco récupération
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>AGENTIC</strong><br><span style="font-size: 12px; color: #94a3b8;">Ajustements Temps Réel</span></td>
+                            <td>ANSI Z10<br>CSA Z1004<br>ACGIH</td>
+                            <td>
+                                • Orchestrer pauses micro/macro (Z1004)<br>
+                                • Rotation tâches selon SMS (Z10)<br>
+                                • Déclencher hydratation/ombrage (ACGIH)<br>
+                                <strong>→ Action:</strong> Interventions proactives personnalisées
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>KG</strong><br><span style="font-size: 12px; color: #94a3b8;">Graphe Connaissances</span></td>
+                            <td>ISO 8996<br>ISO 7243<br>ISO 9886</td>
+                            <td>
+                                • Graph: Tâche → métabolisme (8996)<br>
+                                • → exposition thermique (7243/ACGIH)<br>
+                                • → biomarqueurs FC/HRV (9886)<br>
+                                • → incident/écart<br>
+                                <strong>→ Valeur:</strong> Conserver seuils & actions par contexte
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💡</span>
+                    <h2 class="card-title">Snippets de Conformité (Prêts à Injecter)</h2>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 20px 0 15px 0;">1️⃣ Charge Aiguë Élevée</h3>
+                <div class="code-block">
+# ISO 8996 + CSA Z1004 + ANSI Z10<br>
+if MET ≥ 4.0 (≈ intense) for >30 min OR TRIMP_day > threshold_X:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Action conforme<br>
+&nbsp;&nbsp;&nbsp;&nbsp;schedule_micro_break(duration=2-3 min, frequency=every_30_min)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rotate_task(to_lighter_workload)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_intervention(CSA_Z1004_dashboard)
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">2️⃣ Contrainte Thermique (Aggravant Fatigue)</h3>
+                <div class="code-block">
+# ISO 7243 + ACGIH TLV<br>
+if WBGT ≥ seuil_ACGIH(workload_level):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Exemple: WBGT ≥28°C pour travail modéré acclimaté<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apply_work_rest(schedule="75% work, 25% rest per hour")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hydration_prompt(frequency=every_15_min)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cooling_break(location="shaded area", ventilation=True)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_exposition_pauses(Analytics_Dashboard)
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">3️⃣ Surveillance Physiologique</h3>
+                <div class="code-block">
+# ISO 9886 - Mesures physiologiques<br>
+collect_HR(per_ISO_9886_methods)  # Fréquence cardiaque<br>
+compute_HRV_trend(metrics=['RMSSD', 'SDNN'])  # Variabilité<br>
+<br>
+# Détection fatigue<br>
+if sustained_HR_increase(above_baseline=True) AND HRV_decrease(below_baseline=True):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fatigue_flag = True<br>
+&nbsp;&nbsp;&nbsp;&nbsp;recommend_recovery({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"micro_sieste": "10-15 min",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"etirements_doux": True,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"charge_reduite": "prochain_cycle"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;})<br>
+&nbsp;&nbsp;&nbsp;&nbsp;notify_supervisor(priority="medium")
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">4️⃣ Programme FRMS (Fatigue Risk Management System)</h3>
+                <div class="code-block">
+# Energy Safety Canada FRM + NIOSH + ANSI Z10<br>
+FRMS_program = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"facteurs_risque": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"horaires_atypiques",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"charge_physique_elevee",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"recuperation_insuffisante",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"exposition_thermique"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"controles": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"monitoring_continu": "wearables_FC_HRV",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"pauses_adaptatives": "basees_TRIMP_score",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rotation_taches": "selon_charge_cumulee",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"formation": "reconnaissance_signes_fatigue"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"KPIs": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"TRIMP_moyen_quotidien": "<150",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ratio_recuperation_HRV": ">0.85",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"incidents_lies_fatigue": "-25% YoY"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Architecture -->
+        <div id="architecture" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏗️</span>
+                    <h2 class="card-title">Architecture Multi-Agents Complète</h2>
+                </div>
+
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⌚</div>
+                            <div class="arch-title">WEARABLES</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Capteurs biométriques & environnementaux en temps réel</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Bracelet FC/HRV:</strong> Fréquence cardiaque continue (1 Hz), variabilité HRV (RMSSD, SDNN)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Température cutanée:</strong> Capteur T° pour détecter contrainte thermique (corrélation WBGT)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>IMU (accéléromètre):</strong> Activité physique, estimation métabolisme (MET) selon ISO 8996</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Capteurs environnement:</strong> WBGT (chaleur), humidité relative, ambiance sonore</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🧠</div>
+                            <div class="arch-title">MACHINE LEARNING</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Modèle charge-récupération avec score TRIMP</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Score TRIMP:</strong> Training Impulse = durée × intensité FC relative (% FCmax ou FC réserve)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Enrichissement métabolisme:</strong> Intégration MET (ISO 8996) et WBGT (ISO 7243)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Indice récupération:</strong> HRV matinale, qualité sommeil, ratio charge aiguë/chronique</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Prédiction fatigue:</strong> LSTM pour prédire score fatigue à 24-72h (précision >85%)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">AGENTIC AI</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Orchestration interventions & ajustements temps réel</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Pauses micro/macro:</strong> Déclenchement automatique selon seuils TRIMP et conformité CSA Z1004</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Rotation tâches:</strong> Optimisation charge de travail (léger ↔ modéré ↔ intense)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Coaching récupération:</strong> Recommandations personnalisées (hydratation, étirements, micro-sieste)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Alertes contrainte thermique:</strong> Si WBGT ≥ seuil ACGIH → hydratation, ombrage, ventilation</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🕸️</div>
+                            <div class="arch-title">KNOWLEDGE GRAPH</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Graphe relations charge → fatigue → incidents</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Nœuds:</strong> Tâches, métabolisme MET (ISO 8996), WBGT (ISO 7243), FC/HRV (ISO 9886), incidents</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Relations:</strong> Tâche → génère charge → affecte biomarqueurs → augmente risque incident</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Seuils contextuels:</strong> Conservation seuils et actions adaptés par secteur, tâche, saison</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Historiques:</strong> Enrichissement continu avec résultats interventions passées</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🔄</span>
+                    <h2 class="card-title">Flux de Données & Agents</h2>
+                </div>
+
+                <div class="code-block">
+┌─────────────┐<br>
+│  WEARABLES  │  FC (1 Hz) + HRV (5 min) + T° + IMU → MQTT<br>
+└──────┬──────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌──────────────────────────────────────────────────────┐<br>
+│  AGENT CAPTEURS (Data Collector)                     │<br>
+│  • Validation qualité signal (artifacts, gaps)       │<br>
+│  • Calcul métriques temps réel (FC moy, HRV RMSSD)   │<br>
+│  • Fusion données environnement (WBGT, humidité)     │<br>
+└──────┬───────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌──────────────────────────────────────────────────────┐<br>
+│  AGENT ANALYSE (ML Inference)                        │<br>
+│  • Calcul TRIMP score (intensité × durée FC)         │<br>
+│  • Estimation métabolisme MET (ISO 8996)             │<br>
+│  • Évaluation contrainte thermique (ISO 7243/ACGIH)  │<br>
+│  • Prédiction fatigue 24-72h (LSTM model)            │<br>
+└──────┬───────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌──────────────────────────────────────────────────────┐<br>
+│  AGENT DÉCISION (Agentic Orchestrator)               │<br>
+│  • Si TRIMP > seuil → schedule micro-pause           │<br>
+│  • Si HRV ↓ + FC ↑ → flag fatigue + coaching         │<br>
+│  • Si WBGT ≥ ACGIH → hydratation + ombrage           │<br>
+│  • Orchestration rotation tâches (CSA Z1004)         │<br>
+└──────┬───────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌──────────────────────────────────────────────────────┐<br>
+│  AGENT CONNAISSANCE (KG Query)                       │<br>
+│  • Requêtes Neo4j: patterns charge → incidents       │<br>
+│  • Récupération seuils contextuels (secteur, saison) │<br>
+│  • Enrichissement historique interventions           │<br>
+└──────┬───────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌──────────────────────────────────────────────────────┐<br>
+│  AGENT ANALYTICS (Dashboard)                         │<br>
+│  • Visualisation charge cumulée (jour/semaine/mois)  │<br>
+│  • Tendances récupération HRV                        │<br>
+│  • KPIs conformité (CSA Z1004, ANSI Z10)             │<br>
+│  • Rapports automatisés (SMS SST)                    │<br>
+└──────────────────────────────────────────────────────┘
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🛠️</span>
+                    <h2 class="card-title">Stack Technologique</h2>
+                </div>
+
+                <div class="code-block">
+# 🔌 Wearables & IoT<br>
+- Capteurs: Polar H10 (FC/HRV), Garmin Forerunner, Fitbit Charge<br>
+- Environnement: HOBO MX2301 (T°/HR), Quest QUESTemp°36 (WBGT)<br>
+- Protocoles: BLE 5.0, ANT+, MQTT (pub/sub)<br>
+- Fréquence: FC (1 Hz), HRV (5 min epochs), IMU (50 Hz), WBGT (1/min)<br>
+<br>
+# 🧠 Machine Learning<br>
+- Framework: TensorFlow 2.x, PyTorch 2.0<br>
+- Modèles: <br>
+&nbsp;&nbsp;• LSTM (prédiction fatigue, précision 87%)<br>
+&nbsp;&nbsp;• Random Forest (classification charge: léger/modéré/intense)<br>
+&nbsp;&nbsp;• XGBoost (prédiction incidents, AUC 0.91)<br>
+- Features: TRIMP, HRV (RMSSD/SDNN), MET, WBGT, ratio charge aiguë/chronique<br>
+- Deployment: TensorFlow Lite (edge), ONNX Runtime<br>
+<br>
+# 🤖 Agentic AI<br>
+- Framework: LangChain, AutoGen, LlamaIndex<br>
+- LLM: GPT-4-turbo (coaching), Claude 3 Opus (analyse complexe)<br>
+- Orchestration: Ray (distributed), Celery (task queue)<br>
+- Rules Engine: Drools (seuils conformité ISO/ACGIH)<br>
+<br>
+# 🕸️ Knowledge Graph<br>
+- Database: Neo4j 5.x (graphe), TimescaleDB (séries temporelles)<br>
+- Query: Cypher (graph traversal), GraphQL (API)<br>
+- Ontologie: OWL 2 (SafetyOntology), SKOS (taxonomies)<br>
+- Embeddings: Node2Vec (graph), sentence-transformers (text)<br>
+<br>
+# 📊 Analytics & Viz<br>
+- Backend: FastAPI (Python), Redis (cache), PostgreSQL<br>
+- Frontend: React, D3.js, Plotly, Deck.gl (geo)<br>
+- Dashboards: Grafana (métriques temps réel), Superset (analytics)<br>
+- Exports: PDF (rapports conformité), CSV (données brutes)
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Workflow -->
+        <div id="workflow" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚙️</span>
+                    <h2 class="card-title">Workflow Détaillé - Détection à Intervention</h2>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #22c55e;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">PHASE 1 - BASELINE</div>
+                            <h4 style="color: #86efac; margin: 10px 0;">Établissement Baseline Individuelle (Jour 1-7)</h4>
+                            <p>• Collecte FC, HRV, T° au repos et en activité normale<br>
+                            • Calibration seuils personnalisés (FCmax, HRV baseline, MET repos)<br>
+                            • Questionnaires sommeil, RPE, historique médical<br>
+                            • Définition profil individuel (âge, forme physique, acclimatation chaleur)</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #3b82f6;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">PHASE 2 - MONITORING</div>
+                            <h4 style="color: #93c5fd; margin: 10px 0;">Surveillance Continue en Temps Réel</h4>
+                            <p>• <strong>Wearables actifs:</strong> FC (1 Hz), HRV (5 min), T° (30 s), IMU (50 Hz)<br>
+                            • <strong>Calcul continu:</strong> TRIMP score, MET estimation (ISO 8996), intensité relative<br>
+                            • <strong>Surveillance environnement:</strong> WBGT si ambiance chaude<br>
+                            • <strong>Transmission:</strong> MQTT vers Agent Capteurs (latence <500 ms)</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #eab308;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">PHASE 3 - ANALYSE</div>
+                            <h4 style="color: #fde047; margin: 10px 0;">Analyse ML & Détection Précoce</h4>
+                            <p>• <strong>Agent Analyse:</strong> Calcul TRIMP cumulé (glissement 24h/7j/30j)<br>
+                            • <strong>Modèle LSTM:</strong> Prédiction score fatigue 24-72h (probabilité incident)<br>
+                            • <strong>Seuils dynamiques:</strong> Ajustement selon contexte (saison, tâche, historique)<br>
+                            • <strong>Détection patterns:</strong> FC soutenue élevée + HRV basse = flag fatigue<br>
+                            <br>
+                            <strong>Exemple:</strong> Si TRIMP_quotidien > 150 ET HRV_matinale < 85% baseline → Alerte Jaune</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #f97316;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">PHASE 4 - DÉCISION</div>
+                            <h4 style="color: #fdba74; margin: 10px 0;">Orchestration Interventions Agentic</h4>
+                            <p>• <strong>Agent Décision:</strong> Évaluation gravité (Normal / Attention / Critique)<br>
+                            <br>
+                            <strong>Niveau ATTENTION (TRIMP 120-150):</strong><br>
+                            &nbsp;&nbsp;→ Micro-pause recommandée (2-3 min / 30 min)<br>
+                            &nbsp;&nbsp;→ Coaching hydratation si WBGT > 24°C<br>
+                            &nbsp;&nbsp;→ Notification travailleur (vibration bracelet)<br>
+                            <br>
+                            <strong>Niveau CRITIQUE (TRIMP >150 OU HRV <70% baseline):</strong><br>
+                            &nbsp;&nbsp;→ Pause obligatoire 10-15 min<br>
+                            &nbsp;&nbsp;→ Rotation vers tâche légère (MET <3.0)<br>
+                            &nbsp;&nbsp;→ Alerte superviseur + note au dossier<br>
+                            &nbsp;&nbsp;→ Coaching récupération (micro-sieste, étirements)<br>
+                            <br>
+                            <strong>Contrainte thermique (WBGT ≥ seuil ACGIH):</strong><br>
+                            &nbsp;&nbsp;→ Application horaire travail/repos (ex: 75%/25%)<br>
+                            &nbsp;&nbsp;→ Hydratation toutes les 15 min<br>
+                            &nbsp;&nbsp;→ Ombrage + ventilation forcée</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #ef4444;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">PHASE 5 - INTERVENTION</div>
+                            <h4 style="color: #fca5a5; margin: 10px 0;">Exécution & Suivi</h4>
+                            <p>• <strong>Notification multi-canal:</strong> Bracelet vibrant + app mobile + dashboard superviseur<br>
+                            • <strong>Guidance:</strong> Instructions vocales/visuelles (durée pause, exercices, hydratation)<br>
+                            • <strong>Validation conformité:</strong> Confirmation pause prise (géolocalisation zone repos)<br>
+                            • <strong>Logging:</strong> Enregistrement Neo4j (intervention, timestamp, contexte, efficacité)</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #8b5cf6;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">PHASE 6 - RÉCUPÉRATION</div>
+                            <h4 style="color: #c4b5fd; margin: 10px 0;">Monitoring Post-Intervention & Adaptation</h4>
+                            <p>• <strong>Surveillance HRV:</strong> Retour vers baseline (indicateur récupération efficace)<br>
+                            • <strong>Score récupération:</strong> HRV matinale suivante, qualité sommeil auto-reportée<br>
+                            • <strong>Ajustement seuils:</strong> Si récupération lente → seuils plus conservateurs<br>
+                            • <strong>Analytics:</strong> Dashboard tendances (charge hebdo, ratio aiguë/chronique, incidents évités)<br>
+                            <br>
+                            <strong>Feedback loop:</strong> Efficacité interventions → enrichissement KG → amélioration modèle ML</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 20px; margin-top: 25px;">
+                    <h4 style="color: #c4b5fd; margin: 0 0 15px 0; font-size: 18px;">✨ Avantage de l'Approche Proactive</h4>
+                    <p style="color: #94a3b8; font-size: 14px; line-height: 1.8;">
+                        Contrairement aux approches réactives traditionnelles (observation, questionnaires post-quart), UC-E04 détecte 
+                        l'accumulation de fatigue <strong>24-48h AVANT les symptômes</strong> grâce aux biomarqueurs (FC soutenue, HRV diminuée). 
+                        Cette détection précoce permet des interventions légères et graduelles (micro-pauses, rotations) plutôt que des 
+                        arrêts complets coûteux. Résultat: <strong>25% de réduction des incidents liés à la fatigue</strong> et 
+                        <strong>+12% de productivité</strong> grâce à l'optimisation charge-récupération.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Scénarios -->
+        <div id="scenarios" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎭</span>
+                    <h2 class="card-title">Scénarios Typiques UC-E04</h2>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">Scénario 1: Opérateur Manufacturier - Fatigue Aiguë</h3>
+                <div class="arch-card">
+                    <div class="arch-description">
+                        <p><strong>Contexte:</strong> Opérateur ligne d'assemblage, quart de 8h, tâches répétitives modérées (MET 3.5-4.5)</p>
+                        <p style="margin-top: 10px;"><strong>Baseline:</strong> FC repos 65 bpm, HRV (RMSSD) 45 ms, seuil TRIMP quotidien 120</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <strong>Timeline Journée:</strong>
+                            <div class="timeline" style="margin-top: 15px;">
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #22c55e;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">08:00-10:00</div>
+                                        <p><strong>État Normal</strong><br>
+                                        FC moy: 95 bpm (75% FCmax), TRIMP cumulé: 40<br>
+                                        → Pas d'intervention</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #eab308;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">10:00-12:00</div>
+                                        <p><strong>Alerte Attention</strong><br>
+                                        FC moy: 105 bpm (82% FCmax), TRIMP: 95 → approche seuil<br>
+                                        → Agentic: micro-pause 3 min suggérée à 11:30<br>
+                                        → Travailleur prend pause, FC redescend à 85 bpm</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #f97316;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">13:00-15:00</div>
+                                        <p><strong>Alerte Critique</strong><br>
+                                        FC moy: 110 bpm soutenue, HRV chute à 30 ms, TRIMP: 145 (>seuil)<br>
+                                        → Agentic: pause obligatoire 15 min + rotation tâche légère<br>
+                                        → Coaching: hydratation, étirements, micro-sieste 10 min<br>
+                                        → Superviseur notifié</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #8b5cf6;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">15:00-16:00</div>
+                                        <p><strong>Récupération</strong><br>
+                                        Rotation vers tâche inspection (MET 2.5, assis)<br>
+                                        FC stabilisée 80 bpm, HRV remonte à 38 ms<br>
+                                        → Fin de quart sans incident, TRIMP final: 155</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                            <strong style="color: #86efac;">✅ Résultat:</strong>
+                            <p style="color: #cbd5e1; margin-top: 8px;">Interventions proactives ont évité accumulation fatigue excessive. 
+                            Lendemain: HRV matinale 42 ms (récupération 93% baseline) → reprise charge normale possible.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">Scénario 2: Travailleur Construction - Contrainte Thermique</h3>
+                <div class="arch-card">
+                    <div class="arch-description">
+                        <p><strong>Contexte:</strong> Manœuvre construction, canicule estivale (32°C ambiant, WBGT 29°C), tâche intense (MET 5.5-7.0)</p>
+                        <p style="margin-top: 10px;"><strong>Baseline:</strong> FC repos 70 bpm, HRV 40 ms, acclimaté (15 jours exposition)</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <strong>Problématique:</strong>
+                            <ul class="feature-list" style="margin-top: 10px;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">⚠️</span>
+                                    <span>WBGT 29°C > seuil ACGIH (28°C pour travail modéré acclimaté)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">⚠️</span>
+                                    <span>Charge physique intense (MET 6.5) + chaleur = double stress</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">⚠️</span>
+                                    <span>Risque: épuisement thermique, déshydratation, accidents</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Interventions AgenticX5:</strong>
+                            <div class="code-block" style="font-size: 13px; margin-top: 10px;">
+# ISO 7243 + ACGIH TLV - Contrainte thermique<br>
+WBGT_measured = 29.0  # °C<br>
+workload = "moderate"  # MET 6.5<br>
+acclimation = True<br>
+<br>
+threshold_ACGIH = get_WBGT_threshold(workload, acclimation)<br>
+# → 28°C pour modéré acclimaté<br>
+<br>
+if WBGT_measured > threshold_ACGIH:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# DÉPASSEMENT → Actions immédiates<br>
+&nbsp;&nbsp;&nbsp;&nbsp;apply_work_rest_schedule(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;work_pct=75,  # 45 min travail<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rest_pct=25   # 15 min pause / heure<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hydration_prompt(frequency="every_15_min")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cooling_break(location="shaded_area", fans=True)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;monitor_core_temp(via="skin_temp_sensor")
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Monitoring Physiologique (ISO 9886):</strong>
+                            <table class="data-table" style="margin-top: 10px; font-size: 13px;">
+                                <tr>
+                                    <th>Heure</th>
+                                    <th>FC (bpm)</th>
+                                    <th>T° cutanée (°C)</th>
+                                    <th>TRIMP</th>
+                                    <th>Action Agentic</th>
+                                </tr>
+                                <tr>
+                                    <td>09:00</td>
+                                    <td>110</td>
+                                    <td>35.5</td>
+                                    <td>25</td>
+                                    <td><span class="status-normal">Normal - Hydratation rappel</span></td>
+                                </tr>
+                                <tr>
+                                    <td>10:30</td>
+                                    <td>125</td>
+                                    <td>36.8</td>
+                                    <td>65</td>
+                                    <td><span class="status-warning">Attention - Pause ombrage 15 min</span></td>
+                                </tr>
+                                <tr>
+                                    <td>12:00</td>
+                                    <td>135</td>
+                                    <td>37.2</td>
+                                    <td>105</td>
+                                    <td><span class="status-critical">Critique - Arrêt travail, repos climatisé</span></td>
+                                </tr>
+                                <tr>
+                                    <td>14:00</td>
+                                    <td>95</td>
+                                    <td>35.9</td>
+                                    <td>110</td>
+                                    <td><span class="status-normal">Récupéré - Reprise possible tâche légère</span></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                            <strong style="color: #86efac;">✅ Résultat:</strong>
+                            <p style="color: #cbd5e1; margin-top: 8px;">Détection précoce contrainte thermique (T° cutanée, FC élevée) a permis 
+                            intervention avant épuisement. Horaire travail/repos ACGIH respecté → pas de malaise thermique, 
+                            incident évité.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">Scénario 3: Travailleur Bureau - Fatigue Chronique</h3>
+                <div class="arch-card">
+                    <div class="arch-description">
+                        <p><strong>Contexte:</strong> Employé bureau, sédentaire (MET 1.5-2.0), mais stress psychologique élevé, sommeil insuffisant</p>
+                        <p style="margin-top: 10px;"><strong>Baseline:</strong> FC repos 72 bpm, HRV 35 ms (déjà bas, indicateur stress chronique)</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <strong>Problématique:</strong>
+                            <p style="margin-top: 10px; color: #cbd5e1;">Charge physique faible, mais fatigue <strong>psychologique et manque de récupération</strong> 
+                            (sommeil <6h/nuit, HRV matinale basse) augmentent risque burnout, baisse performance cognitive, erreurs.</p>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Détection UC-E04:</strong>
+                            <ul class="feature-list" style="margin-top: 10px;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">📉</span>
+                                    <span><strong>HRV chroniquement basse:</strong> RMSSD 25-30 ms (vs baseline 35 ms) sur 2 semaines</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">😴</span>
+                                    <span><strong>Sommeil:</strong> Auto-reporté <6h/nuit, qualité subjective faible</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">📈</span>
+                                    <span><strong>FC repos augmentée:</strong> 78-82 bpm (vs 72 bpm baseline) = signe stress chronique</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">⚠️</span>
+                                    <span><strong>Modèle LSTM:</strong> Prédiction risque burnout élevé (85%) dans 2-4 semaines</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Interventions Agentic Multiples:</strong>
+                            <div style="background: rgba(239, 68, 68, 0.05); border-left: 3px solid #ef4444; padding: 15px; margin-top: 10px; border-radius: 8px;">
+                                <p><strong>1. Coaching récupération (BehaviorX Module 7):</strong></p>
+                                <p style="margin-top: 8px; color: #cbd5e1;">
+                                • Recommandation sommeil: viser 7-8h, routine coucher cohérente<br>
+                                • Exercices relaxation: respiration 4-7-8, méditation 10 min/jour<br>
+                                • Pauses actives: marche 5-10 min toutes les 2h (↑ HRV)
+                                </p>
+                            </div>
+                            <div style="background: rgba(234, 179, 8, 0.05); border-left: 3px solid #eab308; padding: 15px; margin-top: 10px; border-radius: 8px;">
+                                <p><strong>2. Ajustement charge travail:</strong></p>
+                                <p style="margin-top: 8px; color: #cbd5e1;">
+                                • Réduction temporaire deadlines serrés<br>
+                                • Priorisation tâches critiques<br>
+                                • Délégation tâches non-essentielles
+                                </p>
+                            </div>
+                            <div style="background: rgba(59, 130, 246, 0.05); border-left: 3px solid #3b82f6; padding: 15px; margin-top: 10px; border-radius: 8px;">
+                                <p><strong>3. Support RH/superviseur:</strong></p>
+                                <p style="margin-top: 8px; color: #cbd5e1;">
+                                • Discussion confidentielle avec RH<br>
+                                • Orientation vers PAE (Programme Aide Employés)<br>
+                                • Ajustements ergonomiques si nécessaire
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Suivi sur 4 semaines:</strong>
+                            <table class="data-table" style="margin-top: 10px; font-size: 13px;">
+                                <tr>
+                                    <th>Semaine</th>
+                                    <th>HRV moy (ms)</th>
+                                    <th>FC repos (bpm)</th>
+                                    <th>Sommeil (h/nuit)</th>
+                                    <th>Score Fatigue</th>
+                                </tr>
+                                <tr>
+                                    <td>S0 (baseline)</td>
+                                    <td>28</td>
+                                    <td>80</td>
+                                    <td>5.5</td>
+                                    <td><span class="status-critical">8.5/10</span></td>
+                                </tr>
+                                <tr>
+                                    <td>S1</td>
+                                    <td>30</td>
+                                    <td>78</td>
+                                    <td>6.2</td>
+                                    <td><span class="status-warning">7.2/10</span></td>
+                                </tr>
+                                <tr>
+                                    <td>S2</td>
+                                    <td>33</td>
+                                    <td>75</td>
+                                    <td>6.8</td>
+                                    <td><span class="status-warning">5.8/10</span></td>
+                                </tr>
+                                <tr>
+                                    <td>S3</td>
+                                    <td>35</td>
+                                    <td>73</td>
+                                    <td>7.1</td>
+                                    <td><span class="status-normal">4.5/10</span></td>
+                                </tr>
+                                <tr>
+                                    <td>S4</td>
+                                    <td>36</td>
+                                    <td>72</td>
+                                    <td>7.3</td>
+                                    <td><span class="status-normal">3.8/10</span></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                            <strong style="color: #86efac;">✅ Résultat:</strong>
+                            <p style="color: #cbd5e1; margin-top: 8px;">
+                            Interventions précoces (détection HRV basse, coaching sommeil, ajustement charge) ont permis 
+                            récupération progressive. Risque burnout écarté, retour à baseline en 4 semaines. 
+                            <strong>Économie estimée:</strong> 15K$ CAD (coût indirect burnout évité).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Demo Interactive -->
+        <div id="demo" class="content-section">
+            <div class="demo-container">
+                <div class="card-header">
+                    <span class="card-icon">🎮</span>
+                    <h2 class="card-title">Démo Interactive - Simulateur Fatigue Musculaire</h2>
+                </div>
+                
+                <p style="margin: 20px 0; color: #94a3b8;">
+                    Simulez en temps réel le monitoring biométrique (FC, HRV) et le calcul du score TRIMP de charge-récupération. 
+                    Ajustez l'intensité de travail et la température ambiante pour observer les interventions agentiques automatiques.
+                </p>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Fréquence Cardiaque</div>
+                        <div class="metric-value" id="hr-value">85</div>
+                        <div class="metric-label" style="font-size: 12px;">bpm</div>
+                        <div class="metric-trend trend-down" id="hr-trend">↓ Dans la norme</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">HRV (RMSSD)</div>
+                        <div class="metric-value" id="hrv-value">42</div>
+                        <div class="metric-label" style="font-size: 12px;">ms</div>
+                        <div class="metric-trend trend-down" id="hrv-trend">↑ Bonne récupération</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Score TRIMP</div>
+                        <div class="metric-value" id="trimp-value">65</div>
+                        <div class="metric-label" style="font-size: 12px;">/ 120 seuil</div>
+                        <div class="metric-trend trend-down" id="trimp-trend">Normal</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Température</div>
+                        <div class="metric-value" id="temp-value">22</div>
+                        <div class="metric-label" style="font-size: 12px;">°C</div>
+                        <div class="metric-trend trend-down" id="temp-trend">Confortable</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label class="control-label">Intensité Travail (MET): <span id="intensity-display">3.5</span></label>
+                        <input type="range" min="1.5" max="8.0" step="0.5" value="3.5" class="slider" id="intensity-slider">
+                        <div style="color: #64748b; font-size: 12px; margin-top: 5px;">1.5 = Sédentaire • 3.5 = Modéré • 8.0 = Intense</div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Température Ambiante (°C): <span id="ambient-temp-display">22</span></label>
+                        <input type="range" min="18" max="38" step="1" value="22" class="slider" id="ambient-temp-slider">
+                        <div style="color: #64748b; font-size: 12px; margin-top: 5px;">18-24 = Confortable • 28-32 = Chaud • 35+ = Canicule</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin: 25px 0;">
+                    <button class="btn" onclick="startSimulation()">▶ Démarrer Simulation</button>
+                    <button class="btn" style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);" onclick="resetSimulation()">⟳ Réinitialiser</button>
+                </div>
+
+                <div id="status-display" style="padding: 20px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; margin: 20px 0;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 32px;">✅</span>
+                        <div>
+                            <strong style="color: #86efac; font-size: 18px;">État: NORMAL</strong>
+                            <p style="color: #cbd5e1; margin-top: 5px; font-size: 14px;" id="status-message">
+                                Tous les indicateurs dans la normale. Continuez le travail actuel.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="interventions-log" style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 12px; padding: 20px; margin-top: 20px;">
+                    <h3 style="color: #fca5a5; margin: 0 0 15px 0;">📝 Journal des Interventions Agentiques</h3>
+                    <div id="log-content" style="max-height: 200px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 13px; color: #cbd5e1;">
+                        <div style="color: #64748b;">[Prêt] Simulation initialisée. Ajustez les paramètres et démarrez.</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px;">
+                    <h4 style="color: #93c5fd; margin: 0 0 15px 0;">ℹ️ Comment Interpréter les Résultats</h4>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">💚</span>
+                            <span><strong>NORMAL (vert):</strong> TRIMP <80, FC <90 bpm, HRV >38 ms → Pas d'intervention</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">💛</span>
+                            <span><strong>ATTENTION (jaune):</strong> TRIMP 80-120, FC 90-110 bpm, HRV 30-38 ms → Micro-pause recommandée</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🧡</span>
+                            <span><strong>CRITIQUE (orange):</strong> TRIMP >120, FC >110 bpm, HRV <30 ms → Pause obligatoire + rotation</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">🔴</span>
+                            <span><strong>URGENT (rouge):</strong> FC >130 bpm + T° >35°C → Arrêt immédiat + repos climatisé</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: ROI & Impact -->
+        <div id="roi" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💰</span>
+                    <h2 class="card-title">ROI & Impact Économique</h2>
+                </div>
+
+                <div class="alert-box alert-success">
+                    <span class="alert-icon">📊</span>
+                    <div>
+                        <strong>ROI Global Estimé: 215% sur 3 ans</strong>
+                        <p>Basé sur déploiement 200 travailleurs, secteur manufacturier, avec coûts incidents fatigue baseline.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">💸 Réductions de Coûts</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Catégorie</th>
+                            <th>Impact</th>
+                            <th>Économies Annuelles (200 employés)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Incidents liés fatigue</strong></td>
+                            <td>-25% (détection précoce)</td>
+                            <td>125K$ CAD<br><span style="font-size: 12px; color: #64748b;">(8 incidents évités × 15.6K$ coût moyen)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Absentéisme</strong></td>
+                            <td>-18% (amélioration récupération)</td>
+                            <td>85K$ CAD<br><span style="font-size: 12px; color: #64748b;">(72 jours évités × 1.18K$ salaire/jour)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TMS prévenus</strong></td>
+                            <td>-15% (fatigue = facteur aggravant)</td>
+                            <td>67K$ CAD<br><span style="font-size: 12px; color: #64748b;">(3 TMS évités × 22.4K$ coût moyen)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Productivité</strong></td>
+                            <td>+12% (optimisation charge)</td>
+                            <td>180K$ CAD<br><span style="font-size: 12px; color: #64748b;">(gain efficacité opérationnelle valorisé)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Coûts CNESST</strong></td>
+                            <td>-22% (primes assurance)</td>
+                            <td>42K$ CAD<br><span style="font-size: 12px; color: #64748b;">(réduction cotisations expérience)</span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: rgba(34, 197, 94, 0.1); font-weight: 700;">
+                            <td colspan="2"><strong>TOTAL ÉCONOMIES ANNUELLES</strong></td>
+                            <td style="color: #86efac; font-size: 18px;"><strong>499K$ CAD</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">💵 Investissement Initial</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Poste</th>
+                            <th>Coût Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Wearables (FC/HRV)</strong></td>
+                            <td>450$ CAD</td>
+                            <td>200</td>
+                            <td>90K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capteurs environnement (WBGT)</strong></td>
+                            <td>1,200$ CAD</td>
+                            <td>10 zones</td>
+                            <td>12K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Infrastructure Edge/Cloud</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>25K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Licences logicielles (3 ans)</strong></td>
+                            <td>180$/employé/an</td>
+                            <td>200 × 3 ans</td>
+                            <td>108K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formation (personnel + superviseurs)</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>15K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Déploiement & intégration</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>18K$ CAD</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: rgba(239, 68, 68, 0.1); font-weight: 700;">
+                            <td colspan="3"><strong>INVESTISSEMENT TOTAL (3 ans)</strong></td>
+                            <td style="color: #fca5a5; font-size: 18px;"><strong>268K$ CAD</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">📈 Analyse ROI sur 3 Ans</h3>
+                <div class="code-block">
+Année 1:<br>
+&nbsp;&nbsp;Économies: 499K$ CAD<br>
+&nbsp;&nbsp;Investissement: 160K$ CAD (matériel + déploiement)<br>
+&nbsp;&nbsp;Net: +339K$ CAD<br>
+<br>
+Année 2:<br>
+&nbsp;&nbsp;Économies: 524K$ CAD (amélioration continue +5%)<br>
+&nbsp;&nbsp;Coûts récurrents: 36K$ CAD (licences)<br>
+&nbsp;&nbsp;Net: +488K$ CAD<br>
+<br>
+Année 3:<br>
+&nbsp;&nbsp;Économies: 550K$ CAD (amélioration +5%)<br>
+&nbsp;&nbsp;Coûts récurrents: 36K$ CAD<br>
+&nbsp;&nbsp;Net: +514K$ CAD<br>
+<br>
+═══════════════════════════════════════<br>
+BILAN 3 ANS:<br>
+&nbsp;&nbsp;Total économies: 1,573K$ CAD<br>
+&nbsp;&nbsp;Total investissement: 268K$ CAD<br>
+&nbsp;&nbsp;Gain net: 1,305K$ CAD<br>
+&nbsp;&nbsp;<strong style="color: #86efac;">ROI: +387% (retour 4.87x)</strong><br>
+&nbsp;&nbsp;Payback period: <strong>6.4 mois</strong>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px;">
+                    <h4 style="color: #c4b5fd; margin: 0 0 15px 0;">🎯 Bénéfices Intangibles</h4>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Culture SST renforcée:</strong> Perception proactive vs réactive, engagement employés +35%</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Attractivité employeur:</strong> Technologie innovante, marque employeur différenciante</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Conformité anticipée:</strong> Prêt pour évolutions réglementaires (monitoring obligatoire fatigue)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Data-driven SST:</strong> Décisions basées données objectives vs intuition, amélioration continue</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Réduction risques juridiques:</strong> Preuve diligence raisonnable, défense assurance/CNESST</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Navigation entre sections
+        function showSection(sectionId) {
+            // Cacher toutes les sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Afficher la section demandée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Mettre à jour les boutons de navigation
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Variables simulation
+        let simulationInterval = null;
+        let trimpScore = 65;
+        let currentHR = 85;
+        let currentHRV = 42;
+        let currentTemp = 22;
+        let intensity = 3.5;
+        let ambientTemp = 22;
+
+        // Mise à jour des affichages sliders
+        document.getElementById('intensity-slider').addEventListener('input', function(e) {
+            intensity = parseFloat(e.target.value);
+            document.getElementById('intensity-display').textContent = intensity.toFixed(1);
+        });
+
+        document.getElementById('ambient-temp-slider').addEventListener('input', function(e) {
+            ambientTemp = parseInt(e.target.value);
+            document.getElementById('ambient-temp-display').textContent = ambientTemp;
+        });
+
+        function startSimulation() {
+            if (simulationInterval) {
+                clearInterval(simulationInterval);
+            }
+
+            addLogEntry('🟢 Simulation démarrée - Monitoring en cours...');
+            
+            simulationInterval = setInterval(updateSimulation, 2000);
+        }
+
+        function updateSimulation() {
+            // Calculer FC basée sur intensité et température
+            const baseHR = 70;
+            const intensityFactor = (intensity - 1.5) * 8;
+            const tempFactor = Math.max(0, (ambientTemp - 22) * 1.5);
+            currentHR = Math.round(baseHR + intensityFactor + tempFactor + (Math.random() * 5 - 2.5));
+            currentHR = Math.min(140, Math.max(60, currentHR));
+
+            // Calculer HRV inversement proportionnelle à la fatigue
+            const hrStress = (currentHR - 70) / 70;
+            const tempStress = Math.max(0, (ambientTemp - 24) / 14);
+            const totalStress = (hrStress + tempStress) / 2;
+            currentHRV = Math.round(45 * (1 - totalStress * 0.6) + (Math.random() * 4 - 2));
+            currentHRV = Math.min(50, Math.max(20, currentHRV));
+
+            // Calculer TRIMP (accumulation progressive)
+            const trimpIncrement = intensity * (currentHR - 60) / 60 * 0.5;
+            trimpScore = Math.min(160, trimpScore + trimpIncrement);
+
+            // Température simulation
+            currentTemp = ambientTemp;
+
+            // Mettre à jour l'affichage
+            document.getElementById('hr-value').textContent = currentHR;
+            document.getElementById('hrv-value').textContent = currentHRV;
+            document.getElementById('trimp-value').textContent = Math.round(trimpScore);
+            document.getElementById('temp-value').textContent = currentTemp;
+
+            // Évaluer l'état et déclencher interventions
+            evaluateState();
+        }
+
+        function evaluateState() {
+            const statusDisplay = document.getElementById('status-display');
+            const statusMessage = document.getElementById('status-message');
+            let statusIcon = '✅';
+            let statusText = 'NORMAL';
+            let statusColor = 'rgba(34, 197, 94, 0.1)';
+            let borderColor = 'rgba(34, 197, 94, 0.3)';
+            let iconColor = '#86efac';
+            let message = 'Tous les indicateurs dans la normale. Continuez le travail actuel.';
+            let hrTrend = '↓ Dans la norme';
+            let hrvTrend = '↑ Bonne récupération';
+            let trimpTrend = 'Normal';
+            let tempTrend = 'Confortable';
+
+            // Logique de décision
+            if (currentHR > 130 && currentTemp > 32) {
+                // URGENT - Danger imminent
+                statusIcon = '🔴';
+                statusText = 'URGENT - DANGER';
+                statusColor = 'rgba(220, 38, 38, 0.15)';
+                borderColor = 'rgba(220, 38, 38, 0.5)';
+                iconColor = '#fca5a5';
+                message = '⚠️ ARRÊT IMMÉDIAT du travail ! FC très élevée + contrainte thermique sévère. Repos climatisé + hydratation + surveillance médicale.';
+                addLogEntry('🔴 [URGENT] Arrêt travail immédiat - FC=' + currentHR + ' bpm, T°=' + currentTemp + '°C - Intervention médicale recommandée');
+                hrTrend = '🔴 CRITIQUE';
+                tempTrend = '🔴 CANICULE';
+            } else if (trimpScore > 120 || currentHR > 115 || currentHRV < 28) {
+                // CRITIQUE
+                statusIcon = '🧡';
+                statusText = 'CRITIQUE';
+                statusColor = 'rgba(251, 146, 60, 0.15)';
+                borderColor = 'rgba(251, 146, 60, 0.4)';
+                iconColor = '#fdba74';
+                message = '⚠️ Fatigue élevée détectée. Pause OBLIGATOIRE 15 min + rotation vers tâche légère. Hydratation et étirements recommandés.';
+                addLogEntry('🧡 [CRITIQUE] TRIMP=' + Math.round(trimpScore) + ', FC=' + currentHR + ' - Pause obligatoire + rotation tâche');
+                trimpTrend = '🧡 Seuil dépassé';
+                hrTrend = '🧡 Élevée';
+                hrvTrend = '🧡 Récup. insuffisante';
+            } else if (trimpScore > 80 || currentHR > 95 || currentHRV < 35 || currentTemp > 28) {
+                // ATTENTION
+                statusIcon = '💛';
+                statusText = 'ATTENTION';
+                statusColor = 'rgba(234, 179, 8, 0.15)';
+                borderColor = 'rgba(234, 179, 8, 0.4)';
+                iconColor = '#fde047';
+                message = '⚠️ Charge de travail élevée. Micro-pause de 3 min recommandée dans les 30 min. Surveillez hydratation.';
+                if (trimpScore > 95) {
+                    addLogEntry('💛 [ATTENTION] TRIMP approche seuil (' + Math.round(trimpScore) + '/120) - Micro-pause recommandée');
+                }
+                if (currentTemp > 28) {
+                    addLogEntry('💛 [ATTENTION] Température élevée (' + currentTemp + '°C) - Application horaire travail/repos ACGIH');
+                    tempTrend = '💛 Chaud';
+                }
+                trimpTrend = '💛 Attention';
+                hrTrend = '💛 Modérée';
+            }
+
+            // Mettre à jour l'affichage du statut
+            statusDisplay.style.background = statusColor;
+            statusDisplay.style.borderColor = borderColor;
+            statusDisplay.querySelector('span:first-child').textContent = statusIcon;
+            statusDisplay.querySelector('strong').textContent = 'État: ' + statusText;
+            statusDisplay.querySelector('strong').style.color = iconColor;
+            statusMessage.textContent = message;
+
+            // Mettre à jour les tendances
+            document.getElementById('hr-trend').textContent = hrTrend;
+            document.getElementById('hrv-trend').textContent = hrvTrend;
+            document.getElementById('trimp-trend').textContent = trimpTrend;
+            document.getElementById('temp-trend').textContent = tempTrend;
+
+            // Coloriser les tendances
+            document.getElementById('hr-trend').className = 'metric-trend ' + (currentHR > 110 ? 'trend-up' : 'trend-down');
+            document.getElementById('hrv-trend').className = 'metric-trend ' + (currentHRV < 32 ? 'trend-up' : 'trend-down');
+            document.getElementById('trimp-trend').className = 'metric-trend ' + (trimpScore > 100 ? 'trend-up' : 'trend-down');
+            document.getElementById('temp-trend').className = 'metric-trend ' + (currentTemp > 28 ? 'trend-up' : 'trend-down');
+        }
+
+        function resetSimulation() {
+            if (simulationInterval) {
+                clearInterval(simulationInterval);
+                simulationInterval = null;
+            }
+
+            trimpScore = 65;
+            currentHR = 85;
+            currentHRV = 42;
+            currentTemp = 22;
+
+            document.getElementById('hr-value').textContent = currentHR;
+            document.getElementById('hrv-value').textContent = currentHRV;
+            document.getElementById('trimp-value').textContent = trimpScore;
+            document.getElementById('temp-value').textContent = currentTemp;
+
+            document.getElementById('intensity-slider').value = 3.5;
+            document.getElementById('ambient-temp-slider').value = 22;
+            document.getElementById('intensity-display').textContent = '3.5';
+            document.getElementById('ambient-temp-display').textContent = '22';
+
+            intensity = 3.5;
+            ambientTemp = 22;
+
+            const statusDisplay = document.getElementById('status-display');
+            statusDisplay.style.background = 'rgba(34, 197, 94, 0.1)';
+            statusDisplay.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+            statusDisplay.querySelector('span:first-child').textContent = '✅';
+            statusDisplay.querySelector('strong').textContent = 'État: NORMAL';
+            statusDisplay.querySelector('strong').style.color = '#86efac';
+            document.getElementById('status-message').textContent = 'Tous les indicateurs dans la normale. Continuez le travail actuel.';
+
+            document.getElementById('hr-trend').textContent = '↓ Dans la norme';
+            document.getElementById('hrv-trend').textContent = '↑ Bonne récupération';
+            document.getElementById('trimp-trend').textContent = 'Normal';
+            document.getElementById('temp-trend').textContent = 'Confortable';
+
+            document.getElementById('log-content').innerHTML = '<div style="color: #64748b;">[Prêt] Simulation réinitialisée.</div>';
+            addLogEntry('🔄 Réinitialisation complète - Baseline rétablie');
+        }
+
+        function addLogEntry(message) {
+            const logContent = document.getElementById('log-content');
+            const timestamp = new Date().toLocaleTimeString('fr-CA');
+            const entry = document.createElement('div');
+            entry.style.marginBottom = '8px';
+            entry.innerHTML = '<span style="color: #64748b;">[' + timestamp + ']</span> ' + message;
+            logContent.appendChild(entry);
+            logContent.scrollTop = logContent.scrollHeight;
+
+            // Limiter à 50 entrées
+            while (logContent.children.length > 50) {
+                logContent.removeChild(logContent.firstChild);
+            }
+        }
+    </script>
+</body>
+</html>

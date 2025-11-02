@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-E11 : Ergonomie Poste Travail Bureau | AgenticX5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --light: #ffffff;
+            --gray: #9ca3af;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(2px 2px at 60px 70px, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(1px 1px at 50px 50px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(2px 2px at 90px 10px, rgba(255, 255, 255, 0.2), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: stars 60s linear infinite;
+        }
+
+        @keyframes stars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-200px); }
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .gradient-orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #8b5cf6, transparent 70%);
+            top: -250px;
+            left: -250px;
+        }
+
+        .gradient-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #ec4899, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 5s;
+        }
+
+        .gradient-orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #06b6d4, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 
+                0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8b5cf6, #ec4899, #06b6d4);
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 60px 0 rgba(139, 92, 246, 0.2),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card:hover::before {
+            opacity: 0.2;
+        }
+
+        /* Hero Header */
+        .hero-header {
+            text-align: center;
+            padding: 60px 20px 80px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .stat-glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 30px 40px;
+            border-radius: 20px;
+            min-width: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 14px 28px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--gray);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--primary);
+            color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            color: var(--light);
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .info-box.success {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .info-box.success::before {
+            background: var(--success);
+        }
+
+        .info-box.warning {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .info-box.warning::before {
+            background: var(--warning);
+        }
+
+        .info-box.info {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .info-box.info::before {
+            background: var(--accent);
+        }
+
+        .info-box.danger {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .info-box.danger::before {
+            background: var(--danger);
+        }
+
+        .info-box h3, .info-box h4 {
+            margin-bottom: 15px;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            padding-left: 35px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            color: var(--light);
+        }
+
+        .feature-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table th {
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--light);
+        }
+
+        .data-table td {
+            color: var(--gray);
+        }
+
+        .data-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            border: 1px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge.success {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .badge.warning {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .badge.info {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .badge.primary {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge.danger {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.05);
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+            border: 1px solid var(--glass-border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .metric-card:hover::before {
+            opacity: 0.2;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 15px 0;
+            line-height: 1;
+        }
+
+        .metric-label {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .metric-trend {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .metric-trend.up {
+            color: var(--success);
+        }
+
+        .metric-trend.down {
+            color: var(--danger);
+        }
+
+        /* Workflow Steps */
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .workflow-step {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.4s ease;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .workflow-step:hover {
+            transform: translateX(10px);
+            border-left-width: 6px;
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .workflow-step-number {
+            min-width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+        }
+
+        .workflow-step-content {
+            flex: 1;
+        }
+
+        .workflow-step-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 55px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 30px 30px 30px 120px;
+            margin: 30px 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 43px;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 3px solid var(--darker);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .timeline-content {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .chart-container h4 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .chart-bar {
+            margin: 25px 0;
+        }
+
+        .chart-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .chart-bar-visual {
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--glass-border);
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Architecture Diagram */
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 40px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .architecture-layer {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .architecture-component {
+            flex: 1;
+            min-width: 220px;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-component:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .architecture-component.layer-1 {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(109, 40, 217, 0.3));
+            border-color: var(--primary);
+        }
+
+        .architecture-component.layer-2 {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.3), rgba(219, 39, 119, 0.3));
+            border-color: var(--secondary);
+        }
+
+        .architecture-component.layer-3 {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(8, 145, 178, 0.3));
+            border-color: var(--accent);
+        }
+
+        .architecture-component h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 60px 40px;
+            border-radius: 24px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 1000;
+            transition: width 0.2s ease;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            padding: 16px 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .nav-tabs {
+                flex-wrap: nowrap;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 70px;
+            }
+
+            .timeline-marker {
+                left: 8px;
+            }
+
+            .glass-card {
+                padding: 25px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="stars"></div>
+        <div class="gradient-orb gradient-orb-1"></div>
+        <div class="gradient-orb gradient-orb-2"></div>
+        <div class="gradient-orb gradient-orb-3"></div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <div class="container">
+        <!-- Hero Header -->
+        <div class="hero-header">
+            <h1 class="hero-title">🪑 Nouvelle Ère de<br>l'Ergonomie de Bureau</h1>
+            <p class="hero-subtitle">
+                Laissez notre IA faire le gros du travail. Auditez, optimisez et conformez vos postes de travail avec des ajustements guidés en temps réel grâce à AgenticX5.
+            </p>
+            <button class="cta-button">Essai gratuit 14 jours</button>
+
+            <div class="hero-stats">
+                <div class="stat-glass">
+                    <div class="stat-value">-30%</div>
+                    <div class="stat-label">TMS Bureau</div>
+                </div>
+                <div class="stat-glass">
+                    <div class="stat-value">+40%</div>
+                    <div class="stat-label">Conformité</div>
+                </div>
+                <div class="stat-glass">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Postes Audités</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('overview')">📊 Vue d'ensemble</button>
+            <button class="nav-tab" onclick="showSection('risk')">⚠️ Risque & TMS</button>
+            <button class="nav-tab" onclick="showSection('solution')">💡 Solution Vision AI</button>
+            <button class="nav-tab" onclick="showSection('workflow')">🔄 Audit Automatisé</button>
+            <button class="nav-tab" onclick="showSection('data')">📈 Données & Vision</button>
+            <button class="nav-tab" onclick="showSection('adjustments')">🔧 Ajustements Guidés</button>
+            <button class="nav-tab" onclick="showSection('standards')">📜 Standards CSA/ISO</button>
+            <button class="nav-tab" onclick="showSection('kpi')">📊 KPIs & ROI</button>
+            <button class="nav-tab" onclick="showSection('deployment')">🚀 Déploiement</button>
+        </div>
+
+        <!-- Section: Overview -->
+        <div id="overview" class="content-section active">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">📊</div>
+                    <h2 class="section-title">Vue d'ensemble UC-E11</h2>
+                </div>
+                
+                <div class="info-box info">
+                    <h3>🎯 Objectif Opérationnel</h3>
+                    <p><strong>Réduire les TMS de bureau de 30% et augmenter la conformité ergonomique de 40%</strong> grâce à un audit automatisé par vision AI et des ajustements guidés personnalisés selon les normes CSA Z412:2024 et ISO 9241-5.</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="metric-card">
+                        <div class="metric-label">Réduction TMS</div>
+                        <div class="metric-value">30%</div>
+                        <div class="metric-trend up">▲ Lombalgies, cervicalgies</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Gain Conformité</div>
+                        <div class="metric-value">+40%</div>
+                        <div class="metric-trend up">▲ CSA Z412:2024</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Volume Impact</div>
+                        <div class="metric-value">100%</div>
+                        <div class="metric-trend">Travailleurs bureau</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">🎯 Priorité du Use Case</h3>
+                <div class="info-box warning">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <div>
+                            <h4>🟡 HAUTE - Volume Travailleurs Élevé</h4>
+                            <p>Impact massif : 100% des travailleurs de bureau concernés. Les TMS liés à la mauvaise ergonomie représentent 40% des troubles musculosquelettiques en entreprise, causant absentéisme, douleurs chroniques et baisse de productivité.</p>
+                        </div>
+                        <span class="badge warning">Priorité Haute</span>
+                    </div>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">🏗️ Architecture Recommandée</h3>
+                <div class="architecture-diagram">
+                    <div class="architecture-layer">
+                        <div class="architecture-component layer-1">
+                            <h4>👁️ VISION AI</h4>
+                            <p>Analyse automatisée configuration poste : hauteur écran/chaise/clavier, distances, angles, posture</p>
+                        </div>
+                        <div class="architecture-component layer-1">
+                            <h4>🤖 AGENTIC</h4>
+                            <p>Génération rapport audit automatique + checklist actions prioritaires + suivi corrections</p>
+                        </div>
+                    </div>
+                    <div class="architecture-layer">
+                        <div class="architecture-component layer-2">
+                            <h4>📚 KNOWLEDGE GRAPH</h4>
+                            <p>Normes CSA Z412:2024, ISO 9241-5, ANSI/HFES 100 + paramètres anthropométriques</p>
+                        </div>
+                        <div class="architecture-component layer-2">
+                            <h4>💬 CONVERSATIONNEL</h4>
+                            <p>Assistant ajustements étape par étape : réglages guidés en langage naturel</p>
+                        </div>
+                    </div>
+                    <div class="architecture-layer">
+                        <div class="architecture-component layer-3">
+                            <h4>📊 ANALYTICS</h4>
+                            <p>Dashboard conformité temps réel + progression corrections + métriques TMS</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">🔧 Modules SafetyGraph</h3>
+                <div class="grid-2">
+                    <div class="info-box info">
+                        <h4>Multimodal Agent (Vision AI)</h4>
+                        <p>Analyse image/vidéo du poste pour extraire hauteur écran, angle, distance œil-écran, position clavier/souris, hauteur siège, support lombaire. Comparaison automatique aux cibles CSA Z412:2024.</p>
+                    </div>
+                    <div class="info-box info">
+                        <h4>SafetyAgent (Assistant Conversationnel)</h4>
+                        <p>Coaching pas-à-pas pour ajustements : "Ajustez votre siège à hauteur genoux 90°", "Positionnez écran sommet au niveau des yeux", avec validation visuelle.</p>
+                    </div>
+                    <div class="info-box info">
+                        <h4>SafetyOntology (Knowledge Graph)</h4>
+                        <p>Graphe de connaissances intégrant normes CSA Z412, ISO 9241-5, ANSI/HFES 100, CNESST + paramètres anthropométriques P5-P95 + solutions (rehausseurs, bras écran).</p>
+                    </div>
+                    <div class="info-box info">
+                        <h4>Dashboard Conformité</h4>
+                        <p>Visualisation temps réel : % postes conformes, écarts par critère (hauteur écran, siège, clavier), priorisation corrections, progression par équipe/site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sections will be added here -->
+        <div id="risk" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">⚠️</div>
+                    <h2 class="section-title">Risques & TMS Bureau</h2>
+                </div>
+                <div class="info-box danger">
+                    <h3>🔴 Troubles Musculosquelettiques (TMS) Liés au Poste de Bureau</h3>
+                    <p><strong>40% des TMS en entreprise</strong> sont directement liés à une mauvaise configuration ergonomique du poste de travail, affectant principalement le dos (lombalgies), le cou (cervicalgies), les épaules et les poignets.</p>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">📋 Problématiques Principales</h3>
+                <div class="grid-2">
+                    <div class="glass-card" style="border-left: 4px solid var(--danger);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">🦴 Lombalgies (Bas du Dos)</h4>
+                        <p style="color: var(--gray); margin-bottom: 15px;"><strong>Causes principales :</strong></p>
+                        <ul class="feature-list">
+                            <li>Siège mal réglé (trop haut/bas, sans support lombaire)</li>
+                            <li>Posture avachie ou dos non supporté</li>
+                            <li>Angle siège-dossier inadéquat (≠ 90-110°)</li>
+                            <li>Pieds non à plat au sol</li>
+                            <li>Assise prolongée sans pauses</li>
+                        </ul>
+                        <span class="badge danger">35% des TMS</span>
+                    </div>
+
+                    <div class="glass-card" style="border-left: 4px solid var(--warning);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">🦴 Cervicalgies (Cou/Nuque)</h4>
+                        <p style="color: var(--gray); margin-bottom: 15px;"><strong>Causes principales :</strong></p>
+                        <ul class="feature-list">
+                            <li>Écran trop haut ou trop bas (≠ sommet ≈ yeux)</li>
+                            <li>Distance œil-écran inadéquate (< 50 cm ou > 80 cm)</li>
+                            <li>Tête penchée vers l'avant (flexion cervicale)</li>
+                            <li>Multi-écrans mal positionnés</li>
+                            <li>Tension musculaire épaules/trapèzes</li>
+                        </ul>
+                        <span class="badge warning">30% des TMS</span>
+                    </div>
+
+                    <div class="glass-card" style="border-left: 4px solid var(--info);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">💪 Épaules & Bras</h4>
+                        <p style="color: var(--gray); margin-bottom: 15px;"><strong>Causes principales :</strong></p>
+                        <ul class="feature-list">
+                            <li>Clavier/souris trop éloignés (extension bras)</li>
+                            <li>Accoudoirs mal réglés ou absents</li>
+                            <li>Angle coude ≠ 90-110° (tension muscles)</li>
+                            <li>Souris trop latérale (abduction épaule)</li>
+                            <li>Tension statique prolongée</li>
+                        </ul>
+                        <span class="badge info">20% des TMS</span>
+                    </div>
+
+                    <div class="glass-card" style="border-left: 4px solid var(--primary);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">✋ Poignets (Canal Carpien)</h4>
+                        <p style="color: var(--gray); margin-bottom: 15px;"><strong>Causes principales :</strong></p>
+                        <ul class="feature-list">
+                            <li>Poignets en extension/flexion (≠ position neutre)</li>
+                            <li>Appui poignet sur rebord bureau (compression)</li>
+                            <li>Clavier trop haut sans repose-poignets</li>
+                            <li>Souris mal adaptée (taille, forme)</li>
+                            <li>Mouvements répétitifs sans pauses</li>
+                        </ul>
+                        <span class="badge primary">15% des TMS</span>
+                    </div>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">📊 Impact Organisationnel</h3>
+                <div class="chart-container">
+                    <h4>Coûts & Conséquences TMS Bureau</h4>
+                    
+                    <div class="chart-bar">
+                        <div class="chart-bar-label">
+                            <span>💼 Absentéisme (jours perdus/an)</span>
+                            <span>+45%</span>
+                        </div>
+                        <div class="chart-bar-visual">
+                            <div class="chart-bar-fill" style="width: 45%; background: linear-gradient(90deg, var(--danger), #dc2626);"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-bar">
+                        <div class="chart-bar-label">
+                            <span>📉 Perte de productivité</span>
+                            <span>-20%</span>
+                        </div>
+                        <div class="chart-bar-visual">
+                            <div class="chart-bar-fill" style="width: 20%; background: linear-gradient(90deg, var(--warning), #ea580c);"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-bar">
+                        <div class="chart-bar-label">
+                            <span>💰 Coûts médicaux/consultations</span>
+                            <span>+35%</span>
+                        </div>
+                        <div class="chart-bar-visual">
+                            <div class="chart-bar-fill" style="width: 35%; background: linear-gradient(90deg, var(--info), #60a5fa);"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-bar">
+                        <div class="chart-bar-label">
+                            <span>😰 Douleurs chroniques rapportées</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="chart-bar-visual">
+                            <div class="chart-bar-fill" style="width: 60%; background: linear-gradient(90deg, var(--primary), var(--secondary));"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-3" style="margin-top: 40px;">
+                    <div class="metric-card">
+                        <div class="metric-label">Coût Moyen TMS</div>
+                        <div class="metric-value" style="color: var(--danger);">$15K</div>
+                        <div class="metric-trend down">▼ Par cas/an</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Postes Non-Conformes</div>
+                        <div class="metric-value" style="color: var(--warning);">65%</div>
+                        <div class="metric-trend down">▼ Sans intervention</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Douleur Chronique</div>
+                        <div class="metric-value" style="color: var(--danger);">40%</div>
+                        <div class="metric-trend down">▼ Employés affectés</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder for remaining sections -->
+        <div id="solution" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">💡</div>
+                    <h2 class="section-title">Solution Vision AI AgenticX5</h2>
+                </div>
+
+                <div class="info-box success">
+                    <h3>🎯 Approche Vision AI + Agentic Complète</h3>
+                    <p>AgenticX5 combine <strong>analyse visuelle automatisée</strong>, <strong>intelligence agentique</strong> et <strong>coaching conversationnel</strong> pour auditer, corriger et maintenir la conformité ergonomique de 100% des postes de travail selon les normes CSA Z412:2024, ISO 9241-5 et ANSI/HFES 100.</p>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">👁️ Capacités Vision AI (Multimodal Agent)</h3>
+                
+                <div class="grid-2">
+                    <div class="glass-card" style="border-left: 4px solid var(--primary);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">📸 Analyse Image/Vidéo Poste</h4>
+                        <p style="color: var(--gray); margin-bottom: 15px;"><strong>Extraction automatique des paramètres clés :</strong></p>
+                        <ul class="feature-list">
+                            <li><strong>Hauteur écran</strong> : Détection sommet écran vs niveau yeux (cible: sommet ≈ yeux ou -5°)</li>
+                            <li><strong>Distance œil-écran</strong> : Mesure précise (cible: 50-70 cm selon CSA Z412)</li>
+                            <li><strong>Angle écran</strong> : Inclinaison verticale (cible: légèrement incliné vers haut)</li>
+                            <li><strong>Position clavier/souris</strong> : Distance utilisateur, proximité, alignement</li>
+                            <li><strong>Hauteur siège</strong> : Niveau assise vs pieds au sol (cible: pieds plats, genoux 90°)</li>
+                            <li><strong>Support lombaire</strong> : Présence, position, contact dos</li>
+                            <li><strong>Accoudoirs</strong> : Hauteur, position, angle coudes (cible: 90-110°)</li>
+                            <li><strong>Posture utilisateur</strong> : Flexion cervicale, lordose lombaire, épaules</li>
+                        </ul>
+                        <span class="badge primary">Vision AI</span>
+                        <span class="badge success">Temps Réel</span>
+                    </div>
+
+                    <div class="glass-card" style="border-left: 4px solid var(--secondary);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">🧠 Intelligence de Comparaison</h4>
+                        <p style="color: var(--gray); margin-bottom: 15px;"><strong>Analyse comparative automatique :</strong></p>
+                        <ul class="feature-list">
+                            <li><strong>Référentiel CSA Z412:2024</strong> : Comparaison valeurs mesurées vs cibles normatives</li>
+                            <li><strong>Anthropométrie adaptative</strong> : Ajustement selon taille utilisateur (P5-P95)</li>
+                            <li><strong>Classification écarts</strong> : OK / Attention / Correction urgente</li>
+                            <li><strong>Priorisation automatique</strong> : Actions selon impact TMS (dos > cou > épaules > poignets)</li>
+                            <li><strong>Génération recommandations</strong> : Solutions concrètes avec visuels (rehausseur, bras écran, repose-pieds)</li>
+                            <li><strong>Validation post-correction</strong> : Nouvelle photo pour confirmer conformité</li>
+                        </ul>
+                        <span class="badge secondary">ML Comparatif</span>
+                        <span class="badge info">CSA Z412</span>
+                    </div>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">🤖 Workflow Agentique Automatisé</h3>
+                
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <span class="workflow-step-number">1</span>
+                        <div class="workflow-step-content">
+                            <div class="workflow-step-title">📸 Capture Initiale (Photo/Vidéo)</div>
+                            <p>Employé prend photo latérale de son poste (via app mobile/webcam). Vision AI détecte automatiquement : écran, clavier, souris, siège, utilisateur en position travail.</p>
+                            <p style="margin-top: 10px; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 10px;">
+                                <strong>Aide intelligente :</strong> "Positionnez-vous en vue latérale, assis à votre poste comme habituellement" + overlay guide pour cadrage optimal
+                            </p>
+                            <span class="badge primary">30 secondes</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <span class="workflow-step-number">2</span>
+                        <div class="workflow-step-content">
+                            <div class="workflow-step-title">🔍 Analyse Vision AI (Multimodal Agent)</div>
+                            <p>Extraction automatique de tous les paramètres ergonomiques mesurables : hauteurs, distances, angles, posture. Reconnaissance objets (écran, clavier, souris, siège, accoudoirs) + points anatomiques (yeux, épaules, coudes, genoux).</p>
+                            <div style="margin-top: 15px; padding: 20px; background: rgba(236, 72, 153, 0.1); border-radius: 12px;">
+                                <strong>Mesures extraites :</strong><br>
+                                • Hauteur sommet écran vs yeux : 43 cm (cible: 0 cm) → <span class="badge danger">Écart -43 cm</span><br>
+                                • Distance œil-écran : 45 cm (cible: 50-70 cm) → <span class="badge warning">Trop proche</span><br>
+                                • Angle genoux : 85° (cible: 90-110°) → <span class="badge warning">Siège trop bas</span><br>
+                                • Support lombaire : Non détecté → <span class="badge danger">Absent</span>
+                            </div>
+                            <span class="badge secondary">Vision AI</span>
+                            <span class="badge info">15-30 secondes</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <span class="workflow-step-number">3</span>
+                        <div class="workflow-step-content">
+                            <div class="workflow-step-title">📊 Génération Rapport d'Audit (Agentic)</div>
+                            <p>Création automatique d'un rapport structuré avec :</p>
+                            <ul class="feature-list">
+                                <li><strong>Score conformité global</strong> : 45/100 (Non conforme)</li>
+                                <li><strong>Écarts détaillés</strong> : Liste complète avec sévérité (Critique / Majeur / Mineur)</li>
+                                <li><strong>Actions prioritaires</strong> : Top 3 corrections à impact maximal TMS</li>
+                                <li><strong>Solutions concrètes</strong> : Produits recommandés (bras écran articulé, coussin lombaire, repose-pieds)</li>
+                                <li><strong>Checklist auto-vérification</strong> : OSHA eTool intégré pour validation continue</li>
+                                <li><strong>Timeline correction</strong> : Planification réaliste (Urgent: 48h / Important: 2 semaines / Souhaitable: 1 mois)</li>
+                            </ul>
+                            <span class="badge success">Rapport PDF</span>
+                            <span class="badge warning">CSA Z412</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <span class="workflow-step-number">4</span>
+                        <div class="workflow-step-content">
+                            <div class="workflow-step-title">💬 Coaching Conversationnel (SafetyAgent)</div>
+                            <p>Assistant vocal/text guide l'employé étape par étape pour ajustements :</p>
+                            <div style="margin-top: 15px; padding: 20px; background: rgba(6, 182, 212, 0.1); border-radius: 12px; border-left: 4px solid var(--accent);">
+                                <strong>💬 SafetyAgent :</strong> "Commençons par votre siège, l'ajustement le plus critique. Réglez la hauteur pour que vos pieds soient à plat au sol et vos genoux à 90°. Prenez une nouvelle photo latérale pour que je vérifie."<br><br>
+                                <strong>📸 [Photo prise]</strong><br><br>
+                                <strong>💬 SafetyAgent :</strong> "✅ Parfait ! Hauteur siège corrigée. Maintenant, ajustons votre écran..."
+                            </div>
+                            <span class="badge info">Conversationnel</span>
+                            <span class="badge success">Validation Visuelle</span>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <span class="workflow-step-number">5</span>
+                        <div class="workflow-step-content">
+                            <div class="workflow-step-title">✅ Validation & Suivi Continu</div>
+                            <p>Après chaque correction, nouvelle analyse Vision AI pour confirmer conformité. Dashboard temps réel affiche progression : 45/100 → 68/100 → 92/100 (Conforme). Audits périodiques programmés (mensuel/trimestriel) pour maintenir conformité dans le temps.</p>
+                            <div class="progress-bar" style="margin-top: 20px;">
+                                <div class="progress-fill" style="width: 92%;">Score Conformité: 92/100 ✅</div>
+                            </div>
+                            <span class="badge success">Conformité Atteinte</span>
+                            <span class="badge primary">Suivi Continu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 40px 0 20px; font-size: 1.8rem; color: var(--light);">🎯 Bénéfices Clés de la Solution</h3>
+                <div class="grid-2">
+                    <div class="glass-card" style="border-top: 4px solid var(--success);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">✅ Pour les Employés</h4>
+                        <ul class="feature-list">
+                            <li>Audit ergonomique personnalisé en < 5 min (vs plusieurs heures manuel)</li>
+                            <li>Guidance pas-à-pas non-technique (compréhensible par tous)</li>
+                            <li>Validation visuelle immédiate de chaque correction</li>
+                            <li>Réduction douleurs dos/cou/épaules dès première semaine</li>
+                            <li>Autonomie complète (pas besoin d'expert sur site)</li>
+                            <li>Historique personnel suivi conformité dans le temps</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card" style="border-top: 4px solid var(--info);">
+                        <h4 style="font-size: 1.3rem; margin-bottom: 20px;">✅ Pour l'Organisation</h4>
+                        <ul class="feature-list">
+                            <li>Audit 100% des postes en quelques jours (vs mois/années)</li>
+                            <li>Conformité CSA Z412:2024 documentée et traçable</li>
+                            <li>Réduction TMS -30% = économies massives ($15K/cas évité)</li>
+                            <li>Priorisation investissements (bras écran vs repose-pieds)</li>
+                            <li>Dashboard conformité temps réel (risque, progression, budget)</li>
+                            <li>Évolutivité : onboarding nouveaux employés automatisé</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="workflow" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">🔄</div>
+                    <h2 class="section-title">Audit Automatisé - En Développement</h2>
+                </div>
+                <div class="info-box info">
+                    <p>Section complète en cours de développement...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="data" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">📈</div>
+                    <h2 class="section-title">Données & Vision - En Développement</h2>
+                </div>
+                <div class="info-box info">
+                    <p>Section complète en cours de développement...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="adjustments" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">🔧</div>
+                    <h2 class="section-title">Ajustements Guidés - En Développement</h2>
+                </div>
+                <div class="info-box info">
+                    <p>Section complète en cours de développement...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="standards" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">📜</div>
+                    <h2 class="section-title">Standards CSA/ISO - En Développement</h2>
+                </div>
+                <div class="info-box info">
+                    <p>Section complète en cours de développement...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="kpi" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">📊</div>
+                    <h2 class="section-title">KPIs & ROI - En Développement</h2>
+                </div>
+                <div class="info-box info">
+                    <p>Section complète en cours de développement...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="deployment" class="content-section">
+            <div class="glass-card">
+                <div class="section-header">
+                    <div class="section-icon">🚀</div>
+                    <h2 class="section-title">Déploiement - En Développement</h2>
+                </div>
+                <div class="info-box info">
+                    <p>Section complète en cours de développement...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">AgenticX5 by GenAISafety</div>
+            <p>Intelligence Agentique au Service de la Sécurité au Travail</p>
+            <p style="margin-top: 15px; color: var(--gray);">
+                UC-E11 : Ergonomie Poste Travail Bureau | Vision AI + Audit Automatisé
+            </p>
+            <div style="margin-top: 30px;">
+                <span class="badge primary">SafetyGraph</span>
+                <span class="badge success">Vision AI</span>
+                <span class="badge info">SafetyAgent</span>
+                <span class="badge warning">CSA Z412:2024</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / scrollable) * 100;
+            scrollProgress.style.width = progress + '%';
+        });
+
+        // Animate progress bars on scroll
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressFills = entry.target.querySelectorAll('.progress-fill, .chart-bar-fill');
+                    progressFills.forEach(fill => {
+                        const width = fill.style.width;
+                        fill.style.width = '0%';
+                        setTimeout(() => {
+                            fill.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.chart-container, .progress-bar').forEach(container => {
+            observer.observe(container);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('UC-E11 Ergonomie Bureau - Interface chargée');
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const tabs = Array.from(document.querySelectorAll('.nav-tab'));
+                const activeTab = document.querySelector('.nav-tab.active');
+                const currentIndex = tabs.indexOf(activeTab);
+                
+                let nextIndex;
+                if (e.key === 'ArrowRight') {
+                    nextIndex = (currentIndex + 1) % tabs.length;
+                } else {
+                    nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                }
+                
+                tabs[nextIndex].click();
+            }
+        });
+    </script>
+</body>
+</html>

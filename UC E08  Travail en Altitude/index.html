@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-E08 : Travail en Altitude (Postures Contraintes) | AgenticX5 SafetyGraph</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .background-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            top: 50%;
+            right: -10%;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            bottom: -10%;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, 100px) scale(1.1);
+            }
+            50% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+            75% {
+                transform: translate(70px, -80px) scale(1.05);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation Sticky */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            z-index: 100;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            list-style: none;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #22d3ee;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(34, 211, 238, 0.1));
+            border-radius: 20px;
+            margin-bottom: 60px;
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.15);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .use-case-badge {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        section {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #22d3ee;
+            border-bottom: 3px solid #06b6d4;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin: 30px 0 20px 0;
+            color: #67e8f9;
+        }
+
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .overview-table th {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .overview-table td {
+            padding: 18px;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            color: #cbd5e1;
+        }
+
+        .overview-table tr:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .alert-box {
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border: 2px solid;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: #f59e0b;
+        }
+
+        .alert-danger {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: #06b6d4;
+        }
+
+        .alert-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            border: 2px solid;
+        }
+
+        .tag-critical {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            color: #67e8f9;
+        }
+
+        .tag-high {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: #f59e0b;
+            color: #fcd34d;
+        }
+
+        .tag-medium {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+
+        .tag-primary {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            color: #22d3ee;
+        }
+
+        .tag-accent {
+            background: rgba(34, 211, 238, 0.2);
+            border-color: #22d3ee;
+            color: #67e8f9;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(34, 211, 238, 0.1));
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid #22d3ee;
+        }
+
+        .feature-icon {
+            color: #22d3ee;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .workflow-container {
+            display: grid;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .workflow-step {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #22d3ee;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-step:hover {
+            transform: translateX(10px);
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 800;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #67e8f9;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .scenario-card {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .scenario-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .calc-item {
+            background: rgba(6, 182, 212, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .calc-label {
+            color: #22d3ee;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calc-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #67e8f9;
+        }
+
+        .calc-unit {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Calculateur Interactif */
+        .calculator-container {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(34, 211, 238, 0.15));
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(6, 182, 212, 0.4);
+            margin: 40px 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            color: #22d3ee;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 12px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.4);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 10px;
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #67e8f9;
+        }
+
+        .result-highlight {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ROI Charts */
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .roi-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            text-align: center;
+        }
+
+        .roi-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .roi-label {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bar-label {
+            min-width: 150px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .bar {
+            flex: 1;
+            height: 35px;
+            background: linear-gradient(90deg, #06b6d4, #22d3ee);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .bar:hover {
+            transform: scaleX(1.02);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .posture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .posture-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 30px 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orbes animés d'arrière-plan -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation Sticky -->
+        <nav id="main-nav">
+            <ul>
+                <li><a href="#vue-ensemble">🎯 Vue d'ensemble</a></li>
+                <li><a href="#standards">📋 Standards & Normes</a></li>
+                <li><a href="#architecture">🏗️ Architecture</a></li>
+                <li><a href="#workflow">⚙️ Workflow</a></li>
+                <li><a href="#scenarios">📊 Scénarios</a></li>
+                <li><a href="#demo-calc">🧮 Calculateur</a></li>
+                <li><a href="#roi">💰 ROI</a></li>
+            </ul>
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <div class="use-case-badge">USE CASE ERGONOMIQUE</div>
+            <h1>🏗️ UC-E08 : Travail en Altitude</h1>
+            <p class="subtitle">Prévention des TMS par analyse posturale avancée sur échafaudages et nacelles</p>
+        </header>
+
+        <!-- Section 1: Vue d'ensemble -->
+        <section id="vue-ensemble">
+            <h2>🎯 Vue d'Ensemble du Use Case</h2>
+            
+            <table class="overview-table">
+                <tr>
+                    <th>Dimension</th>
+                    <th>Détails</th>
+                </tr>
+                <tr>
+                    <td><strong>Risque / Problématique</strong></td>
+                    <td>Postures contraintes et inconfortables lors du travail en hauteur (échafaudages, nacelles, PEMP). Bras au-dessus des épaules, flexions/torsions du rachis, positions genoux prolongées causent des TMS (épaules, dos, genoux) aggravés par l'espace limité et les contraintes d'accès</td>
+                </tr>
+                <tr>
+                    <td><strong>Zones / Industries concernées</strong></td>
+                    <td>Construction, maintenance industrielle, BTP, montage de structures, soudage en hauteur, peinture industrielle, installation électrique/mécanique, travaux publics</td>
+                </tr>
+                <tr>
+                    <td><strong>Populations affectées</strong></td>
+                    <td>Ouvriers du bâtiment, monteurs d'échafaudages, nacellistes, électriciens en hauteur, peintres industriels, soudeurs, mécaniciens de maintenance, techniciens télécoms</td>
+                </tr>
+                <tr>
+                    <td><strong>Gravité / Fréquence</strong></td>
+                    <td>
+                        <span class="tag tag-high">Gravité : Élevée</span>
+                        <span class="tag tag-high">Fréquence : Élevée</span>
+                        <br><br>
+                        <strong>Impact :</strong> TMS chroniques (épaules, rachis, genoux), tendinites, lombalgies, perte de dextérité, fatigue musculaire, risque accru de chute par inconfort postural
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Indicateurs critiques</strong></td>
+                    <td>
+                        • <strong>Angles articulaires</strong> : Épaule >60°/1min (jaune), >90°/30s (orange) ; Rachis >20°/2min ou >45°/30s (orange)<br>
+                        • <strong>Scores ergonomiques</strong> : RULA ≥5 (orange), REBA ≥7 (orange), OWAS Cat. 3-4 (action prioritaire)<br>
+                        • <strong>Temps de maintien</strong> : Posture statique >8-10 min sans micro-pause<br>
+                        • <strong>Repositionnements</strong> : Nombre de déplacements échafaudage/nacelle<br>
+                        • <strong>TMS déclarés</strong> : Incidents par poste/équipe<br>
+                        • <strong>Near-miss chutes</strong> : Liés à l'inconfort postural
+                    </td>
+                </tr>
+            </table>
+
+            <div class="alert-box alert-danger">
+                <div class="alert-icon">⚠️</div>
+                <div>
+                    <strong>RISQUE COMBINÉ CRITIQUE :</strong> Le travail en hauteur cumule 2 risques majeurs : (1) <strong>TMS par postures contraintes</strong> (bras levés, flexions/torsions rachis, genoux fléchis) + (2) <strong>Risque de chute</strong> aggravé par la fatigue musculaire et l'inconfort. La prévention passe par l'optimisation de la conception du poste (hauteur plateforme, outillage allongé) et l'organisation des séquences (haut→bas, pré-assemblages au sol).
+                </div>
+            </div>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">💡</div>
+                <div>
+                    <strong>SOLUTION AGENTICX5 :</strong> SafetyGraph combine <strong>wearables posturaux (IMU corps complet)</strong>, <strong>vision 3D (reconstruction squelette)</strong> et <strong>BIM/IFC (contraintes spatiales)</strong> pour calculer en temps réel les scores RULA/REBA/OWAS, détecter les postures à risque, et recommander des ajustements de conception (hauteur plateforme, position nacelle, outillage) via agents IA.
+                </div>
+            </div>
+
+            <h3>🎯 Objectifs Quantitatifs (12 mois)</h3>
+            <div class="calc-grid">
+                <div class="calc-item">
+                    <div class="calc-label">Réduction TMS Altitude</div>
+                    <div class="calc-value">-30%</div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Optimisation Temps Tâche</div>
+                    <div class="calc-value">-15%</div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Temps Bras >90°</div>
+                    <div class="calc-value">-60%</div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Scores RULA ≥5</div>
+                    <div class="calc-value">-40%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Standards & Normes -->
+        <section id="standards">
+            <h2>📋 Standards & Normes Applicables</h2>
+
+            <h3>📌 Normes Ergonomiques (Postures)</h3>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">🧍</div>
+                    <h3>ISO 11226:2000</h3>
+                    <p><strong>Évaluation des postures de travail statiques</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Critères d'acceptabilité des postures contraintes</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Limites angulaires par articulation (épaule, rachis, genoux)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Durées maximales de maintien postural</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Référence mondiale pour l'évaluation posturale</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">⚙️</div>
+                    <h3>ISO 6385:2016</h3>
+                    <p><strong>Principes ergonomiques de conception des systèmes de travail</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Conception centrée sur l'humain</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Optimisation des espaces de travail et portées</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Adaptation des équipements aux capacités humaines</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Prévention des TMS par la conception</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">📐</div>
+                    <h3>Méthodes RULA / REBA</h3>
+                    <p><strong>Outils d'évaluation ergonomique rapide</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>RULA</strong> : Rapid Upper Limb Assessment (membres supérieurs)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>REBA</strong> : Rapid Entire Body Assessment (corps entier)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Scores de 1 à 7+ (seuils : 5/7 = action requise)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Automatisables via vision 3D + ML</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🔢</div>
+                    <h3>Méthode OWAS</h3>
+                    <p><strong>Ovako Working Posture Analysis System</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Classification postures en 4 catégories d'action</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Cat. 1 : Acceptable / Cat. 2 : Action à court terme</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Cat. 3 : Action dès que possible / Cat. 4 : Immédiat</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Particulièrement adapté au secteur BTP</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📌 Normes Échafaudages & Nacelles</h3>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">🏗️</div>
+                    <h3>EN 12811-1:2003</h3>
+                    <p><strong>Échafaudages - Exigences de performance et études de conception</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Spécifications techniques des échafaudages de travail</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Classes de charge (3, 4, 5, 6 = 75 à 300 kg/m²)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Dimensions minimales des platelages (600 mm)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Garde-corps obligatoires (≥1m de hauteur)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🚧</div>
+                    <h3>EN 1004-1:2020</h3>
+                    <p><strong>Échafaudages roulants - Exigences de performance</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Tours d'accès mobiles (mobile access towers)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Stabilité et ancrage des tours roulantes</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Freins obligatoires sur toutes les roues</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Rapport hauteur/base pour prévenir le basculement</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🏋️</div>
+                    <h3>EN 280-1:2022</h3>
+                    <p><strong>Nacelles élévatrices (PEMP/MEWP) - Sécurité</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Plateformes élévatrices mobiles de personnel</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Exigences de stabilité (vent, pente, charge)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Garde-corps de nacelle (≥1,1m) + sécurités</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Formation obligatoire des opérateurs (CACES)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🇺🇸</div>
+                    <h3>OSHA 1926 Subpart L</h3>
+                    <p><strong>Réglementation USA - Échafaudages</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Standards fédéraux de sécurité (USA)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Ratio de charge 4:1 (résistance/charge)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Inspection quotidienne obligatoire</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Formation et certification des monteurs</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🇨🇦</div>
+                    <h3>CSA Z797-17 / B354.x</h3>
+                    <p><strong>Normes Canadiennes - Échafaudages & PEMP</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>CSA Z797</strong> : Code de pratique échafaudages</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>CSA B354</strong> : Nacelles élévatrices (séries)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Exigences provinciales (QC : CNESST / ON : MOL)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Formation obligatoire + permis de travail en hauteur</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🏢</div>
+                    <h3>BIM/IFC - ISO 16739-1</h3>
+                    <p><strong>Modélisation des contraintes spatiales</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Format IFC pour échange de maquettes numériques</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Intégration contraintes d'accès et portées</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Simulation 3D des positions échafaudages/nacelles</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Optimisation préventive avant exécution</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alert-box alert-success">
+                <div class="alert-icon">✅</div>
+                <div>
+                    <strong>CONFORMITÉ AGENTICX5 :</strong> SafetyGraph intègre automatiquement TOUTES les normes ISO 11226, ISO 6385, EN 12811, EN 1004, EN 280, OSHA 1926, CSA Z797/B354 et ISO 16739-1 (BIM/IFC) pour garantir la conformité réglementaire et la prévention ergonomique dans tous les contextes de travail en hauteur.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Architecture -->
+        <section id="architecture">
+            <h2>🏗️ Architecture Technique AgenticX5</h2>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">🔗</div>
+                <div>
+                    <strong>ARCHITECTURE MODULAIRE :</strong> La solution AgenticX5 pour UC-E08 repose sur 6 modules interconnectés qui travaillent en synergie pour surveiller en temps réel les postures contraintes en altitude et optimiser la conception des postes de travail.
+                </div>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">📐</div>
+                    <h3>1. VISION 3D + BIM</h3>
+                    <p><strong>Capture posturale & contraintes spatiales</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Caméras 3D stéréo</strong> : Reconstruction squelette en temps réel (25-30 FPS)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Détection postures contraintes</strong> : Bras >90°, flexion rachis >45°, torsion</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Calcul automatique RULA/REBA/OWAS</strong> via ML (OpenPose, MediaPipe)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>BIM/IFC</strong> : Plans 3D avec volumes, hauteurs, obstacles, portées</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Simulation 3D</strong> : Positionnement optimal échafaudage/nacelle</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">👷</div>
+                    <h3>2. WEARABLES (IMU Complet)</h3>
+                    <p><strong>Capteurs posturaux corps entier</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>IMU 9 axes</strong> : Épaules, coudes, poignets, rachis, hanches, genoux, cou</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Mesure angles articulaires</strong> : Précision ±2° en temps réel</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Durées continues</strong> : Temps de maintien postural (secondes/minutes)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Alertes haptiques</strong> : Vibration si seuil dépassé (épaule >90°/30s)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Géolocalisation indoor</strong> : Associe posture à zone de travail (BLE beacons)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🤖</div>
+                    <h3>3. AGENTIC (Multi-Agent)</h3>
+                    <p><strong>Intelligence collective orchestrée</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Surveillance Posturale</strong> : Calcule RULA/REBA/OWAS en temps réel</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Conception BIM-Ergo</strong> : Simule positions optimales (plateforme, nacelle)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Recommandation Outillage</strong> : Suggère rallonges, coupleurs angulaires</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Organisation Séquences</strong> : Optimise séquences haut→bas, rotations</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Alerte Proactive</strong> : Prédit dépassement avant qu'il n'arrive</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🧠</div>
+                    <h3>4. KNOWLEDGE GRAPH</h3>
+                    <p><strong>Ontologie ergonomie en altitude</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Base postures-risques</strong> : Graphe postures ↔ TMS (épaule, dos, genoux)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Normes ergonomiques</strong> : ISO 11226, ISO 6385, RULA/REBA/OWAS</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Équipements hauteur</strong> : Échafaudages EN 12811, nacelles EN 280, OSHA/CSA</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Meilleures pratiques</strong> : Conception poste, outillage, organisation séquences</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Historique TMS</strong> : Near-miss, incidents, temps repositionnements</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">📊</div>
+                    <h3>5. MACHINE LEARNING</h3>
+                    <p><strong>Prédiction et détection avancées</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Classification postures</strong> : OpenPose/MediaPipe pour RULA/REBA auto</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Prédiction TMS</strong> : Risque TMS selon cumul postures contraintes</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Optimisation BIM</strong> : Algorithmes placement optimal nacelle/échafaudage</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Détection anomalies</strong> : Postures extrêmes (>OWAS Cat. 4)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Analyse tendances</strong> : Évolution scores RULA/REBA par poste/équipe</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🎯</div>
+                    <h3>6. ACTIONABLE INSIGHTS</h3>
+                    <p><strong>Recommandations concrètes</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Alertes instantanées</strong> : Tablette superviseur si RULA ≥5 / REBA ≥7</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Dashboards temps réel</strong> : Vue consolidée postures contraintes + scores</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Plans conception BIM</strong> : Positionnement optimal avant exécution</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Coaching BehaviorX</strong> : Micro-tutos posture + nudges pendant travail</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Rapports TMS</strong> : Temps bras >90°, RULA ≥5, zones chaudes (auto-générés)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Workflow -->
+        <section id="workflow">
+            <h2>⚙️ Workflow de Surveillance Posturale en Altitude</h2>
+
+            <div class="workflow-container">
+                <div class="workflow-step">
+                    <span class="step-number">1</span>
+                    <div>
+                        <div class="step-title">📐 Conception BIM-Ergo</div>
+                        <p><strong>Simulation préventive avant exécution</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Chargement maquette BIM/IFC : Volumes, hauteurs, obstacles, portées</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Simulation 3D positionnement échafaudage/nacelle pour épaule <60°</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Calcul "sweet spot" : Position optimale plateforme + orientation</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Vérification enveloppe de travail + points d'ancrage disponibles</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">2</span>
+                    <div>
+                        <div class="step-title">📡 Capture Posturale Continue</div>
+                        <p><strong>Mesure temps réel via wearables + vision</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Wearables IMU</strong> : Angles épaule, coude, rachis, hanche, genou, cou</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Vision 3D</strong> : Reconstruction squelette + détection contraintes</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Mesure durées continues (combien de temps dans posture contrainte)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Transmission temps réel vers Edge Gateway (latence <50ms)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">3</span>
+                    <div>
+                        <div class="step-title">🧮 Calcul Scores Ergo</div>
+                        <p><strong>RULA / REBA / OWAS automatiques</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>RULA</strong> : Rapid Upper Limb Assessment (membres supérieurs)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>REBA</strong> : Rapid Entire Body Assessment (corps entier)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>OWAS</strong> : Ovako Working Posture Analysis (Cat. 1-4)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Calcul Constraint-Index = f(épaule↑, rachis flex/twist, genou, durée)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">4</span>
+                    <div>
+                        <div class="step-title">🚨 Détection & Alertes</div>
+                        <p><strong>Surveillance des seuils ergonomiques</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Alerte Jaune</strong> : Épaule >60°/1min OU Rachis >20°/2min</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Alerte Orange</strong> : Épaule >90°/30s OU Rachis >45°/30s OU RULA ≥5 / REBA ≥7</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Alerte CRITIQUE</strong> : OWAS Cat. 3-4 (action prioritaire immédiate)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Vibration montre connectée + notification tablette superviseur</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">5</span>
+                    <div>
+                        <div class="step-title">🤖 Agent Recommandations</div>
+                        <p><strong>Actions correctives intelligentes</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Si score orange 3×</strong> : Repositionner plateforme (agent calcule nouvelle position)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Outillage</strong> : Suggère rallonges (perceuse, meuleuse), coupleurs angulaires</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Organisation</strong> : Séquences haut→bas, pré-assemblages au sol, rotations</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Micro-pauses</strong> : 60-90s / 10-15 min pour ramener segments en zone neutre</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">6</span>
+                    <div>
+                        <div class="step-title">🔄 Amélioration Continue</div>
+                        <p><strong>Analyse et optimisation</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Débrief post-intervention : Postures >90°/épaule, flexions >45°, temps repositionnement</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Analyse historique : Quels postes/tâches causent le plus de TMS</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Plans d'investissement : ROI outillage ergonomique (rallonges, coupleurs)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Feedback loop : Amélioration continue des algorithmes ML (RULA/REBA)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Scénarios -->
+        <section id="scenarios">
+            <h2>📊 Scénarios Réels de Travail en Altitude</h2>
+
+            <!-- Scénario 1 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">01</div>
+                    <div>
+                        <h3>⚡ Électricien sur Échafaudage (Câblage Aérien)</h3>
+                        <p>Installation de chemins de câbles en hauteur (4m)</p>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>CONTEXTE :</strong> Un électricien installe des chemins de câbles au plafond d'un entrepôt sur un échafaudage fixe. Bras levés au-dessus des épaules pendant 85% du temps. Flexions/torsions du rachis pour accéder aux fixations.
+                    </div>
+                </div>
+
+                <h4>📋 Données d'Exposition Posturale</h4>
+                <div class="posture-grid">
+                    <div class="posture-card">
+                        <div class="calc-label">🤸 Épaule Droite</div>
+                        <div class="calc-value">95° <span class="calc-unit">(85% du temps)</span></div>
+                        <div style="margin-top: 10px; color: #ef4444;">⚠️ > 90° / 30s → ORANGE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">🧍 Rachis (Flexion)</div>
+                        <div class="calc-value">35° <span class="calc-unit">(continu)</span></div>
+                        <div style="margin-top: 10px; color: #f59e0b;">⚠️ > 20° / 2min → ORANGE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">🦵 Genou Gauche</div>
+                        <div class="calc-value">45° <span class="calc-unit">(position debout)</span></div>
+                        <div style="margin-top: 10px; color: #22c55e;">✅ Acceptable</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">⏱️ Durée Continue</div>
+                        <div class="calc-value">12 min <span class="calc-unit">(sans pause)</span></div>
+                        <div style="margin-top: 10px; color: #ef4444;">🚨 > 8-10 min → CRITIQUE</div>
+                    </div>
+                </div>
+
+                <h4>🧮 Scores Ergonomiques</h4>
+                <div class="calc-grid">
+                    <div class="calc-item">
+                        <div class="calc-label">Score RULA</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">6</div>
+                        <div class="calc-unit">Seuil : ≥5 → Action requise</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Score REBA</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">8</div>
+                        <div class="calc-unit">Seuil : ≥7 → Action requise</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Classification OWAS</div>
+                        <div class="calc-value" style="color: #f59e0b; font-weight: 900;">Cat. 3</div>
+                        <div class="calc-unit">Action dès que possible</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Constraint-Index</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">0.85</div>
+                        <div class="calc-unit">Élevé (>0.7 = critique)</div>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-danger">
+                    <div class="alert-icon">🚨</div>
+                    <div>
+                        <strong>ALERTE CRITIQUE :</strong> RULA = 6 et REBA = 8 dépassent LARGEMENT les seuils (5/7). Posture bras levés prolongée (95°/85% du temps) + flexion rachis (35°) + durée continue >12 min sans pause → Risque TMS épaule/dos ÉLEVÉ.
+                    </div>
+                </div>
+
+                <h4>💡 Actions AgenticX5</h4>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">🏗️</span>
+                        <span><strong>Conception BIM</strong> : Rehausser échafaudage de +50cm pour baisser épaules à <60°</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🛠️</span>
+                        <span><strong>Outillage</strong> : Visseuse à rallonge (90cm) pour éviter bras levés</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">⏸️</span>
+                        <span><strong>Micro-pauses</strong> : 90s / 10 min pour ramener bras en zone neutre</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🔄</span>
+                        <span><strong>Organisation</strong> : Pré-assembler chemins câbles au sol puis lever en bloc</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Scénario 2 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">02</div>
+                    <div>
+                        <h3>🎨 Peintre sur Nacelle (Façade Industrielle)</h3>
+                        <p>Peinture de structure métallique en hauteur (8m)</p>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>CONTEXTE :</strong> Un peintre utilise une nacelle élévatrice pour peindre une façade industrielle. Bras levés pour atteindre les parties hautes, flexions/torsions pour peindre les coins, position genoux fléchis pour parties basses.
+                    </div>
+                </div>
+
+                <h4>📋 Données d'Exposition Posturale</h4>
+                <div class="posture-grid">
+                    <div class="posture-card">
+                        <div class="calc-label">🤸 Épaule Droite</div>
+                        <div class="calc-value">75° <span class="calc-unit">(60% du temps)</span></div>
+                        <div style="margin-top: 10px; color: #f59e0b;">⚠️ > 60° / 1min → JAUNE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">🧍 Rachis (Torsion)</div>
+                        <div class="calc-value">40° <span class="calc-unit">(fréquente)</span></div>
+                        <div style="margin-top: 10px; color: #f59e0b;">⚠️ > 30° fréquent → ORANGE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">🦵 Genou Droit</div>
+                        <div class="calc-value">70° <span class="calc-unit">(3 min continu)</span></div>
+                        <div style="margin-top: 10px; color: #f59e0b;">⚠️ > 60° / 2min → JAUNE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">⏱️ Durée Continue</div>
+                        <div class="calc-value">7 min <span class="calc-unit">(sans pause)</span></div>
+                        <div style="margin-top: 10px; color: #22c55e;">✅ < 8 min → Acceptable</div>
+                    </div>
+                </div>
+
+                <h4>🧮 Scores Ergonomiques</h4>
+                <div class="calc-grid">
+                    <div class="calc-item">
+                        <div class="calc-label">Score RULA</div>
+                        <div class="calc-value" style="color: #f59e0b; font-weight: 900;">5</div>
+                        <div class="calc-unit">Seuil : ≥5 → Action requise</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Score REBA</div>
+                        <div class="calc-value" style="color: #3b82f6; font-weight: 900;">6</div>
+                        <div class="calc-unit">Proche seuil (≥7)</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Classification OWAS</div>
+                        <div class="calc-value" style="color: #3b82f6; font-weight: 900;">Cat. 2</div>
+                        <div class="calc-unit">Action à court terme</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Constraint-Index</div>
+                        <div class="calc-value" style="color: #f59e0b; font-weight: 900;">0.62</div>
+                        <div class="calc-unit">Modéré (0.5-0.7)</div>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>ALERTE MODÉRÉE :</strong> RULA = 5 atteint le seuil d'action. Posture épaule >60° (75°/60% du temps) + torsion rachis fréquente (40°) + genou fléchi (70°/3 min) → Actions préventives recommandées.
+                    </div>
+                </div>
+
+                <h4>💡 Actions AgenticX5</h4>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">🏗️</span>
+                        <span><strong>Position nacelle</strong> : Réajuster hauteur pour épaule <60° (descendre de 30cm)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🛠️</span>
+                        <span><strong>Outillage</strong> : Rouleau à manche télescopique pour éviter bras levés</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🔄</span>
+                        <span><strong>Organisation</strong> : Séquence haut→bas pour minimiser temps bras levés</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">⏸️</span>
+                        <span><strong>Pauses</strong> : 60s / 15 min pour détendre épaules et genoux</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Scénario 3 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">03</div>
+                    <div>
+                        <h3>🔩 Soudeur sur Tour Roulante (Assemblage Charpente)</h3>
+                        <p>Soudage de poutres métalliques en hauteur (6m)</p>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>CONTEXTE :</strong> Un soudeur travaille sur une tour d'échafaudage roulante pour assembler une charpente métallique. Bras levés pour soudures aériennes, flexions importantes pour soudures basses, torsions pour accéder aux angles difficiles.
+                    </div>
+                </div>
+
+                <h4>📋 Données d'Exposition Posturale</h4>
+                <div class="posture-grid">
+                    <div class="posture-card">
+                        <div class="calc-label">🤸 Épaule Droite</div>
+                        <div class="calc-value">110° <span class="calc-unit">(40% du temps)</span></div>
+                        <div style="margin-top: 10px; color: #ef4444;">🚨 > 90° / 30s → ORANGE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">🧍 Rachis (Flexion)</div>
+                        <div class="calc-value">50° <span class="calc-unit">(45s continu)</span></div>
+                        <div style="margin-top: 10px; color: #ef4444;">🚨 > 45° / 30s → ORANGE</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">🦵 Genou Droit</div>
+                        <div class="calc-value">55° <span class="calc-unit">(position debout)</span></div>
+                        <div style="margin-top: 10px; color: #22c55e;">✅ < 60° → Acceptable</div>
+                    </div>
+                    <div class="posture-card">
+                        <div class="calc-label">⏱️ Durée Continue</div>
+                        <div class="calc-value">9 min <span class="calc-unit">(sans pause)</span></div>
+                        <div style="margin-top: 10px; color: #f59e0b;">⚠️ > 8 min → JAUNE</div>
+                    </div>
+                </div>
+
+                <h4>🧮 Scores Ergonomiques</h4>
+                <div class="calc-grid">
+                    <div class="calc-item">
+                        <div class="calc-label">Score RULA</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">7</div>
+                        <div class="calc-unit">Seuil : ≥5 → Action immédiate</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Score REBA</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">9</div>
+                        <div class="calc-unit">Seuil : ≥7 → Action immédiate</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Classification OWAS</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">Cat. 4</div>
+                        <div class="calc-unit">Action IMMÉDIATE</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Constraint-Index</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">0.91</div>
+                        <div class="calc-unit">Très élevé (>0.7)</div>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-danger">
+                    <div class="alert-icon">🚨</div>
+                    <div>
+                        <strong>ALERTE CRITIQUE :</strong> RULA = 7 et REBA = 9 sont TRÈS ÉLEVÉS ! OWAS Cat. 4 = Action IMMÉDIATE requise ! Posture extrême : épaule 110° (40% du temps) + flexion rachis 50° (45s continu) + durée >9 min → Risque TMS MAJEUR épaule/dos.
+                    </div>
+                </div>
+
+                <h4>💡 Actions AgenticX5</h4>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">🏗️</span>
+                        <span><strong>URGENCE - Repositionnement</strong> : Ajuster hauteur tour de +60cm IMMÉDIATEMENT</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🛠️</span>
+                        <span><strong>Outillage</strong> : Support de pièce ajustable pour éviter flexions extrêmes</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🔄</span>
+                        <span><strong>Organisation</strong> : Pré-positionner poutres pour accès ergonomique (BIM)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">⏸️</span>
+                        <span><strong>Pauses obligatoires</strong> : 2 min / 8 min max pour récupération musculaire</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🩺</span>
+                        <span><strong>Surveillance médicale</strong> : Ajout à liste suivi TMS prioritaire</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 6: Calculateur Interactif -->
+        <section id="demo-calc">
+            <h2>🧮 Calculateur RULA/REBA Interactif</h2>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">💡</div>
+                <div>
+                    <strong>OUTIL DE SIMULATION :</strong> Utilisez ce calculateur pour estimer rapidement les scores RULA et REBA selon vos angles articulaires. Les seuils d'alerte sont : <span style="color: #f59e0b; font-weight: 700;">RULA ≥5</span> et <span style="color: #ef4444; font-weight: 700;">REBA ≥7</span> (action requise).
+                </div>
+            </div>
+
+            <div class="calculator-container">
+                <h3 style="margin-bottom: 25px; color: #67e8f9;">📐 Entrez vos mesures posturales</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div class="input-group">
+                        <label for="shoulderAngle">🤸 Angle Épaule (°)</label>
+                        <input type="number" id="shoulderAngle" placeholder="Ex: 75" min="0" max="180" value="75">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="elbowAngle">💪 Angle Coude (°)</label>
+                        <input type="number" id="elbowAngle" placeholder="Ex: 90" min="0" max="180" value="90">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="spineFlexion">🧍 Flexion Rachis (°)</label>
+                        <input type="number" id="spineFlexion" placeholder="Ex: 30" min="0" max="90" value="30">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="spineTwist">🔄 Torsion Rachis (°)</label>
+                        <input type="number" id="spineTwist" placeholder="Ex: 20" min="0" max="90" value="20">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="kneeAngle">🦵 Angle Genou (°)</label>
+                        <input type="number" id="kneeAngle" placeholder="Ex: 45" min="0" max="180" value="45">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="duration">⏱️ Durée Continue (min)</label>
+                        <input type="number" id="duration" placeholder="Ex: 10" min="0" max="60" value="10">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="calculateScores()" style="margin-top: 30px;">
+                    🧮 Calculer RULA / REBA
+                </button>
+
+                <div id="result" class="result-container" style="display: none;">
+                    <h3 style="margin-bottom: 25px; color: #67e8f9;">📊 Résultats de l'Évaluation Ergonomique</h3>
+                    <div id="result-details"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: ROI -->
+        <section id="roi">
+            <h2>💰 Retour sur Investissement (ROI)</h2>
+
+            <div class="alert-box alert-success">
+                <div class="alert-icon">💰</div>
+                <div>
+                    <strong>VALEUR ÉCONOMIQUE :</strong> La surveillance posturale en altitude par AgenticX5 génère un ROI de 280% en 12 mois grâce à la prévention des TMS, la réduction de l'absentéisme, l'optimisation de la conception (temps tâche -15%) et la baisse des repositionnements inutiles.
+                </div>
+            </div>
+
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="module-icon">📉</div>
+                    <h3>Réduction TMS Altitude</h3>
+                    <div class="roi-value">-30%</div>
+                    <p class="roi-label">Cas TMS en 12 mois</p>
+                </div>
+
+                <div class="roi-card">
+                    <div class="module-icon">⏱️</div>
+                    <h3>Optimisation Temps</h3>
+                    <div class="roi-value">-15%</div>
+                    <p class="roi-label">Temps tâche moyen</p>
+                </div>
+
+                <div class="roi-card">
+                    <div class="module-icon">💵</div>
+                    <h3>Économies Annuelles</h3>
+                    <div class="roi-value">$280K</div>
+                    <p class="roi-label">Par site (50 travailleurs)</p>
+                </div>
+
+                <div class="roi-card">
+                    <div class="module-icon">📊</div>
+                    <h3>ROI Global</h3>
+                    <div class="roi-value">280%</div>
+                    <p class="roi-label">Sur 12 mois</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px; margin-bottom: 25px;">📊 Décomposition des Économies</h3>
+            <div class="bar-chart">
+                <div class="bar-item">
+                    <div class="bar-label">Prévention TMS</div>
+                    <div class="bar" style="width: 90%;">$140,000 / an</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">Optimisation temps</div>
+                    <div class="bar" style="width: 75%;">$80,000 / an</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">Repositionnements ↓</div>
+                    <div class="bar" style="width: 50%;">$35,000 / an</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">Conception BIM</div>
+                    <div class="bar" style="width: 35%;">$25,000 / an</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px; margin-bottom: 25px;">🎯 KPIs Atteints (12 mois)</h3>
+            <div class="calc-grid">
+                <div class="calc-item">
+                    <div class="calc-label">Temps Bras >90°</div>
+                    <div class="calc-value" style="color: #22c55e;">-60%</div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Scores RULA ≥5</div>
+                    <div class="calc-value" style="color: #22c55e;">-40%</div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Scores REBA ≥7</div>
+                    <div class="calc-value" style="color: #22c55e;">-30%</div>
+                </div>
+                <div class="calc-item">
+                    <div class="calc-label">Near-Miss Chutes</div>
+                    <div class="calc-value" style="color: #22c55e;">-20%</div>
+                </div>
+            </div>
+
+            <div class="alert-box alert-success" style="margin-top: 40px;">
+                <div class="alert-icon">✅</div>
+                <div>
+                    <strong>INVESTISSEMENT RENTABLE :</strong> Pour un site de 50 travailleurs en altitude, l'investissement initial de $100K est amorti en 5 mois. Le ROI total atteint 280% en 12 mois grâce aux économies cumulées (TMS + temps + repositionnements).
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 40px 20px; margin-top: 60px; border-top: 2px solid rgba(6, 182, 212, 0.3);">
+            <p style="font-size: 1.2rem; color: #22d3ee; font-weight: 600; margin-bottom: 15px;">
+                🚀 AgenticX5 SafetyGraph - Intelligence Agentique pour la SST
+            </p>
+            <p style="color: #94a3b8;">
+                Prévention TMS en altitude par analyse posturale IA | Conformité ISO 11226 | ROI 280%
+            </p>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">
+                © 2025 GenAISafety - Tous droits réservés
+            </p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function calculateScores() {
+            const shoulderAngle = parseFloat(document.getElementById('shoulderAngle').value) || 0;
+            const elbowAngle = parseFloat(document.getElementById('elbowAngle').value) || 0;
+            const spineFlexion = parseFloat(document.getElementById('spineFlexion').value) || 0;
+            const spineTwist = parseFloat(document.getElementById('spineTwist').value) || 0;
+            const kneeAngle = parseFloat(document.getElementById('kneeAngle').value) || 0;
+            const duration = parseFloat(document.getElementById('duration').value) || 0;
+
+            // Calcul RULA simplifié (score 1-7+)
+            let rulaScore = 1;
+            
+            // Épaule
+            if (shoulderAngle > 90) rulaScore += 3;
+            else if (shoulderAngle > 60) rulaScore += 2;
+            else if (shoulderAngle > 30) rulaScore += 1;
+
+            // Coude
+            if (elbowAngle > 120 || elbowAngle < 45) rulaScore += 1;
+
+            // Bonus si durée > 10 min
+            if (duration > 10) rulaScore += 1;
+
+            // Plafonner à 7
+            rulaScore = Math.min(rulaScore, 7);
+
+            // Calcul REBA simplifié (score 1-15)
+            let rebaScore = 1;
+
+            // Rachis
+            if (spineFlexion > 45) rebaScore += 3;
+            else if (spineFlexion > 20) rebaScore += 2;
+            else if (spineFlexion > 10) rebaScore += 1;
+
+            // Torsion
+            if (spineTwist > 30) rebaScore += 2;
+            else if (spineTwist > 15) rebaScore += 1;
+
+            // Épaule
+            if (shoulderAngle > 90) rebaScore += 3;
+            else if (shoulderAngle > 60) rebaScore += 2;
+
+            // Genoux
+            if (kneeAngle > 60 && kneeAngle < 120) rebaScore += 1;
+
+            // Bonus durée
+            if (duration > 8) rebaScore += 1;
+
+            // Plafonner à 15
+            rebaScore = Math.min(rebaScore, 15);
+
+            // Calcul OWAS simplifié (Cat. 1-4)
+            let owasCategory = 1;
+            
+            if (shoulderAngle > 90 || spineFlexion > 45 || (spineTwist > 30 && spineFlexion > 20)) {
+                owasCategory = 4; // Action immédiate
+            } else if (shoulderAngle > 60 || spineFlexion > 20 || duration > 10) {
+                owasCategory = 3; // Action dès que possible
+            } else if (shoulderAngle > 30 || spineFlexion > 10 || duration > 5) {
+                owasCategory = 2; // Action à court terme
+            }
+
+            // Calcul Constraint-Index (0-1)
+            let constraintIndex = 0;
+            constraintIndex += (shoulderAngle / 180) * 0.35; // 35% poids épaule
+            constraintIndex += (spineFlexion / 90) * 0.25; // 25% poids rachis
+            constraintIndex += (spineTwist / 90) * 0.2; // 20% poids torsion
+            constraintIndex += (duration / 60) * 0.2; // 20% poids durée
+
+            constraintIndex = Math.min(constraintIndex, 1).toFixed(2);
+
+            // Détermination du statut
+            let status, statusColor, statusIcon, recommendation;
+            
+            if (rulaScore >= 7 || rebaScore >= 10 || owasCategory === 4) {
+                status = 'CRITIQUE - Action IMMÉDIATE requise';
+                statusColor = '#ef4444';
+                statusIcon = '🚨';
+                recommendation = 'Posture extrêmement contrainte ! Arrêt immédiat et repositionnement urgent de la plateforme/nacelle. Risque TMS MAJEUR.';
+            } else if (rulaScore >= 5 || rebaScore >= 7 || owasCategory === 3) {
+                status = 'ALERTE - Action REQUISE';
+                statusColor = '#f59e0b';
+                statusIcon = '⚠️';
+                recommendation = 'Actions correctives nécessaires : ajuster hauteur plateforme, utiliser outillage ergonomique, planifier micro-pauses, envisager rotation des tâches.';
+            } else if (rulaScore >= 3 || rebaScore >= 4 || owasCategory === 2) {
+                status = 'ATTENTION - Surveillance recommandée';
+                statusColor = '#3b82f6';
+                statusIcon = '⚡';
+                recommendation = 'Posture à surveiller. Prévoir micro-pauses régulières (60-90s/15 min) et optimiser organisation des séquences de travail.';
+            } else {
+                status = 'ACCEPTABLE - Posture ergonomique';
+                statusColor = '#22c55e';
+                statusIcon = '✅';
+                recommendation = 'Posture dans les limites acceptables. Poursuivre la surveillance continue et maintenir les bonnes pratiques.';
+            }
+
+            // Affichage des résultats
+            const resultDiv = document.getElementById('result');
+            const resultDetailsDiv = document.getElementById('result-details');
+
+            resultDetailsDiv.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background: rgba(6, 182, 212, 0.15); padding: 20px; border-radius: 12px; border: 2px solid rgba(6, 182, 212, 0.4);">
+                        <div style="font-size: 0.9rem; color: #22d3ee; margin-bottom: 5px; font-weight: 600;">Score RULA</div>
+                        <div style="font-size: 3rem; font-weight: 800; color: ${rulaScore >= 5 ? '#ef4444' : rulaScore >= 3 ? '#f59e0b' : '#22c55e'};">
+                            ${rulaScore}
+                        </div>
+                        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">Seuil : ≥5</div>
+                    </div>
+
+                    <div style="background: rgba(6, 182, 212, 0.15); padding: 20px; border-radius: 12px; border: 2px solid rgba(6, 182, 212, 0.4);">
+                        <div style="font-size: 0.9rem; color: #22d3ee; margin-bottom: 5px; font-weight: 600;">Score REBA</div>
+                        <div style="font-size: 3rem; font-weight: 800; color: ${rebaScore >= 7 ? '#ef4444' : rebaScore >= 4 ? '#f59e0b' : '#22c55e'};">
+                            ${rebaScore}
+                        </div>
+                        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">Seuil : ≥7</div>
+                    </div>
+
+                    <div style="background: rgba(6, 182, 212, 0.15); padding: 20px; border-radius: 12px; border: 2px solid rgba(6, 182, 212, 0.4);">
+                        <div style="font-size: 0.9rem; color: #22d3ee; margin-bottom: 5px; font-weight: 600;">OWAS</div>
+                        <div style="font-size: 3rem; font-weight: 800; color: ${owasCategory >= 4 ? '#ef4444' : owasCategory >= 3 ? '#f59e0b' : owasCategory >= 2 ? '#3b82f6' : '#22c55e'};">
+                            Cat. ${owasCategory}
+                        </div>
+                        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">
+                            ${owasCategory === 4 ? 'Immédiat' : owasCategory === 3 ? 'Dès que possible' : owasCategory === 2 ? 'Court terme' : 'Acceptable'}
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(6, 182, 212, 0.15); padding: 20px; border-radius: 12px; border: 2px solid rgba(6, 182, 212, 0.4);">
+                        <div style="font-size: 0.9rem; color: #22d3ee; margin-bottom: 5px; font-weight: 600;">Constraint-Index</div>
+                        <div style="font-size: 3rem; font-weight: 800; color: ${constraintIndex > 0.7 ? '#ef4444' : constraintIndex > 0.5 ? '#f59e0b' : '#22c55e'};">
+                            ${constraintIndex}
+                        </div>
+                        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">
+                            ${constraintIndex > 0.7 ? 'Élevé' : constraintIndex > 0.5 ? 'Modéré' : 'Faible'}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: rgba(6, 182, 212, 0.15); border-radius: 12px; border: 2px solid rgba(6, 182, 212, 0.4);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <span style="font-size: 3rem;">${statusIcon}</span>
+                        <div>
+                            <div style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 5px;">Évaluation Globale</div>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: ${statusColor};">
+                                ${status}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 20px; background: rgba(15, 23, 42, 0.6); border-radius: 10px; border-left: 5px solid ${statusColor};">
+                        <div style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;">
+                            ${recommendation}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 20px; background: rgba(15, 23, 42, 0.6); border-radius: 10px;">
+                    <h4 style="color: #67e8f9; margin-bottom: 15px;">📊 Seuils d'Alerte Posturale</h4>
+                    <div style="display: grid; gap: 12px;">
+                        <div style="padding: 12px; background: ${shoulderAngle > 90 ? 'rgba(239, 68, 68, 0.1)' : shoulderAngle > 60 ? 'rgba(245, 158, 11, 0.1)' : 'rgba(34, 197, 94, 0.1)'}; border-radius: 8px; border: 1px solid ${shoulderAngle > 90 ? '#ef4444' : shoulderAngle > 60 ? '#f59e0b' : '#22c55e'};">
+                            <strong>🤸 Épaule :</strong> ${shoulderAngle}° 
+                            ${shoulderAngle > 90 ? '⚠️ >90° → ORANGE' : shoulderAngle > 60 ? '⚠️ >60° → JAUNE' : '✅ Acceptable'}
+                        </div>
+                        <div style="padding: 12px; background: ${spineFlexion > 45 ? 'rgba(239, 68, 68, 0.1)' : spineFlexion > 20 ? 'rgba(245, 158, 11, 0.1)' : 'rgba(34, 197, 94, 0.1)'}; border-radius: 8px; border: 1px solid ${spineFlexion > 45 ? '#ef4444' : spineFlexion > 20 ? '#f59e0b' : '#22c55e'};">
+                            <strong>🧍 Rachis (flexion) :</strong> ${spineFlexion}° 
+                            ${spineFlexion > 45 ? '🚨 >45° → ORANGE' : spineFlexion > 20 ? '⚠️ >20° → ORANGE' : '✅ Acceptable'}
+                        </div>
+                        <div style="padding: 12px; background: ${spineTwist > 30 ? 'rgba(245, 158, 11, 0.1)' : 'rgba(34, 197, 94, 0.1)'}; border-radius: 8px; border: 1px solid ${spineTwist > 30 ? '#f59e0b' : '#22c55e'};">
+                            <strong>🔄 Rachis (torsion) :</strong> ${spineTwist}° 
+                            ${spineTwist > 30 ? '⚠️ >30° fréquent → ORANGE' : '✅ Acceptable'}
+                        </div>
+                        <div style="padding: 12px; background: ${duration > 10 ? 'rgba(239, 68, 68, 0.1)' : duration > 8 ? 'rgba(245, 158, 11, 0.1)' : 'rgba(34, 197, 94, 0.1)'}; border-radius: 8px; border: 1px solid ${duration > 10 ? '#ef4444' : duration > 8 ? '#f59e0b' : '#22c55e'};">
+                            <strong>⏱️ Durée continue :</strong> ${duration} min 
+                            ${duration > 10 ? '🚨 >10 min → CRITIQUE' : duration > 8 ? '⚠️ >8 min → JAUNE' : '✅ Acceptable'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-P17: Confinement Énergétique (Lockout/Tagout) | AgenticX5 SafetyGraph</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Orbes flottants animés */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 25s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb1 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.4) 0%, transparent 70%);
+            top: -15%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, transparent 70%);
+            bottom: -20%;
+            right: -15%;
+            animation-delay: 8s;
+        }
+
+        .orb3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%);
+            top: 45%;
+            right: 5%;
+            animation-delay: 16s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(40px, -60px) scale(1.15) rotate(120deg); }
+            66% { transform: translate(-30px, 40px) scale(0.9) rotate(240deg); }
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(249, 115, 22, 0.1) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .uc-badge {
+            background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+        }
+
+        .priority-badge {
+            background: rgba(220, 38, 38, 0.2);
+            border: 2px solid #dc2626;
+            color: #fca5a5;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fca5a5 0%, #fdba74 50%, #fcd34d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        .nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: #dc2626;
+            color: #fef2f2;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Sections de contenu */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.25);
+            border-color: rgba(220, 38, 38, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        /* Table des données */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.25) 0%, rgba(249, 115, 22, 0.2) 100%);
+            color: #fcd34d;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid rgba(220, 38, 38, 0.4);
+        }
+
+        .data-table th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        .data-table th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            color: #e2e8f0;
+        }
+
+        .data-table tr:hover {
+            background: rgba(220, 38, 38, 0.05);
+        }
+
+        /* Liste à puces personnalisée */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(220, 38, 38, 0.05);
+            border-left: 3px solid #dc2626;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(220, 38, 38, 0.1);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            color: #f97316;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Architecture modules */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .arch-card {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.12) 0%, rgba(249, 115, 22, 0.08) 100%);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .arch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35);
+            border-color: #dc2626;
+        }
+
+        .arch-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .arch-icon {
+            font-size: 28px;
+        }
+
+        .arch-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fca5a5;
+        }
+
+        .arch-description {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Timeline workflow */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #dc2626 0%, #f97316 50%, #fbbf24 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #dc2626;
+            border: 3px solid #0f172a;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.3);
+        }
+
+        .timeline-time {
+            color: #f97316;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .timeline-content h4 {
+            color: #fca5a5;
+            margin-bottom: 10px;
+        }
+
+        /* Alert boxes */
+        .alert-box {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            align-items: flex-start;
+        }
+
+        .alert-critical {
+            background: rgba(220, 38, 38, 0.12);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+        }
+
+        .alert-warning {
+            background: rgba(234, 179, 8, 0.12);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #86efac;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        /* Demo simulation */
+        .demo-container {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 27, 75, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(220, 38, 38, 0.35);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .step-card {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+            border-color: #dc2626;
+        }
+
+        .step-card.completed {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+
+        .step-number {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fca5a5 0%, #fdba74 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .step-title {
+            color: #f1f5f9;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-status {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* Controls simulation */
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(220, 38, 38, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-safe {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #86efac;
+        }
+
+        .status-warning {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+
+        .status-danger {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            color: #fca5a5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .nav {
+                position: static;
+            }
+
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orbes animés -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="uc-badge">UC-P17 • PRÉVENTION</div>
+                <div class="priority-badge">
+                    <span>🔴</span>
+                    <span>PRIORITÉ CRITIQUE</span>
+                </div>
+            </div>
+            <h1>Confinement Énergétique (Lockout/Tagout)</h1>
+            <p class="subtitle">
+                Système intelligent de cadenassage et traçabilité LOTO pour prévenir les démarrages intempestifs • 
+                89 incidents graves/an évitables • Architecture WEARABLES + AGENTIC + CONVERSATIONNEL + KG • 
+                Conformité RSST, CSA Z460, OSHA 1910.147
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('overview')">📊 Vue d'ensemble</button>
+            <button class="nav-btn" onclick="showSection('standards')">📋 Normes & Standards</button>
+            <button class="nav-btn" onclick="showSection('architecture')">🏗️ Architecture</button>
+            <button class="nav-btn" onclick="showSection('workflow')">⚙️ Workflow LOTO</button>
+            <button class="nav-btn" onclick="showSection('scenarios')">🎭 Scénarios</button>
+            <button class="nav-btn" onclick="showSection('demo')">🎮 Démo Interactive</button>
+            <button class="nav-btn" onclick="showSection('roi')">💰 ROI & Impact</button>
+        </div>
+
+        <!-- Section: Vue d'ensemble -->
+        <div id="overview" class="content-section active">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2 class="card-title">Vue d'Ensemble - UC-P17</h2>
+                </div>
+                
+                <table class="data-table">
+                    <tr>
+                        <th style="width: 25%;">Dimension</th>
+                        <th>Détails</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Risque/Problématique</strong></td>
+                        <td>Démarrage intempestif machines (89 incidents graves/an au Québec, 38K+ lésions/an Canada)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Action/Solution</strong></td>
+                        <td>Vérification procédure LOTO intelligente + traçabilité complète + assistant conversationnel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Données Utilisées</strong></td>
+                        <td>
+                            • <strong>RFID/NFC:</strong> Cadenas électroniques intelligents traçables<br>
+                            • <strong>Vision AI:</strong> Vérification visuelle cadenas posés/étiquettes<br>
+                            • <strong>Logs maintenance:</strong> Historique interventions par équipement<br>
+                            • <strong>Checklist LOTO digitales:</strong> Validation étapes en temps réel<br>
+                            • <strong>Knowledge Graph:</strong> Procédures LOTO par équipement/énergie
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>
+                            <strong>WEARABLES + AGENTIC + KG + CONVERSATIONNEL</strong><br>
+                            • RFID: Cadenas intelligents avec validation cléage unique<br>
+                            • Agentic: Vérification automatisée étapes LOTO + approbations<br>
+                            • KG: Procédures LOTO par équipement dans SafetyOntology<br>
+                            • Conversationnel: SafetyAgent guide étape par étape<br>
+                            • Vision: Vérification visuelle conformité cadenassage
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modules SafetyGraph</strong></td>
+                        <td>
+                            • <strong>Module PTW (Permit to Work):</strong> Génération permis travail automatisée<br>
+                            • <strong>SafetyOntology (Neo4j):</strong> Base procédures LOTO par équipement<br>
+                            • <strong>SafetyAgent:</strong> Assistant conversationnel LOTO interactif<br>
+                            • <strong>Vision AI:</strong> Détection cadenas/étiquettes par caméras<br>
+                            • <strong>Dashboard Conformité:</strong> Métriques temps réel LOTO<br>
+                            • <strong>Training Module:</strong> Formation LOTO interactive
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROI Estimé</strong></td>
+                        <td>
+                            • Réduction 70% incidents LOTO<br>
+                            • Conformité audits: +35%<br>
+                            • Traçabilité: 100% (vs 40-60% manuel)<br>
+                            • Temps procédure: -25%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Priorité</strong></td>
+                        <td><span class="priority-badge">🔴 CRITIQUE (accidents mortels potentiels)</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚠️</span>
+                    <h2 class="card-title">Problématique Critique</h2>
+                </div>
+                
+                <div class="alert-box alert-critical">
+                    <span class="alert-icon">🔴</span>
+                    <div>
+                        <strong>Le Confinement Énergétique: Enjeu #1 Sécurité Industrielle</strong>
+                        <p style="margin-top: 10px;">Le LOTO (Lockout/Tagout) est la procédure de sécurité la plus critique en milieu industriel. 
+                        Le démarrage intempestif d'équipements pendant la maintenance cause chaque année des accidents graves, 
+                        incluant des décès évitables. Les approches manuelles actuelles (cadenas physiques, étiquettes papier, 
+                        checklists non-digitales) présentent des taux de non-conformité alarmants de 40-60% lors des audits.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">📈 Statistiques Alarmantes</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⚡</div>
+                            <div class="arch-title">38,000+</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Lésions annuelles Canada</strong></p>
+                            <p style="margin-top: 8px;">Liées au démarrage intempestif d'équipements lors de maintenance, réparation ou ajustement</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🚨</div>
+                            <div class="arch-title">89</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Incidents graves/an Québec</strong></p>
+                            <p style="margin-top: 8px;">Recensés CNESST (2015-2024) nécessitant arrêt travail >14 jours, hospitalisations, décès</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">💰</div>
+                            <div class="arch-title">125K$</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Coût moyen incident</strong></p>
+                            <p style="margin-top: 8px;">Comprenant frais médicaux, arrêt production, enquête SST, indemnités. Décès: 1.2M$ CAD</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📉</div>
+                            <div class="arch-title">40-60%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Taux non-conformité audits</strong></p>
+                            <p style="margin-top: 8px;">Des audits RSST/CSA Z460 révèlent lacunes: procédures incomplètes, formation insuffisante, traçabilité manquante</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🎯 Objectifs du Système AgenticX5-LOTO</h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Zéro démarrage intempestif:</strong> Validation automatique isolement AVANT début travaux (RFID + Vision AI)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Conformité 100%:</strong> Procédures SafetyOntology conformes RSST/CSA Z460/OSHA 1910.147</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Traçabilité totale:</strong> Logs immutables Neo4j (qui, quand, où, quel équipement, quelle énergie)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Assistant intelligent:</strong> SafetyAgent guide conversationnel étape par étape (vocal + texte)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Réduction temps:</strong> Automatisation validations (-25% durée procédure) sans compromis sécurité</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section: Normes & Standards -->
+        <div id="standards" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📋</span>
+                    <h2 class="card-title">Normes & Standards Applicables</h2>
+                </div>
+                
+                <div class="alert-box alert-info">
+                    <span class="alert-icon">ℹ️</span>
+                    <div>
+                        <strong>Couverture Réglementaire Complète Multi-Juridictions</strong>
+                        <p>UC-P17 s'appuie sur un cadre normatif exhaustif couvrant Québec, Canada, USA et normes internationales 
+                        (ISO) pour le confinement des énergies dangereuses. Toutes les procédures AgenticX5-LOTO sont alignées 
+                        sur ces standards pour assurer conformité légale et défense en cas d'audit ou incident.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">🇨🇦 Québec</h3>
+                
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">⚖️</div>
+                        <div class="arch-title">RSST - Cadenassage (Art. 188.1 à 188.13)</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Règlement sur la santé et la sécurité du travail - Dispositions cadenassage</strong></p>
+                        <p style="margin-top: 10px;">Exigences légales Québec pour méthodes de contrôle des énergies:</p>
+                        <ul class="feature-list" style="margin-top: 15px;">
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Art. 188.1:</strong> Définitions (cadenassage, verrouillage, condamnation, étiquetage)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Art. 188.2-188.3:</strong> Méthode écrite obligatoire par équipement/énergie</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Art. 188.4:</strong> Cléage unique personnel (1 cadenas par travailleur)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Art. 188.5-188.6:</strong> Registre cadenassage + coordination multi-employeurs</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Art. 188.7-188.8:</strong> Vérification d'isolement AVANT travaux (test fonctionnel)</span>
+                            </li>
+                        </ul>
+                        <div style="margin-top: 15px;">
+                            <strong>Application AgenticX5:</strong> SafetyOntology encode Art. 188.x comme règles obligatoires. 
+                            RFID valide cléage unique. Neo4j = registre digital immutable.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: Légis Québec - RSST c. S-2.1, r. 13
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">📘</div>
+                        <div class="arch-title">CNESST - Guide Cadenassage</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Guide: "Cadenassage et autres méthodes de contrôle des énergies"</strong></p>
+                        <p style="margin-top: 10px;">Document de référence CNESST avec procédures types, rôles, formation, méthodes alternatives.</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application AgenticX5:</strong> SafetyAgent utilise guide CNESST pour coaching conversationnel. 
+                            Checklist digitales basées procédures types. Training Module = formation interactive conforme.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: CNESST DC100-1046
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">🇨🇦 Canada (National)</h3>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🔐</div>
+                        <div class="arch-title">CSA Z460:2020</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Control of Hazardous Energy - Lockout and Other Methods</strong></p>
+                        <p style="margin-top: 10px;">Standard canadien de référence pour programme LOTO complet:</p>
+                        <ul class="feature-list" style="margin-top: 15px;">
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Programme écrit:</strong> Politique, responsabilités, procédures documentées</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Procédures par point d'isolement:</strong> Identification toutes énergies (électrique, mécanique, pneumatique, hydraulique, thermique, chimique, gravité)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Validation d'isolement:</strong> Tests fonctionnels obligatoires (tryout procedure)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Audits/Traçabilité:</strong> Inspection périodique procédures + logs interventions</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Méthodes alternatives:</strong> Cadre pour évaluer interlocking, safe work procedures</span>
+                            </li>
+                        </ul>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# CSA Z460:2020 - Workflow LOTO structuré<br>
+workflow_LOTO_CSA_Z460 = [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"1. Preparation (identify energies, notify)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"2. Shutdown (orderly stop equipment)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"3. Isolation (switches, valves, disconnect)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"4. Lockout/Tagout (apply devices)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"5. Dissipation (stored energy release)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"6. Verification (test isolation effectiveness)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"7. Work (maintenance/repair)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"8. Removal (reverse LOTO)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"9. Re-energization (restore energy)"<br>
+]<br>
+<br>
+# AgenticX5 impose workflow complet<br>
+for step in workflow_LOTO_CSA_Z460:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;validate_step_completion(step)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_to_neo4j(step, timestamp, user_id, equipment_id)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;block_next_step_until_current_validated()
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: CSA Group Z460:2020
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">🇺🇸 États-Unis</h3>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🏛️</div>
+                        <div class="arch-title">OSHA 29 CFR 1910.147</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>The Control of Hazardous Energy (Lockout/Tagout)</strong></p>
+                        <p style="margin-top: 10px;">Norme OSHA de référence USA pour LOTO:</p>
+                        <ul class="feature-list" style="margin-top: 15px;">
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Programme LOTO écrit:</strong> Obligatoire pour tous établissements</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Dispositifs standardisés:</strong> Cadenas/étiquettes conformes (résistance, couleur, format)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Libération énergies stockées:</strong> Capacitors, springs, hydraulics, gravity</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Formation/Inspection périodique:</strong> Annuelle minimum + requalification</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Group lockout:</strong> Procédures spécifiques multi-travailleurs</span>
+                            </li>
+                        </ul>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# OSHA 1910.147 - Validation conformité dispositifs<br>
+def validate_LOTO_device_OSHA(device):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"""Valide cadenas/étiquette selon OSHA 1910.147(c)(5)"""<br>
+&nbsp;&nbsp;&nbsp;&nbsp;checks = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"durable": device.withstands_environment(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"standardized": device.color == "red" and device.has_warning(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"substantial": device.cannot_be_removed_without_force(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"identifiable": device.shows_worker_name_and_date()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return all(checks.values())<br>
+<br>
+# AgenticX5 RFID valide conformité OSHA automatiquement<br>
+if not validate_LOTO_device_OSHA(rfid_lock):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;block_PTW_issuance()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;alert_supervisor("Non-compliant LOTO device")
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: OSHA 29 CFR 1910.147
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">📐</div>
+                        <div class="arch-title">ANSI/ASSP Z244.1-2024</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Lockout, Tagout & Alternative Methods</strong></p>
+                        <p style="margin-top: 10px;">Standard ANSI pour LOTO et méthodes alternatives basées analyse de risque.</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application AgenticX5:</strong> SafetyOntology encode arbres décision ANSI Z244.1 pour évaluer 
+                            quand méthodes alternatives (interlocking, safe work procedures) sont acceptables vs LOTO obligatoire.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: ASSP Z244.1-2024
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">⚡</div>
+                        <div class="arch-title">NFPA 70E:2024</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Electrical Safety in the Workplace</strong></p>
+                        <p style="margin-top: 10px;">Standard électrique complémentaire au LOTO pour risques électriques spécifiques:</p>
+                        <ul class="feature-list" style="margin-top: 15px;">
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Plan de travail:</strong> Energized Electrical Work Permit (EEWP) pour travaux sous tension</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Analyse risque:</strong> Choc électrique + arc-flash (incident energy, boundaries)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>EPI spécifique:</strong> Arc-rated clothing, voltage-rated gloves</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span><strong>Étiquetage:</strong> Arc-flash labels sur équipements (incident energy cal/cm²)</span>
+                            </li>
+                        </ul>
+                        <div class="code-block" style="font-size: 12px; margin-top: 15px;">
+# NFPA 70E - LOTO électrique avec validation tension<br>
+def LOTO_electrical_NFPA_70E(equipment):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"""Procédure LOTO électrique selon NFPA 70E Art. 120"""<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 1. Identifier sources électriques<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sources = identify_electrical_sources(equipment)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 2. Isoler (switches, breakers, disconnects)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for source in sources:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isolate(source)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apply_LOTO_device(source, rfid_lock)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 3. CRITIQUE: Test absence tension (Verify Zero Energy)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;for circuit in equipment.circuits:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;voltage_reading = test_voltage(circuit, meter="CAT_III")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assert voltage_reading == 0, "DANGER: Live circuit detected!"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log_to_neo4j("voltage_test", circuit, voltage_reading)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# 4. Décharger capacités (stored energy)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;discharge_capacitors(equipment)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return "SAFE_TO_WORK"
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <strong>Application AgenticX5:</strong> PTW module intègre NFPA 70E pour interventions électriques. 
+                            Liens étiquettes arc-flash dans SafetyOntology. Vision AI vérifie absence tension (voltmeter visual check).
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: NFPA 70E:2024 Article 120
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">🌍 ISO (Conception & Méthode)</h3>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">🔒</div>
+                        <div class="arch-title">ISO 14118:2017</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Prevention of Unexpected Start-Up</strong></p>
+                        <p style="margin-top: 10px;">Norme ISO pour exigences de conception machines empêchant démarrage intempestif (toutes énergies).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application AgenticX5:</strong> SafetyOntology encode exigences ISO 14118 pour validation conception 
+                            nouveaux équipements. PTW module vérifie conformité ISO avant émission permis.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: ISO 14118:2017
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-card">
+                    <div class="arch-card-header">
+                        <div class="arch-icon">⚙️</div>
+                        <div class="arch-title">ISO 12100:2010</div>
+                    </div>
+                    <div class="arch-description">
+                        <p><strong>Risk Assessment & Risk Reduction (Machinery)</strong></p>
+                        <p style="margin-top: 10px;">Terminologie et méthodologie d'évaluation/réduction du risque (support à PTW/SafetyOntology).</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Application AgenticX5:</strong> Framework ISO 12100 pour analyse de risque pré-LOTO. 
+                            Hiérarchie contrôles (élimination → ingénierie → administratif → EPI) intégrée PTW.
+                        </div>
+                        <div style="margin-top: 10px; color: #94a3b8; font-size: 13px;">
+                            📎 Référence: ISO 12100:2010
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🔗</span>
+                    <h2 class="card-title">Mappage Normes → Modules AgenticX5</h2>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Normes Appliquées</th>
+                            <th>Application Concrète</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PTW / Agentic</strong></td>
+                            <td>CSA Z460<br>OSHA 1910.147<br>RSST 188.x</td>
+                            <td>
+                                • Workflow LOTO imposé (9 étapes CSA Z460)<br>
+                                • Blocage PTW si point d'isolement sans cadenas actif (OSHA)<br>
+                                • Validation cléage unique RSST 188.4<br>
+                                • Génération permis électrique NFPA 70E
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>SafetyOntology (KG)</strong></td>
+                            <td>RSST 188.x<br>CSA Z460<br>ISO 14118</td>
+                            <td>
+                                • Procédures LOTO stockées par équipement/énergie<br>
+                                • Points d'isolement, rôles/autorisations (RSST)<br>
+                                • Exigences cléage unique + registre (RSST 188.4-188.5)<br>
+                                • Conformité conception ISO 14118
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>SafetyAgent</strong></td>
+                            <td>Guide CNESST<br>CSA Z460<br>OSHA 1910.147</td>
+                            <td>
+                                • Checklists vocales/texte étape-par-étape (Guide CNESST)<br>
+                                • Alertes si écart (ex: absence vérification d'isolement)<br>
+                                • Coaching conversationnel procédures types<br>
+                                • Q&A LOTO contextualisé par équipement
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>RFID/NFC</strong></td>
+                            <td>RSST 188.4<br>OSHA 1910.147</td>
+                            <td>
+                                • Validation cléage unique personnel (RSST)<br>
+                                • Conformité dispositifs OSHA (durable, standardized)<br>
+                                • Traçabilité qui/quand/où<br>
+                                • Détection enlèvement non-autorisé
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vision AI</strong></td>
+                            <td>CSA Z460<br>OSHA 1910.147<br>NFPA 70E</td>
+                            <td>
+                                • Vérification visuelle cadenas posés (CSA Z460)<br>
+                                • Détection étiquettes conformes (OSHA)<br>
+                                • Reconnaissance arc-flash labels (NFPA 70E)<br>
+                                • Comptage cadenas multi-employeurs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dashboard Conformité</strong></td>
+                            <td>RSST 188.5-188.6<br>CSA Z460<br>ANSI Z244.1</td>
+                            <td>
+                                • Registre digital (RSST 188.5)<br>
+                                • Métriques audits périodiques (CSA Z460)<br>
+                                • KPIs conformité temps réel<br>
+                                • Rapports automatisés SMS SST
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section: Architecture -->
+        <div id="architecture" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏗️</span>
+                    <h2 class="card-title">Architecture Multi-Agents & Modules</h2>
+                </div>
+
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📡</div>
+                            <div class="arch-title">WEARABLES / RFID-NFC</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Cadenas intelligents traçables + validation cléage unique</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Cadenas RFID/NFC:</strong> Identifiant unique par travailleur (cléage unique RSST 188.4)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Validation temps réel:</strong> Lecture RFID confirm cadenas posé (événement Neo4j)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Détection enlèvement:</strong> Alerte si retrait non-autorisé avant fin PTW</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Group lockbox:</strong> Support multi-employeurs (coordination RSST 188.6)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">👁️</div>
+                            <div class="arch-title">VISION AI</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Vérification visuelle cadenassage par computer vision</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Détection cadenas:</strong> Comptage + localisation cadenas sur points d'isolement</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Reconnaissance étiquettes:</strong> OCR validation étiquettes conformes (nom, date, équipement)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Arc-flash labels:</strong> Lecture NFPA 70E incident energy (cal/cm²)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Audit visuel automatisé:</strong> Caméras IP → capture périodique → validation conformité</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">AGENTIC AI</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Orchestration workflow LOTO & validation étapes automatisée</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Workflow imposé:</strong> 9 étapes CSA Z460 séquentielles (blocage si étape manquante)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Validation approbations:</strong> Rôles/permissions SafetyOntology (superviseur, électricien, etc.)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Vérification automatique:</strong> Croisement RFID + Vision AI (cadenas posés vs PTW émis)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Alertes intelligentes:</strong> Détection anomalies (écart procédure, timing suspect)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🕸️</div>
+                            <div class="arch-title">KNOWLEDGE GRAPH (KG)</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>SafetyOntology Neo4j - Procédures LOTO par équipement</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Graphe équipements:</strong> Nœuds (machine, point isolement, énergie) + relations</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Procédures LOTO:</strong> Séquence isolement par équipement (conforme normes)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Rôles/Autorisations:</strong> Qui peut émettre PTW, qui peut intervenir (RSST 188.x)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Registre immutable:</strong> Logs Neo4j = registre digital RSST 188.5 (qui, quand, où)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">💬</div>
+                            <div class="arch-title">CONVERSATIONNEL</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>SafetyAgent - Assistant LOTO vocal/texte étape par étape</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Guidance interactive:</strong> SafetyAgent guide travailleur chaque étape (vocal + écran)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Checklist vocale:</strong> Validation orale étapes clés ("Cadenas posé? Oui/Non")</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Q&A contextualisé:</strong> Questions-réponses spécifiques à l'équipement (RAG SafetyOntology)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Coaching sécurité:</strong> Rappels procédures, alertes dangers, formation just-in-time</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📄</div>
+                            <div class="arch-title">PTW (PERMIT TO WORK)</div>
+                        </div>
+                        <div class="arch-description">
+                            <p style="margin-bottom: 15px;"><strong>Génération automatisée permis de travail</strong></p>
+                            <ul class="feature-list" style="margin: 0;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Génération auto:</strong> PTW créé selon procédure SafetyOntology (équipement + tâche)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Validation multi-critères:</strong> Approbations, RFID cadenas, Vision AI, tests isolement</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Intégration BIM/Procore:</strong> Liens équipements, zones, drawings (IFC)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">✓</span>
+                                    <span><strong>Digital signature:</strong> Signatures électroniques superviseur + travailleurs</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🔄</span>
+                    <h2 class="card-title">Flux de Données & Orchestration</h2>
+                </div>
+
+                <div class="code-block">
+┌────────────────┐<br>
+│  WEARABLES     │  RFID cadenas → lecture événement pose/retrait<br>
+│  RFID/NFC      │<br>
+└────────┬───────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌─────────────────────────────────────────────────────────────┐<br>
+│  AGENT LOTO COORDINATOR (Orchestrateur Central)             │<br>
+│  • Reçoit événements RFID (pose, retrait cadenas)           │<br>
+│  • Interroge SafetyOntology: procédure LOTO équipement      │<br>
+│  • Valide séquence workflow CSA Z460 (9 étapes)             │<br>
+│  • Coordonne Vision AI (vérification visuelle)              │<br>
+│  • Déclenche SafetyAgent (guidance conversationnelle)       │<br>
+└────────┬────────────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌─────────────────────────────────────────────────────────────┐<br>
+│  SAFETYO NTOLOGY (Neo4j Knowledge Graph)                    │<br>
+│  • Procédures LOTO par équipement/énergie                   │<br>
+│  • Points d'isolement, séquence, rôles/autorisations        │<br>
+│  • Registre immutable (logs RSST 188.5)                     │<br>
+│  • Relations équipements → énergies → cadenas               │<br>
+└────────┬────────────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌─────────────────────────────────────────────────────────────┐<br>
+│  PTW MODULE (Permit to Work Generator)                      │<br>
+│  • Génération PTW selon procédure SafetyOntology            │<br>
+│  • Validation multi-critères (RFID + Vision + Approbations) │<br>
+│  • Blocage émission si étape LOTO manquante                 │<br>
+│  • Digital signatures (superviseur + travailleurs)          │<br>
+└────────┬────────────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌─────────────────────────────────────────────────────────────┐<br>
+│  VISION AI (Computer Vision Module)                         │<br>
+│  • Caméras IP → détection cadenas posés                     │<br>
+│  • OCR étiquettes (nom, date, équipement)                   │<br>
+│  • Comptage cadenas multi-employeurs                        │<br>
+│  • Validation visuelle conformité OSHA/CSA                  │<br>
+└────────┬────────────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌─────────────────────────────────────────────────────────────┐<br>
+│  SAFETYAGENT (Conversational AI Assistant)                  │<br>
+│  • Guidance vocale/texte étape par étape                    │<br>
+│  • Checklist interactive (Cadenas posé? Oui/Non)            │<br>
+│  • Q&A LOTO contextualisé (RAG SafetyOntology)              │<br>
+│  • Coaching sécurité + alertes dangers                      │<br>
+└────────┬────────────────────────────────────────────────────┘<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+┌─────────────────────────────────────────────────────────────┐<br>
+│  DASHBOARD CONFORMITÉ (Analytics & Reporting)               │<br>
+│  • Métriques temps réel: PTW actifs, LOTO en cours          │<br>
+│  • KPIs conformité: % audits passés, incidents évités       │<br>
+│  • Rapports automatisés: registre RSST 188.5, audits CSA    │<br>
+│  • Alertes superviseur: anomalies, non-conformités          │<br>
+└─────────────────────────────────────────────────────────────┘
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Workflow LOTO -->
+        <div id="workflow" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚙️</span>
+                    <h2 class="card-title">Workflow LOTO en 7 Étapes (CSA Z460 + OSHA 1910.147)</h2>
+                </div>
+
+                <div class="alert-box alert-info">
+                    <span class="alert-icon">ℹ️</span>
+                    <div>
+                        <strong>Workflow Structuré Conforme Normes</strong>
+                        <p>AgenticX5 impose un workflow LOTO séquentiel strict conforme CSA Z460:2020 et OSHA 29 CFR 1910.147. 
+                        Chaque étape doit être validée (RFID + Vision AI + approbations) avant passage à la suivante. 
+                        Tout écart déclenche blocage automatique + alerte superviseur.</p>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #3b82f6;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 1 - PRÉPARATION</div>
+                            <h4 style="color: #93c5fd; margin: 10px 0;">Identification & Notification</h4>
+                            <p><strong>Actions:</strong></p>
+                            <p>• Identifier toutes les énergies (électrique, mécanique, pneumatique, hydraulique, thermique, chimique, gravité)<br>
+                            • Consulter SafetyOntology: procédure LOTO spécifique à l'équipement<br>
+                            • Notifier travailleurs affectés + superviseur (alerte app mobile + email)<br>
+                            • Réserver cadenas RFID personnels (cléage unique RSST 188.4)</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> PTW module crée permis pré-rempli avec énergies identifiées. 
+                            SafetyAgent envoie checklist préparatoire.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #8b5cf6;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 2 - ARRÊT ORDONNÉ</div>
+                            <h4 style="color: #c4b5fd; margin: 10px 0;">Shutdown Orderly</h4>
+                            <p><strong>Actions:</strong></p>
+                            <p>• Arrêt normal équipement selon séquence manufacturier (éviter dommages)<br>
+                            • Commandes d'arrêt enregistrées (logs SCADA si applicable)<br>
+                            • Confirmation arrêt visuel + indicateurs (témoins, compteurs, mouvement nul)</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> Agent LOTO Coordinator vérifie statut équipement 
+                            (intégration SCADA/IoT). Vision AI confirme arrêt mouvement.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #f59e0b;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 3 - ISOLEMENT</div>
+                            <h4 style="color: #fbbf24; margin: 10px 0;">Isolation des Énergies</h4>
+                            <p><strong>Actions:</strong></p>
+                            <p>• Ouvrir disjoncteurs/interrupteurs (électrique)<br>
+                            • Fermer vannes/isoler tuyauterie (pneumatique, hydraulique, chimique)<br>
+                            • Bloquer mécaniquement (cales, goupilles) contre gravité/ressorts<br>
+                            • Vérifier chaque point d'isolement selon procédure SafetyOntology</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> Checklist digitale SafetyAgent 
+                            (vocal/texte) guide chaque point d'isolement. Logs Neo4j horodatés.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #dc2626;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 4 - CADENASSAGE/ÉTIQUETAGE</div>
+                            <h4 style="color: #fca5a5; margin: 10px 0;">Application Lockout/Tagout Devices</h4>
+                            <p><strong>Actions:</strong></p>
+                            <p>• Poser cadenas RFID personnel sur CHAQUE point d'isolement (cléage unique)<br>
+                            • Apposer étiquettes conformes (nom, date, équipement, danger - OSHA 1910.147)<br>
+                            • Group lockbox si multi-employeurs (coordination RSST 188.6)<br>
+                            • RFID auto-enregistre pose cadenas → événement Neo4j + mise à jour PTW</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> Lecture RFID confirme cadenas posés. 
+                            Vision AI vérifie étiquettes + comptage cadenas. Blocage PTW si cadenas manquant.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #dc2626;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 5 - DISSIPATION</div>
+                            <h4 style="color: #fca5a5; margin: 10px 0;">Release Stored Energy</h4>
+                            <p><strong>Actions:</strong></p>
+                            <p>• Décharger condensateurs électriques (NFPA 70E)<br>
+                            • Relâcher pression pneumatique/hydraulique (purge)<br>
+                            • Relâcher ressorts comprimés, contrepoids<br>
+                            • Refroidir surfaces chaudes (thermique)<br>
+                            • Vidange chimiques résiduels (si applicable)</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> SafetyAgent checklist dissipation 
+                            spécifique à chaque énergie. Confirmation manuelle opérateur.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #22c55e;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 6 - VÉRIFICATION</div>
+                            <h4 style="color: #86efac; margin: 10px 0;">Verify Zero Energy (Tryout Procedure)</h4>
+                            <p><strong>Actions CRITIQUES:</strong></p>
+                            <p>• <strong>Test fonctionnel isolement:</strong> Tenter démarrage équipement (doit échouer)<br>
+                            • <strong>Mesure tension électrique:</strong> Voltmètre CAT III confirme 0V (NFPA 70E)<br>
+                            • <strong>Vérification visuelle:</strong> Absence mouvement, pression, température<br>
+                            • <strong>Double confirmation:</strong> Travailleur + superviseur signent validation</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> TEST OBLIGATOIRE non-contournable. 
+                            Vision AI peut vérifier lecture voltmètre. Logs Neo4j = preuve vérification faite.</p>
+                            <div style="margin-top: 15px; padding: 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                                <strong style="color: #86efac;">✅ Point Critique Sécurité</strong>
+                                <p style="color: #cbd5e1; margin-top: 8px;">La vérification d'isolement (Étape 6) est l'étape la plus critique. 
+                                C'est ici que 80% des accidents LOTO auraient pu être évités. AgenticX5 IMPOSE cette étape avant émission PTW final.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker" style="background: #22c55e;"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-time">ÉTAPE 7 - TRAVAIL SÉCURITAIRE</div>
+                            <h4 style="color: #86efac; margin: 10px 0;">Safe to Work + Re-energization</h4>
+                            <p><strong>Pendant Travaux:</strong></p>
+                            <p>• PTW émis = autorisation travail (digital signature)<br>
+                            • Monitoring continu: RFID détecte retrait non-autorisé cadenas → alerte immédiate<br>
+                            • Vision AI audit périodique conformité cadenassage<br>
+                            • SafetyAgent disponible Q&A temps réel</p>
+                            <p style="margin-top: 10px;"><strong>Fin Travaux & Remise en Service:</strong></p>
+                            <p>• Vérification zone dégagée (outils, personnes)<br>
+                            • Retrait cadenas ORDRE INVERSE (dernier posé = premier enlevé)<br>
+                            • RFID enregistre retraits → libération PTW progressive<br>
+                            • Re-énergisation selon séquence inverse isolement<br>
+                            • Test fonctionnel équipement + clôture PTW</p>
+                            <p style="margin-top: 10px;"><strong>Validation AgenticX5:</strong> PTW ne peut être clôturé tant que 
+                            RFID détecte cadenas actifs. Checklist remise en service SafetyAgent. Logs complets Neo4j.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 20px; margin-top: 25px;">
+                    <h4 style="color: #c4b5fd; margin: 0 0 15px 0; font-size: 18px;">✨ Avantage de l'Approche Agentique</h4>
+                    <p style="color: #cbd5e1; font-size: 14px; line-height: 1.8;">
+                        Les approches LOTO manuelles (cadenas physiques, checklists papier) sont sujettes à erreurs humaines: 
+                        étapes oubliées, vérifications bâclées, documentation incomplète. AgenticX5 élimine ces risques par 
+                        <strong>validation automatisée obligatoire</strong> de chaque étape (RFID + Vision AI + SafetyOntology). 
+                        Le système <strong>BLOQUE</strong> la progression si une étape critique (ex: vérification isolement) est manquante. 
+                        Résultat: <strong>70% de réduction des incidents LOTO</strong> et <strong>100% de traçabilité</strong> pour audits/enquêtes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Scénarios -->
+        <div id="scenarios" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎭</span>
+                    <h2 class="card-title">Scénarios Typiques UC-P17</h2>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">Scénario 1: Maintenance Convoyeur Manufacturier</h3>
+                <div class="arch-card">
+                    <div class="arch-description">
+                        <p><strong>Contexte:</strong> Réparation encodeur défectueux sur convoyeur principal (3 moteurs électriques 480V, système pneumatique)</p>
+                        <p style="margin-top: 10px;"><strong>Énergies identifiées:</strong> Électrique (480V triphasé), pneumatique (6 bar), mécanique (inertie rotation)</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <strong>Déroulement avec AgenticX5:</strong>
+                            <div class="timeline" style="margin-top: 15px;">
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #3b82f6;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">08:15</div>
+                                        <p><strong>Préparation</strong><br>
+                                        • Technicien demande PTW via app mobile<br>
+                                        • SafetyAgent interroge SafetyOntology: procédure LOTO Convoyeur-CV-001<br>
+                                        • PTW pré-rempli: 4 points isolement (3 disjoncteurs + 1 vanne pneumatique)<br>
+                                        • Notification superviseur + opérateurs zone</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #8b5cf6;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">08:25</div>
+                                        <p><strong>Arrêt & Isolement</strong><br>
+                                        • Superviseur arrête convoyeur depuis SCADA (arrêt ordonné)<br>
+                                        • Technicien ouvre 3 disjoncteurs + ferme vanne pneumatique<br>
+                                        • SafetyAgent checklist vocale: "Disjoncteur M1 ouvert? Oui/Non"</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #dc2626;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">08:35</div>
+                                        <p><strong>Cadenassage</strong><br>
+                                        • Technicien pose 4 cadenas RFID (1 par point isolement)<br>
+                                        • RFID auto-enregistre: Cadenas #1247 posé à 08:35:12 par Jean Tremblay<br>
+                                        • Vision AI détecte 4 cadenas + 4 étiquettes conformes<br>
+                                        • PTW mis à jour: 4/4 cadenas validés</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #dc2626;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">08:40</div>
+                                        <p><strong>Dissipation & Vérification</strong><br>
+                                        • Purge pression pneumatique (6 bar → 0 bar)<br>
+                                        • Test voltmètre: 0V sur bornes moteurs (NFPA 70E)<br>
+                                        • TEST FONCTIONNEL: Bouton démarrage pressé → aucune réaction (isolement confirmé)<br>
+                                        • SafetyAgent: "Vérification isolement validée ✓"</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #22c55e;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">08:45</div>
+                                        <p><strong>PTW Émis - Travail Autorisé</strong><br>
+                                        • PTW digital signé superviseur + technicien<br>
+                                        • Travail réparation encodeur (2h estimé)<br>
+                                        • Monitoring continu: RFID surveille cadenas (alerte si retrait non-autorisé)</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker" style="background: #22c55e;"></div>
+                                    <div class="timeline-content" style="padding: 15px;">
+                                        <div class="timeline-time">10:50</div>
+                                        <p><strong>Fin Travaux & Remise en Service</strong><br>
+                                        • Encodeur remplacé, zone dégagée<br>
+                                        • Retrait 4 cadenas RFID (ordre inverse pose)<br>
+                                        • RFID enregistre retraits → PTW libéré progressivement<br>
+                                        • Re-énergisation: vanne pneumatique → disjoncteurs M1, M2, M3<br>
+                                        • Test fonctionnel convoyeur OK → PTW clôturé automatiquement<br>
+                                        • Logs complets Neo4j disponibles pour audit</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                            <strong style="color: #86efac;">✅ Résultat:</strong>
+                            <p style="color: #cbd5e1; margin-top: 8px;">Intervention LOTO 100% conforme (RSST, CSA Z460, OSHA). 
+                            Traçabilité totale (43 événements Neo4j). Temps procédure: 2h35 (vs 3h+ manuel). 
+                            Zéro écart audit, zéro incident. Documentation automatique prête pour inspection CNESST.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">Scénario 2: Intervention Multi-Employeurs (Group Lockout)</h3>
+                <div class="arch-card">
+                    <div class="arch-description">
+                        <p><strong>Contexte:</strong> Maintenance majeure transformateur électrique (plusieurs corps de métier: électriciens, mécaniciens, soudeurs)</p>
+                        <p style="margin-top: 10px;"><strong>Problématique:</strong> Coordination multi-employeurs (RSST 188.6) avec group lockbox</p>
+                        
+                        <div style="margin-top: 20px;">
+                            <strong>Solution AgenticX5:</strong>
+                            <ul class="feature-list" style="margin-top: 10px;">
+                                <li class="feature-item">
+                                    <span class="feature-icon">1️⃣</span>
+                                    <span><strong>Coordination initiale:</strong> Électricien senior = responsable LOTO, crée PTW maître</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">2️⃣</span>
+                                    <span><strong>Group lockbox:</strong> Boîte verrouillée contient clés isolement primaire (réseau 25kV)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">3️⃣</span>
+                                    <span><strong>Cadenas multiples:</strong> Chaque travailleur (8 personnes) pose son cadenas RFID personnel sur group lockbox</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">4️⃣</span>
+                                    <span><strong>RFID tracking:</strong> Système compte 8/8 cadenas posés → PTW maître validé</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">5️⃣</span>
+                                    <span><strong>Coordination travaux:</strong> Chaque corps métier peut travailler indépendamment (soudeurs, mécaniciens, etc.)</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">6️⃣</span>
+                                    <span><strong>Fin coordonnée:</strong> Chacun retire son cadenas RFID une fois son travail terminé</span>
+                                </li>
+                                <li class="feature-item">
+                                    <span class="feature-icon">7️⃣</span>
+                                    <span><strong>Libération finale:</strong> Quand 8/8 cadenas retirés → responsable LOTO peut ré-énergiser 25kV</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Validation AgenticX5:</strong>
+                            <div class="code-block" style="font-size: 12px; margin-top: 10px;">
+# RSST 188.6 - Coordination multi-employeurs<br>
+group_lockbox_status = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"equipment_id": "TRANSFO-HV-001",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"primary_lockout_responsible": "Jean Tremblay (Électricien senior)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"workers_involved": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"name": "Jean Tremblay", "trade": "Électricien", "rfid": "1247", "status": "locked"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"name": "Marie Dubois", "trade": "Électricienne", "rfid": "1248", "status": "locked"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"name": "Paul Martin", "trade": "Mécanicien", "rfid": "1249", "status": "locked"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# ... 5 autres travailleurs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"locks_count": "8/8",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"can_reenergize": False  # Tant que >0 cadenas<br>
+}<br>
+<br>
+# AgenticX5 BLOQUE ré-énergisation tant que cadenas présents<br>
+if group_lockbox_status["locks_count"] != "0/8":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;block_reenergization()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;alert_supervisor("Group LOTO still active - {} locks remaining")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;allow_reenergization()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log_to_neo4j("group_LOTO_completed", timestamp, all_workers)
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px;">
+                            <strong style="color: #86efac;">✅ Résultat:</strong>
+                            <p style="color: #cbd5e1; margin-top: 8px;">Coordination multi-employeurs parfaite (RSST 188.6). 
+                            RFID assure que TOUS les travailleurs ont retiré leurs cadenas avant ré-énergisation 25kV. 
+                            Zéro risque démarrage intempestif pendant travaux. Traçabilité complète (qui, quand, combien de temps). 
+                            Conformité audits 100%.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Demo Interactive -->
+        <div id="demo" class="content-section">
+            <div class="demo-container">
+                <div class="card-header">
+                    <span class="card-icon">🎮</span>
+                    <h2 class="card-title">Démo Interactive - Simulateur Workflow LOTO</h2>
+                </div>
+                
+                <p style="margin: 20px 0; color: #cbd5e1;">
+                    Simulez un workflow LOTO complet conforme CSA Z460 et OSHA 1910.147. Cliquez sur chaque étape 
+                    pour la compléter et observer les validations automatiques AgenticX5.
+                </p>
+
+                <div id="workflow-status" style="padding: 20px; background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 12px; margin: 20px 0;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 32px;">🔴</span>
+                        <div>
+                            <strong style="color: #fca5a5; font-size: 18px;">Statut: ÉQUIPEMENT SOUS TENSION</strong>
+                            <p style="color: #cbd5e1; margin-top: 5px; font-size: 14px;" id="workflow-message">
+                                DANGER - Équipement actif. Démarrez la procédure LOTO pour sécuriser l'intervention.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-steps">
+                    <div class="step-card" id="step1" onclick="completeStep(1)">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Préparation</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                    <div class="step-card" id="step2" onclick="completeStep(2)">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Arrêt Ordonné</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                    <div class="step-card" id="step3" onclick="completeStep(3)">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Isolement</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                    <div class="step-card" id="step4" onclick="completeStep(4)">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Cadenassage</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                    <div class="step-card" id="step5" onclick="completeStep(5)">
+                        <div class="step-number">5</div>
+                        <div class="step-title">Dissipation</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                    <div class="step-card" id="step6" onclick="completeStep(6)">
+                        <div class="step-number">6</div>
+                        <div class="step-title">Vérification</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                    <div class="step-card" id="step7" onclick="completeStep(7)">
+                        <div class="step-number">7</div>
+                        <div class="step-title">PTW Émis</div>
+                        <div class="step-status">🔴 Non complété</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn" onclick="resetWorkflow()">⟳ Réinitialiser Workflow</button>
+                </div>
+
+                <div id="events-log" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(148, 163, 184, 0.25); border-radius: 12px; padding: 20px; margin-top: 20px;">
+                    <h3 style="color: #fca5a5; margin: 0 0 15px 0;">📝 Journal Événements AgenticX5</h3>
+                    <div id="log-content" style="max-height: 250px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 13px; color: #cbd5e1;">
+                        <div style="color: #64748b;">[Prêt] Simulateur LOTO initialisé. Commencez par l'étape 1: Préparation.</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px;">
+                    <h4 style="color: #93c5fd; margin: 0 0 15px 0;">ℹ️ Instructions Simulation</h4>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">1️⃣</span>
+                            <span>Cliquez sur chaque étape <strong>dans l'ordre</strong> pour simuler progression workflow LOTO</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">2️⃣</span>
+                            <span>AgenticX5 <strong>BLOQUE</strong> si vous tentez de sauter une étape (conformité normes)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">3️⃣</span>
+                            <span>L'étape 6 (Vérification) est <strong>CRITIQUE</strong> - déclenche validation automatique intensive</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">4️⃣</span>
+                            <span>Statut passe de 🔴 Danger → 🟡 Sécurisation → 🟢 PTW Émis (Safe to Work)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: ROI & Impact -->
+        <div id="roi" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💰</span>
+                    <h2 class="card-title">ROI & Impact Économique</h2>
+                </div>
+
+                <div class="alert-box alert-success">
+                    <span class="alert-icon">📊</span>
+                    <div>
+                        <strong>ROI Global Estimé: 240% sur 3 ans</strong>
+                        <p>Basé sur usine manufacturière 500 travailleurs, 150 interventions LOTO/mois, coût incident moyen 125K$ CAD.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 25px 0 15px 0;">💸 Réductions de Coûts</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Catégorie</th>
+                            <th>Impact</th>
+                            <th>Économies Annuelles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Incidents LOTO</strong></td>
+                            <td>-70% (prévention démarrage intempestif)</td>
+                            <td>525K$ CAD<br><span style="font-size: 12px; color: #64748b;">(6 incidents évités × 87.5K$ coût moyen)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conformité audits</strong></td>
+                            <td>+35% (traçabilité 100%)</td>
+                            <td>95K$ CAD<br><span style="font-size: 12px; color: #64748b;">(amendes évitées + réduction temps audits)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Productivité LOTO</strong></td>
+                            <td>-25% temps procédure (automatisation)</td>
+                            <td>180K$ CAD<br><span style="font-size: 12px; color: #64748b;">(150 LOTO/mois × 30 min gain × 40$/h)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documentation/Audits</strong></td>
+                            <td>-60% temps préparation audits</td>
+                            <td>45K$ CAD<br><span style="font-size: 12px; color: #64748b;">(automatisation rapports, logs Neo4j)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formation continue</strong></td>
+                            <td>-40% coûts formation (Training Module)</td>
+                            <td>32K$ CAD<br><span style="font-size: 12px; color: #64748b;">(e-learning interactif vs formation présentielle)</span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: rgba(34, 197, 94, 0.1); font-weight: 700;">
+                            <td colspan="2"><strong>TOTAL ÉCONOMIES ANNUELLES</strong></td>
+                            <td style="color: #86efac; font-size: 18px;"><strong>877K$ CAD</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">💵 Investissement Initial</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Poste</th>
+                            <th>Coût Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cadenas RFID/NFC</strong></td>
+                            <td>150$ CAD</td>
+                            <td>500 travailleurs</td>
+                            <td>75K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Caméras Vision AI</strong></td>
+                            <td>2,500$ CAD</td>
+                            <td>20 zones critiques</td>
+                            <td>50K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Infrastructure Edge/Cloud</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>45K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Licences AgenticX5 (3 ans)</strong></td>
+                            <td>200$/travailleur/an</td>
+                            <td>500 × 3 ans</td>
+                            <td>300K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intégration SafetyOntology</strong></td>
+                            <td>-</td>
+                            <td>500 équipements</td>
+                            <td>85K$ CAD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formation & déploiement</strong></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>35K$ CAD</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: rgba(220, 38, 38, 0.1); font-weight: 700;">
+                            <td colspan="3"><strong>INVESTISSEMENT TOTAL (3 ans)</strong></td>
+                            <td style="color: #fca5a5; font-size: 18px;"><strong>590K$ CAD</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">📈 Analyse ROI sur 3 Ans</h3>
+                <div class="code-block">
+Année 1:<br>
+&nbsp;&nbsp;Économies: 877K$ CAD<br>
+&nbsp;&nbsp;Investissement: 355K$ CAD (matériel + intégration + formation)<br>
+&nbsp;&nbsp;Net: +522K$ CAD<br>
+<br>
+Année 2:<br>
+&nbsp;&nbsp;Économies: 920K$ CAD (amélioration continue +5%)<br>
+&nbsp;&nbsp;Coûts récurrents: 100K$ CAD (licences)<br>
+&nbsp;&nbsp;Net: +820K$ CAD<br>
+<br>
+Année 3:<br>
+&nbsp;&nbsp;Économies: 966K$ CAD (amélioration +5%)<br>
+&nbsp;&nbsp;Coûts récurrents: 100K$ CAD<br>
+&nbsp;&nbsp;Net: +866K$ CAD<br>
+<br>
+═══════════════════════════════════════<br>
+BILAN 3 ANS:<br>
+&nbsp;&nbsp;Total économies: 2,763K$ CAD<br>
+&nbsp;&nbsp;Total investissement: 590K$ CAD<br>
+&nbsp;&nbsp;Gain net: 2,173K$ CAD<br>
+&nbsp;&nbsp;<strong style="color: #86efac;">ROI: +368% (retour 4.68x)</strong><br>
+&nbsp;&nbsp;Payback period: <strong>8.1 mois</strong>
+                </div>
+
+                <h3 style="color: #fca5a5; margin: 35px 0 15px 0;">🎯 Bénéfices Mesurables</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🔒</div>
+                            <div class="arch-title">-70%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Réduction incidents LOTO</strong></p>
+                            <p style="margin-top: 8px;">De 8-10 incidents/an → 2-3 incidents/an (validation automatisée obligatoire élimine erreurs humaines)</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">✅</div>
+                            <div class="arch-title">+35%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Amélioration conformité audits</strong></p>
+                            <p style="margin-top: 8px;">De 55-65% → 90-95% conformité (traçabilité 100%, documentation automatique Neo4j)</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⏱️</div>
+                            <div class="arch-title">-25%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Réduction temps procédure</strong></p>
+                            <p style="margin-top: 8px;">De 40 min → 30 min moyenne (automatisation validations, PTW digital, checklists SafetyAgent)</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📊</div>
+                            <div class="arch-title">100%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Traçabilité LOTO</strong></p>
+                            <p style="margin-top: 8px;">De 40-60% (manuel) → 100% (RFID + Vision AI + Neo4j = registre immutable complet)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px;">
+                    <h4 style="color: #c4b5fd; margin: 0 0 15px 0;">🎯 Bénéfices Intangibles</h4>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Culture sécurité renforcée:</strong> Perception technologie avancée, engagement travailleurs +40%</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Réputation HSE:</strong> Différenciateur concurrentiel, attractivité employeur, appels d'offres</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Défense juridique:</strong> Preuve diligence raisonnable (Neo4j logs immutables) en cas enquête CNESST</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Conformité anticipée:</strong> Prêt pour évolutions réglementaires (LOTO électronique obligatoire)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">⭐</span>
+                            <span><strong>Paix d'esprit direction:</strong> Monitoring temps réel, alertes proactives, rapports automatisés</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Navigation entre sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Variables simulation workflow
+        let completedSteps = 0;
+        const totalSteps = 7;
+
+        function completeStep(stepNumber) {
+            // Validation: étapes doivent être complétées dans l'ordre
+            if (stepNumber !== completedSteps + 1) {
+                addLogEntry('⚠️ [BLOQUÉ] Les étapes LOTO doivent être complétées dans l\'ordre séquentiel (CSA Z460). Complétez d\'abord l\'étape ' + (completedSteps + 1) + '.');
+                return;
+            }
+
+            completedSteps = stepNumber;
+            
+            // Mettre à jour visuel de l'étape
+            const stepCard = document.getElementById('step' + stepNumber);
+            stepCard.classList.add('completed');
+            stepCard.querySelector('.step-status').textContent = '✅ Complété';
+
+            // Messages spécifiques par étape
+            let logMessage = '';
+            switch(stepNumber) {
+                case 1:
+                    logMessage = '🟢 [ÉTAPE 1] Préparation: SafetyOntology interrogé → Procédure LOTO Convoyeur-CV-001 chargée. 4 points isolement identifiés. PTW pré-rempli.';
+                    break;
+                case 2:
+                    logMessage = '🟢 [ÉTAPE 2] Arrêt ordonné: Équipement arrêté via SCADA. Mouvement arrêté confirmé Vision AI. SafetyAgent checklist: Arrêt visuel validé.';
+                    break;
+                case 3:
+                    logMessage = '🟢 [ÉTAPE 3] Isolement: 3 disjoncteurs ouverts + 1 vanne pneumatique fermée. Checklist SafetyAgent: 4/4 points isolement confirmés.';
+                    break;
+                case 4:
+                    logMessage = '🟢 [ÉTAPE 4] Cadenassage: RFID détecte 4 cadenas posés (Jean Tremblay #1247-1250). Vision AI confirme 4 étiquettes conformes OSHA. PTW mis à jour: 4/4 cadenas validés.';
+                    break;
+                case 5:
+                    logMessage = '🟢 [ÉTAPE 5] Dissipation: Pression pneumatique purgée (6 bar → 0 bar). SafetyAgent checklist dissipation: 4/4 énergies stockées relâchées.';
+                    break;
+                case 6:
+                    logMessage = '🔴 [ÉTAPE 6 CRITIQUE] Vérification isolement: Test fonctionnel démarrage → ÉCHEC (attendu) ✓. Voltmètre: 0V confirmé (NFPA 70E) ✓. Vision AI: absence mouvement ✓. VALIDATION COMPLÈTE - Isolement effectif confirmé.';
+                    break;
+                case 7:
+                    logMessage = '🟢 [ÉTAPE 7] PTW Émis: Signatures électroniques superviseur + Jean Tremblay ✓. Autorisation travail active. Monitoring continu RFID cadenas activé.';
+                    break;
+            }
+            addLogEntry(logMessage);
+
+            // Mettre à jour statut global
+            updateWorkflowStatus();
+        }
+
+        function updateWorkflowStatus() {
+            const statusDiv = document.getElementById('workflow-status');
+            const messageDiv = document.getElementById('workflow-message');
+            
+            if (completedSteps === 0) {
+                statusDiv.style.background = 'rgba(220, 38, 38, 0.1)';
+                statusDiv.style.borderColor = 'rgba(220, 38, 38, 0.3)';
+                statusDiv.querySelector('span').textContent = '🔴';
+                statusDiv.querySelector('strong').textContent = 'Statut: ÉQUIPEMENT SOUS TENSION';
+                statusDiv.querySelector('strong').style.color = '#fca5a5';
+                messageDiv.textContent = 'DANGER - Équipement actif. Démarrez la procédure LOTO pour sécuriser l\'intervention.';
+            } else if (completedSteps < 6) {
+                statusDiv.style.background = 'rgba(234, 179, 8, 0.1)';
+                statusDiv.style.borderColor = 'rgba(234, 179, 8, 0.3)';
+                statusDiv.querySelector('span').textContent = '🟡';
+                statusDiv.querySelector('strong').textContent = 'Statut: SÉCURISATION EN COURS';
+                statusDiv.querySelector('strong').style.color = '#fde047';
+                messageDiv.textContent = `Procédure LOTO en cours... ${completedSteps}/${totalSteps} étapes complétées. Continuez jusqu'à validation isolement (Étape 6).`;
+            } else if (completedSteps === 6) {
+                statusDiv.style.background = 'rgba(59, 130, 246, 0.1)';
+                statusDiv.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                statusDiv.querySelector('span').textContent = '🔵';
+                statusDiv.querySelector('strong').textContent = 'Statut: ISOLEMENT VALIDÉ';
+                statusDiv.querySelector('strong').style.color = '#93c5fd';
+                messageDiv.textContent = 'Vérification isolement COMPLÈTE ✓ - Prêt pour émission PTW. Complétez l\'étape 7 pour autoriser travaux.';
+            } else if (completedSteps === totalSteps) {
+                statusDiv.style.background = 'rgba(34, 197, 94, 0.1)';
+                statusDiv.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+                statusDiv.querySelector('span').textContent = '🟢';
+                statusDiv.querySelector('strong').textContent = 'Statut: PTW ÉMIS - SAFE TO WORK';
+                statusDiv.querySelector('strong').style.color = '#86efac';
+                messageDiv.textContent = '✅ Workflow LOTO 100% conforme (CSA Z460, OSHA 1910.147, RSST 188.x). Intervention autorisée. Traçabilité complète Neo4j disponible.';
+                addLogEntry('🎉 [SUCCÈS] Workflow LOTO complet réussi! 7/7 étapes validées. PTW actif. Logs immutables enregistrés Neo4j. Prêt pour audit CNESST.');
+            }
+        }
+
+        function resetWorkflow() {
+            completedSteps = 0;
+            
+            // Réinitialiser visuels étapes
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepCard = document.getElementById('step' + i);
+                stepCard.classList.remove('completed');
+                stepCard.querySelector('.step-status').textContent = '🔴 Non complété';
+            }
+
+            // Réinitialiser statut
+            updateWorkflowStatus();
+            
+            // Réinitialiser log
+            document.getElementById('log-content').innerHTML = '<div style="color: #64748b;">[Prêt] Simulateur LOTO réinitialisé. Commencez par l\'étape 1: Préparation.</div>';
+            addLogEntry('🔄 [RESET] Workflow LOTO réinitialisé. Recommencez la simulation depuis l\'étape 1.');
+        }
+
+        function addLogEntry(message) {
+            const logContent = document.getElementById('log-content');
+            const timestamp = new Date().toLocaleTimeString('fr-CA');
+            const entry = document.createElement('div');
+            entry.style.marginBottom = '8px';
+            entry.innerHTML = '<span style="color: #64748b;">[' + timestamp + ']</span> ' + message;
+            logContent.appendChild(entry);
+            logContent.scrollTop = logContent.scrollHeight;
+
+            // Limiter à 100 entrées
+            while (logContent.children.length > 100) {
+                logContent.removeChild(logContent.firstChild);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-E07 : Vibrations Main-Bras (HAV) | AgenticX5 SafetyGraph</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .background-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            top: 50%;
+            right: -10%;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            bottom: -10%;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, 100px) scale(1.1);
+            }
+            50% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+            75% {
+                transform: translate(70px, -80px) scale(1.05);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation Sticky */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            z-index: 100;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            list-style: none;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #a78bfa;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(167, 139, 250, 0.1));
+            border-radius: 20px;
+            margin-bottom: 60px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.15);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .use-case-badge {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        section {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #a78bfa;
+            border-bottom: 3px solid #8b5cf6;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin: 30px 0 20px 0;
+            color: #c4b5fd;
+        }
+
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .overview-table th {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .overview-table td {
+            padding: 18px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            color: #cbd5e1;
+        }
+
+        .overview-table tr:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .alert-box {
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border: 2px solid;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: #f59e0b;
+        }
+
+        .alert-danger {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: #8b5cf6;
+        }
+
+        .alert-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            border: 2px solid;
+        }
+
+        .tag-critical {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            color: #c4b5fd;
+        }
+
+        .tag-high {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: #f59e0b;
+            color: #fcd34d;
+        }
+
+        .tag-medium {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+
+        .tag-primary {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            color: #a78bfa;
+        }
+
+        .tag-accent {
+            background: rgba(167, 139, 250, 0.2);
+            border-color: #a78bfa;
+            color: #c4b5fd;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(167, 139, 250, 0.1));
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: #8b5cf6;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid #a78bfa;
+        }
+
+        .feature-icon {
+            color: #a78bfa;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .workflow-container {
+            display: grid;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .workflow-step {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #a78bfa;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-step:hover {
+            transform: translateX(10px);
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 800;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #c4b5fd;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .scenario-card {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .scenario-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .calc-item {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .calc-label {
+            color: #a78bfa;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calc-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #c4b5fd;
+        }
+
+        .calc-unit {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Calculateur Interactif */
+        .calculator-container {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(167, 139, 250, 0.15));
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            margin: 40px 0;
+        }
+
+        .tool-row {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: center;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            color: #a78bfa;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 12px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: #8b5cf6;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #c4b5fd;
+        }
+
+        .result-highlight {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ROI Charts */
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .roi-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            text-align: center;
+        }
+
+        .roi-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .roi-label {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bar-label {
+            min-width: 120px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .bar {
+            flex: 1;
+            height: 35px;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .bar:hover {
+            transform: scaleX(1.02);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 30px 20px;
+            }
+
+            .tool-row {
+                grid-template-columns: 1fr;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orbes animés d'arrière-plan -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation Sticky -->
+        <nav id="main-nav">
+            <ul>
+                <li><a href="#vue-ensemble">🎯 Vue d'ensemble</a></li>
+                <li><a href="#standards">📋 Standards & Normes</a></li>
+                <li><a href="#architecture">🏗️ Architecture</a></li>
+                <li><a href="#workflow">⚙️ Workflow</a></li>
+                <li><a href="#scenarios">📊 Scénarios</a></li>
+                <li><a href="#demo-calc">🧮 Calculateur</a></li>
+                <li><a href="#roi">💰 ROI</a></li>
+            </ul>
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <div class="use-case-badge">USE CASE ERGONOMIQUE</div>
+            <h1>🔊 UC-E07 : Vibrations Main-Bras (HAV)</h1>
+            <p class="subtitle">Surveillance continue des expositions vibratoires et prévention du syndrome des vibrations main-bras</p>
+        </header>
+
+        <!-- Section 1: Vue d'ensemble -->
+        <section id="vue-ensemble">
+            <h2>🎯 Vue d'Ensemble du Use Case</h2>
+            
+            <table class="overview-table">
+                <tr>
+                    <th>Dimension</th>
+                    <th>Détails</th>
+                </tr>
+                <tr>
+                    <td><strong>Risque / Problématique</strong></td>
+                    <td>Exposition aux vibrations transmises aux mains et aux bras par les outils vibrants (marteaux-piqueurs, meuleuses, tronçonneuses, etc.), pouvant causer le syndrome des vibrations main-bras (HAVS), des troubles vasculaires (phénomène de Raynaud), des lésions nerveuses et musculo-squelettiques</td>
+                </tr>
+                <tr>
+                    <td><strong>Zones / Industries concernées</strong></td>
+                    <td>Construction, mines, foresterie, métallurgie, usinage, maintenance industrielle, travaux publics, ateliers mécaniques</td>
+                </tr>
+                <tr>
+                    <td><strong>Populations affectées</strong></td>
+                    <td>Opérateurs d'outils vibrants, ouvriers du bâtiment, mécaniciens, métalliers, bûcherons, mineurs, personnel de maintenance</td>
+                </tr>
+                <tr>
+                    <td><strong>Gravité / Fréquence</strong></td>
+                    <td>
+                        <span class="tag tag-critical">Gravité : Élevée</span>
+                        <span class="tag tag-high">Fréquence : Moyenne-Élevée</span>
+                        <br><br>
+                        <strong>Impact :</strong> Troubles vasculaires irréversibles, engourdissements, perte de dextérité, douleurs chroniques, incapacité à travailler au froid
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Indicateurs critiques</strong></td>
+                    <td>
+                        • Accélération vibratoire (m/s²) pondérée en fréquence<br>
+                        • A(8) : Exposition quotidienne normalisée sur 8h (m/s²)<br>
+                        • Temps d'exposition aux outils vibrants<br>
+                        • Seuils : 2,5 m/s² (valeur d'action) / 5 m/s² (valeur limite d'exposition)<br>
+                        • Nombre de travailleurs dépassant les seuils<br>
+                        • Symptômes rapportés (picotements, blanchiment des doigts, douleurs)
+                    </td>
+                </tr>
+            </table>
+
+            <div class="alert-box alert-danger">
+                <div class="alert-icon">⚠️</div>
+                <div>
+                    <strong>ATTENTION CRITIQUE :</strong> L'exposition prolongée aux vibrations main-bras peut causer des dommages irréversibles au système vasculaire, nerveux et musculo-squelettique. La prévention passe par la surveillance continue des niveaux d'exposition (A(8)), la rotation des tâches, l'utilisation d'outils à faibles vibrations et le respect des temps de pause.
+                </div>
+            </div>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">💡</div>
+                <div>
+                    <strong>SOLUTION AGENTICX5 :</strong> SafetyGraph combine capteurs portés sur les outils, accéléromètres et IA pour mesurer en temps réel l'exposition vibratoire de chaque travailleur, calculer automatiquement le A(8), alerter dès qu'un seuil est dépassé, et recommander des actions correctives (pause, rotation, changement d'outil).
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Standards & Normes -->
+        <section id="standards">
+            <h2>📋 Standards & Normes Applicables</h2>
+
+            <h3>📌 Normes Internationales</h3>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">🌍</div>
+                    <h3>ISO 5349-1:2001</h3>
+                    <p><strong>Vibrations mécaniques - Mesurage et évaluation de l'exposition aux vibrations transmises par la main</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Définit les méthodes de mesurage des vibrations main-bras</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Spécifie le calcul de l'exposition quotidienne A(8)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Établit les pondérations en fréquence (1-1600 Hz)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Référence mondiale pour l'évaluation HAV</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">📊</div>
+                    <h3>ISO 5349-2:2001</h3>
+                    <p><strong>Partie 2 : Guide pratique pour le mesurage au poste de travail</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Instructions pratiques de mesurage sur le terrain</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Positionnement des accéléromètres triaxiaux</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Gestion de la variabilité et incertitudes</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Exemples d'outils et équipements</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🔬</div>
+                    <h3>ISO 8041-1:2017</h3>
+                    <p><strong>Instrumentation de mesurage des vibrations - Partie 1 : Instruments de mesurage des vibrations</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Spécifications techniques des instruments de mesure</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Étalonnage et vérification des capteurs</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Précision requise (±10% ou 0,5 dB)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Garantit la fiabilité des mesures</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">⚖️</div>
+                    <h3>ISO 20643:2023</h3>
+                    <p><strong>Guide pour l'application pratique de l'ISO 5349-1</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Méthode de détermination du temps d'exposition</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Stratégies de surveillance à long terme</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Gestion des expositions multiples (plusieurs outils)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Calcul du A(8) quotidien cumulé</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📌 Canada / Québec</h3>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">🇨🇦</div>
+                    <h3>CNESST (QC) - Art. 177-180 RSST</h3>
+                    <p><strong>Règlement sur la santé et la sécurité du travail</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Valeur limite : 5 m/s² A(8) sur 8 heures</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Obligation d'évaluation des risques vibratoires</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Mesures de contrôle obligatoires si dépassement</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Surveillance médicale si exposition régulière</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">📚</div>
+                    <h3>CCOHS (Fédéral)</h3>
+                    <p><strong>Centre canadien d'hygiène et de sécurité au travail</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Guides pratiques sur les vibrations main-bras</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Facteurs aggravants (froid, force de préhension)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Recommandations de prévention (pauses, gants)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Fiches techniques par type d'outil</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📌 International (USA & Autres)</h3>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">🇺🇸</div>
+                    <h3>NIOSH (USA)</h3>
+                    <p><strong>National Institute for Occupational Safety and Health</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Critères de prévention du HAVS</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Seuil recommandé : 4 m/s² A(8) sur 8h</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Échelle de Stockholm (classification des symptômes)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Programmes de surveillance médicale</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🇬🇧</div>
+                    <h3>HSE (UK)</h3>
+                    <p><strong>Health and Safety Executive</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Control of Vibration at Work Regulations 2005</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Valeur d'action : 2,5 m/s² A(8) / Limite : 5 m/s²</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Calculateurs en ligne HAV (HSE Vibration Calculator)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Base de données des valeurs d'émission par outil</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🇪🇺</div>
+                    <h3>Directive UE 2002/44/CE</h3>
+                    <p><strong>Directive européenne sur les vibrations</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Valeur d'action : 2,5 m/s² A(8) sur 8h</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Valeur limite d'exposition : 5 m/s² A(8) sur 8h</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Obligations de l'employeur (évaluation, formation, surveillance)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span>Harmonisation des pratiques dans toute l'UE</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="alert-box alert-success">
+                <div class="alert-icon">✅</div>
+                <div>
+                    <strong>CONFORMITÉ AGENTICX5 :</strong> SafetyGraph intègre automatiquement TOUTES les normes ISO 5349, ISO 8041-1, ISO 20643, CNESST, NIOSH, HSE et Directive UE 2002/44/CE pour garantir la conformité réglementaire dans toutes les juridictions. Les seuils d'alerte (2,5 m/s²) et limites (5 m/s²) sont paramétrables selon le contexte légal.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Architecture -->
+        <section id="architecture">
+            <h2>🏗️ Architecture Technique AgenticX5</h2>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">🔗</div>
+                <div>
+                    <strong>ARCHITECTURE MODULAIRE :</strong> La solution AgenticX5 pour UC-E07 repose sur 6 modules interconnectés qui travaillent en synergie pour surveiller en temps réel l'exposition aux vibrations main-bras.
+                </div>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-icon">📡</div>
+                    <h3>1. VISION + IoT</h3>
+                    <p><strong>Capture multi-sensorielle</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Accéléromètres triaxiaux</strong> : Montés sur les outils (poignées) pour mesurer les vibrations X, Y, Z</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Capteurs IMU</strong> : Intégrés dans les gants connectés pour capter les vibrations transmises</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Caméras thermiques</strong> : Détectent les zones à risque de syndrome de Raynaud</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Fréquence d'échantillonnage</strong> : 1-1600 Hz selon ISO 5349-1</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Transmission temps réel</strong> : Via BLE/5G vers le Edge Gateway</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">👷</div>
+                    <h3>2. WEARABLES</h3>
+                    <p><strong>Équipements portés intelligents</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Gants anti-vibrations connectés</strong> : Avec capteurs IMU intégrés</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Montres connectées</strong> : Affichent en temps réel le A(8) et alertes de dépassement</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Tags RFID/NFC</strong> : Identification automatique de l'outil utilisé</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Alertes haptiques</strong> : Vibrations de la montre si seuil 2,5 m/s² atteint</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Géolocalisation indoor</strong> : Associe l'exposition à la zone de travail</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🤖</div>
+                    <h3>3. AGENTIC (Multi-Agent)</h3>
+                    <p><strong>Intelligence collective orchestrée</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Surveillance HAV</strong> : Calcule A(8) en temps réel selon ISO 5349-1</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Alerte Proactive</strong> : Prédit dépassement avant qu'il n'arrive</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Rotation</strong> : Optimise la répartition des tâches vibrantes</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Recommandation</strong> : Suggère outils à faibles vibrations</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Agent Conformité</strong> : Vérifie respect des normes (CNESST, HSE, UE)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🧠</div>
+                    <h3>4. KNOWLEDGE GRAPH</h3>
+                    <p><strong>Ontologie des vibrations HAV</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Base outils vibrants</strong> : +2000 outils avec valeurs d'émission ahv (m/s²)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Normes HAV</strong> : ISO 5349, ISO 8041-1, ISO 20643, Directive UE</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Pathologies HAV</strong> : HAVS, Raynaud, neuropathies, TMS</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Facteurs aggravants</strong> : Froid, humidité, force de préhension</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Meilleures pratiques</strong> : Pauses, rotations, maintenance des outils</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">📊</div>
+                    <h3>5. MACHINE LEARNING</h3>
+                    <p><strong>Prédiction et détection avancées</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Prédiction dépassement A(8)</strong> : Alerte 30 min avant d'atteindre 5 m/s²</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Classification outils</strong> : Identifie automatiquement l'outil utilisé</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Détection anomalies</strong> : Outils défectueux (vibrations anormales)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Analyse tendances</strong> : Évolution A(8) hebdo/mensuelle par travailleur</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Corrélation symptômes</strong> : Lien A(8) cumulé ↔ symptômes HAVS</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-icon">🎯</div>
+                    <h3>6. ACTIONABLE INSIGHTS</h3>
+                    <p><strong>Recommandations concrètes</strong></p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Alertes instantanées</strong> : SMS/Email au superviseur si A(8) > 4 m/s²</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Dashboards temps réel</strong> : Vue consolidée de toutes les expositions HAV</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Rapports conformité</strong> : CNESST, HSE, UE (auto-générés)</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Plans d'action</strong> : Rotation, pauses, changement d'outil suggérés</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <span><strong>Suivi médical</strong> : Liste travailleurs à risque pour surveillance médicale</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Workflow -->
+        <section id="workflow">
+            <h2>⚙️ Workflow de Surveillance HAV</h2>
+
+            <div class="workflow-container">
+                <div class="workflow-step">
+                    <span class="step-number">1</span>
+                    <div>
+                        <div class="step-title">📡 Capture Continue</div>
+                        <p><strong>Mesure en temps réel des vibrations</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Accéléromètres triaxiaux sur outils mesurent vibrations X, Y, Z (1-1600 Hz)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Gants connectés captent les vibrations transmises aux mains</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Identification automatique de l'outil via RFID/NFC</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Transmission BLE/5G vers Edge Gateway (latence < 50 ms)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">2</span>
+                    <div>
+                        <div class="step-title">🧮 Calcul A(8) Temps Réel</div>
+                        <p><strong>Traitement selon ISO 5349-1</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Pondération en fréquence des accélérations mesurées</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Calcul ahv = √(ahvx² + ahvy² + ahvz²) pour chaque outil</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Accumulation du temps d'exposition T par outil</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Calcul A(8) = √[Σ(ahvi² × Ti) / T0] avec T0 = 8h</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">3</span>
+                    <div>
+                        <div class="step-title">🚨 Détection & Alertes</div>
+                        <p><strong>Surveillance des seuils réglementaires</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Comparaison A(8) actuel vs seuils (2,5 m/s² / 5 m/s²)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Alerte Niveau 1</strong> : A(8) > 2,5 m/s² → Notification superviseur</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Alerte Niveau 2</strong> : A(8) > 4 m/s² → Vibration montre connectée</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Alerte CRITIQUE</strong> : A(8) > 5 m/s² → Arrêt immédiat + alerte SMS</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">4</span>
+                    <div>
+                        <div class="step-title">🤖 Agent Recommandations</div>
+                        <p><strong>Prévention intelligente par IA</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Si A(8) > 2,5 m/s²</strong> : Suggère pause de 15 min toutes les 2h</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Si A(8) > 4 m/s²</strong> : Propose rotation avec collègue moins exposé</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span><strong>Si A(8) → 5 m/s²</strong> : Recommande changement d'outil (modèle moins vibrant)</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Optimisation automatique de l'ordonnancement des tâches vibrantes</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">5</span>
+                    <div>
+                        <div class="step-title">📊 Visualisation & Reporting</div>
+                        <p><strong>Dashboards et analyses</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Dashboard temps réel : Tous les travailleurs + leur A(8) actuel</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Graphiques évolution : A(8) journalier, hebdo, mensuel par personne</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Heatmap des zones à risque : Quels postes/outils dépassent le plus</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Rapports conformité : CNESST, HSE, UE (PDF auto-générés)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <span class="step-number">6</span>
+                    <div>
+                        <div class="step-title">🔄 Amélioration Continue</div>
+                        <p><strong>Apprentissage et optimisation</strong></p>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Analyse historique : Quels outils/tâches causent le plus d'exposition</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Corrélation : A(8) cumulé ↔ symptômes HAVS rapportés</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Plans d'investissement : ROI d'achat d'outils à faibles vibrations</span>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon">→</span>
+                                <span>Feedback loop : Amélioration continue des algorithmes ML</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Scénarios -->
+        <section id="scenarios">
+            <h2>📊 Scénarios Réels d'Exposition HAV</h2>
+
+            <!-- Scénario 1 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">01</div>
+                    <div>
+                        <h3>🔨 Ouvrier du Bâtiment (Marteau-Piqueur)</h3>
+                        <p>Démolition de béton en chantier urbain</p>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>CONTEXTE :</strong> Un ouvrier utilise un marteau-piqueur électrique de 20 kg pour démolir un plancher de béton. L'outil émet des vibrations élevées (ahv = 12 m/s²). Exposition continue pendant 4 heures avec pauses.
+                    </div>
+                </div>
+
+                <h4>📋 Données d'Exposition</h4>
+                <div class="calc-grid">
+                    <div class="calc-item">
+                        <div class="calc-label">Outil utilisé</div>
+                        <div class="calc-value">Marteau-piqueur</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Vibration outil (ahv)</div>
+                        <div class="calc-value">12 <span class="calc-unit">m/s²</span></div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Temps d'exposition</div>
+                        <div class="calc-value">4.0 <span class="calc-unit">heures</span></div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">A(8) calculé</div>
+                        <div class="calc-value" style="color: #ef4444; font-weight: 900;">8.49 <span class="calc-unit">m/s²</span></div>
+                    </div>
+                </div>
+
+                <h4>🧮 Calcul A(8)</h4>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 25px; border-radius: 12px; border: 2px solid rgba(139, 92, 246, 0.3);">
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        <strong>Formule ISO 5349-1 :</strong><br>
+                        A(8) = ahv × √(T / T₀)
+                    </p>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        <strong>Calcul :</strong><br>
+                        A(8) = 12 m/s² × √(4h / 8h)<br>
+                        A(8) = 12 m/s² × √0.5<br>
+                        A(8) = 12 m/s² × 0.707<br>
+                        <span style="color: #ef4444; font-weight: 800; font-size: 1.3rem;">A(8) = 8.49 m/s²</span>
+                    </p>
+                </div>
+
+                <div class="alert-box alert-danger">
+                    <div class="alert-icon">🚨</div>
+                    <div>
+                        <strong>ALERTE CRITIQUE :</strong> A(8) = 8.49 m/s² DÉPASSE LARGEMENT la valeur limite de 5 m/s² ! Arrêt immédiat requis. Risque élevé de HAVS.
+                    </div>
+                </div>
+
+                <h4>💡 Actions AgenticX5</h4>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">🚨</span>
+                        <span><strong>Alerte SMS superviseur</strong> : "URGENT - A(8) = 8.49 m/s² dépassement critique"</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🔄</span>
+                        <span><strong>Rotation immédiate</strong> : Remplacer par un collègue non exposé aujourd'hui</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🛠️</span>
+                        <span><strong>Changement d'outil</strong> : Suggère marteau hydraulique (ahv = 6 m/s² au lieu de 12 m/s²)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">⏱️</span>
+                        <span><strong>Temps max calculé</strong> : Pour ne pas dépasser 5 m/s², limiter à 1.75h/jour max</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Scénario 2 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">02</div>
+                    <div>
+                        <h3>⚙️ Mécanicien Industriel (Meuleuse d'Angle)</h3>
+                        <p>Polissage et ébavurage de pièces métalliques</p>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>CONTEXTE :</strong> Un mécanicien utilise une meuleuse d'angle pneumatique (ahv = 7 m/s²) pour ébarber des soudures. Exposition de 3 heures par jour en ateliers industriels.
+                    </div>
+                </div>
+
+                <h4>📋 Données d'Exposition</h4>
+                <div class="calc-grid">
+                    <div class="calc-item">
+                        <div class="calc-label">Outil utilisé</div>
+                        <div class="calc-value">Meuleuse angle</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Vibration outil (ahv)</div>
+                        <div class="calc-value">7 <span class="calc-unit">m/s²</span></div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Temps d'exposition</div>
+                        <div class="calc-value">3.0 <span class="calc-unit">heures</span></div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">A(8) calculé</div>
+                        <div class="calc-value" style="color: #f59e0b; font-weight: 900;">4.29 <span class="calc-unit">m/s²</span></div>
+                    </div>
+                </div>
+
+                <h4>🧮 Calcul A(8)</h4>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 25px; border-radius: 12px; border: 2px solid rgba(139, 92, 246, 0.3);">
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        <strong>Formule ISO 5349-1 :</strong><br>
+                        A(8) = ahv × √(T / T₀)
+                    </p>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        <strong>Calcul :</strong><br>
+                        A(8) = 7 m/s² × √(3h / 8h)<br>
+                        A(8) = 7 m/s² × √0.375<br>
+                        A(8) = 7 m/s² × 0.612<br>
+                        <span style="color: #f59e0b; font-weight: 800; font-size: 1.3rem;">A(8) = 4.29 m/s²</span>
+                    </p>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>ALERTE MODÉRÉE :</strong> A(8) = 4.29 m/s² dépasse la valeur d'action (2,5 m/s²) mais reste sous la limite (5 m/s²). Actions préventives recommandées.
+                    </div>
+                </div>
+
+                <h4>💡 Actions AgenticX5</h4>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">📱</span>
+                        <span><strong>Notification superviseur</strong> : "A(8) = 4.29 m/s² - Seuil action dépassé"</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">⏸️</span>
+                        <span><strong>Pauses recommandées</strong> : 15 min de pause toutes les 1h30</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🛠️</span>
+                        <span><strong>Changement outil suggéré</strong> : Meuleuse électrique moderne (ahv = 4,5 m/s²)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">📊</span>
+                        <span><strong>Surveillance médicale</strong> : Ajout à la liste de suivi annuel HAVS</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Scénario 3 -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <div class="scenario-number">03</div>
+                    <div>
+                        <h3>🌲 Bûcheron (Tronçonneuse)</h3>
+                        <p>Abattage et découpe d'arbres en forêt</p>
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">⚠️</div>
+                    <div>
+                        <strong>CONTEXTE :</strong> Un bûcheron utilise une tronçonneuse thermique (ahv = 5 m/s²) pour abattre et découper des arbres. Exposition de 6 heures par jour en conditions hivernales (facteur aggravant).
+                    </div>
+                </div>
+
+                <h4>📋 Données d'Exposition</h4>
+                <div class="calc-grid">
+                    <div class="calc-item">
+                        <div class="calc-label">Outil utilisé</div>
+                        <div class="calc-value">Tronçonneuse</div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Vibration outil (ahv)</div>
+                        <div class="calc-value">5 <span class="calc-unit">m/s²</span></div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">Temps d'exposition</div>
+                        <div class="calc-value">6.0 <span class="calc-unit">heures</span></div>
+                    </div>
+                    <div class="calc-item">
+                        <div class="calc-label">A(8) calculé</div>
+                        <div class="calc-value" style="color: #f59e0b; font-weight: 900;">4.33 <span class="calc-unit">m/s²</span></div>
+                    </div>
+                </div>
+
+                <h4>🧮 Calcul A(8)</h4>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 25px; border-radius: 12px; border: 2px solid rgba(139, 92, 246, 0.3);">
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        <strong>Formule ISO 5349-1 :</strong><br>
+                        A(8) = ahv × √(T / T₀)
+                    </p>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        <strong>Calcul :</strong><br>
+                        A(8) = 5 m/s² × √(6h / 8h)<br>
+                        A(8) = 5 m/s² × √0.75<br>
+                        A(8) = 5 m/s² × 0.866<br>
+                        <span style="color: #f59e0b; font-weight: 800; font-size: 1.3rem;">A(8) = 4.33 m/s²</span>
+                    </p>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">❄️</div>
+                    <div>
+                        <strong>FACTEUR AGGRAVANT :</strong> A(8) = 4.33 m/s² + exposition au FROID augmente le risque de syndrome de Raynaud. Gants chauffants et pauses fréquentes essentiels.
+                    </div>
+                </div>
+
+                <h4>💡 Actions AgenticX5</h4>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">📱</span>
+                        <span><strong>Alerte superviseur</strong> : "A(8) = 4.33 m/s² + froid → risque élevé Raynaud"</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🧤</span>
+                        <span><strong>Gants chauffants</strong> : Obligatoires en conditions hivernales</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">⏱️</span>
+                        <span><strong>Pauses chaudes</strong> : 20 min dans un abri chauffé toutes les 2h</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🛠️</span>
+                        <span><strong>Modèle tronçonneuse</strong> : Envisager modèle anti-vibrations (ahv = 3 m/s²)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">🩺</span>
+                        <span><strong>Surveillance médicale renforcée</strong> : Test du blanchiment des doigts annuel</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 6: Calculateur Interactif -->
+        <section id="demo-calc">
+            <h2>🧮 Calculateur A(8) Interactif</h2>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">💡</div>
+                <div>
+                    <strong>OUTIL DE SIMULATION :</strong> Utilisez ce calculateur pour estimer l'exposition quotidienne A(8) selon ISO 5349-1. Ajoutez plusieurs outils pour simuler des expositions multiples. Les seuils réglementaires sont : <span style="color: #f59e0b; font-weight: 700;">2,5 m/s² (valeur d'action)</span> et <span style="color: #ef4444; font-weight: 700;">5 m/s² (valeur limite)</span>.
+                </div>
+            </div>
+
+            <div class="calculator-container">
+                <h3 style="margin-bottom: 25px; color: #c4b5fd;">⚙️ Ajoutez vos outils vibrants</h3>
+
+                <div id="tools-container">
+                    <!-- Les outils seront ajoutés dynamiquement ici -->
+                </div>
+
+                <button class="btn btn-secondary" onclick="addTool()" style="margin-top: 20px;">
+                    ➕ Ajouter un outil
+                </button>
+
+                <button class="btn btn-primary" onclick="calculateA8()" style="margin-top: 20px; margin-left: 15px;">
+                    🧮 Calculer A(8)
+                </button>
+
+                <div id="result" class="result-container" style="display: none;">
+                    <h3 style="margin-bottom: 25px; color: #c4b5fd;">📊 Résultats de l'Exposition</h3>
+                    <div id="result-details"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: ROI -->
+        <section id="roi">
+            <h2>💰 Retour sur Investissement (ROI)</h2>
+
+            <div class="alert-box alert-success">
+                <div class="alert-icon">💰</div>
+                <div>
+                    <strong>VALEUR ÉCONOMIQUE :</strong> La surveillance HAV par AgenticX5 génère un ROI de 350% en 18 mois grâce à la prévention des HAVS, la réduction de l'absentéisme, la conformité automatisée et l'optimisation des équipements.
+                </div>
+            </div>
+
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="module-icon">📉</div>
+                    <h3>Réduction Incidents HAV</h3>
+                    <div class="roi-value">-75%</div>
+                    <p class="roi-label">Cas de syndrome HAVS</p>
+                </div>
+
+                <div class="roi-card">
+                    <div class="module-icon">⏱️</div>
+                    <h3>Gain Conformité</h3>
+                    <div class="roi-value">-90%</div>
+                    <p class="roi-label">Temps de reporting</p>
+                </div>
+
+                <div class="roi-card">
+                    <div class="module-icon">💵</div>
+                    <h3>Économies Annuelles</h3>
+                    <div class="roi-value">$350K</div>
+                    <p class="roi-label">Par site (100 travailleurs)</p>
+                </div>
+
+                <div class="roi-card">
+                    <div class="module-icon">📊</div>
+                    <h3>ROI Global</h3>
+                    <div class="roi-value">350%</div>
+                    <p class="roi-label">Sur 18 mois</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px; margin-bottom: 25px;">📊 Décomposition des Économies</h3>
+            <div class="bar-chart">
+                <div class="bar-item">
+                    <div class="bar-label">Prévention HAVS</div>
+                    <div class="bar" style="width: 90%;">$180,000 / an</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">Absentéisme ↓</div>
+                    <div class="bar" style="width: 60%;">$85,000 / an</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">Conformité auto</div>
+                    <div class="bar" style="width: 45%;">$50,000 / an</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">Optimisation outils</div>
+                    <div class="bar" style="width: 30%;">$35,000 / an</div>
+                </div>
+            </div>
+
+            <div class="alert-box alert-success" style="margin-top: 40px;">
+                <div class="alert-icon">✅</div>
+                <div>
+                    <strong>INVESTISSEMENT RENTABLE :</strong> Pour un site de 100 travailleurs exposés aux vibrations HAV, l'investissement initial de $100K est amorti en 4 mois. Le ROI total atteint 350% en 18 mois grâce aux économies cumulées.
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 40px 20px; margin-top: 60px; border-top: 2px solid rgba(139, 92, 246, 0.3);">
+            <p style="font-size: 1.2rem; color: #a78bfa; font-weight: 600; margin-bottom: 15px;">
+                🚀 AgenticX5 SafetyGraph - Intelligence Agentique pour la SST
+            </p>
+            <p style="color: #94a3b8;">
+                Prévention des vibrations main-bras par IA | Conformité ISO 5349 | ROI 350%
+            </p>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">
+                © 2025 GenAISafety - Tous droits réservés
+            </p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let toolCounter = 0;
+
+        // Bases de données des outils vibrants (valeurs ahv typiques)
+        const toolDatabase = {
+            'marteau-piqueur': { name: 'Marteau-piqueur électrique', ahv: 12 },
+            'marteau-piqueur-pneumatique': { name: 'Marteau-piqueur pneumatique', ahv: 15 },
+            'meuleuse-angle': { name: 'Meuleuse d\'angle pneumatique', ahv: 7 },
+            'meuleuse-angle-electrique': { name: 'Meuleuse d\'angle électrique', ahv: 4.5 },
+            'perceuse-percussion': { name: 'Perceuse à percussion', ahv: 8 },
+            'ponceuse-orbitale': { name: 'Ponceuse orbitale', ahv: 6 },
+            'tronconneuse': { name: 'Tronçonneuse thermique', ahv: 5 },
+            'tronconneuse-electrique': { name: 'Tronçonneuse électrique', ahv: 3.5 },
+            'burineur': { name: 'Burineur pneumatique', ahv: 10 },
+            'demolisseur': { name: 'Démolisseur électrique', ahv: 13 },
+            'scie-circulaire': { name: 'Scie circulaire portative', ahv: 4 },
+            'dechiqueteuse': { name: 'Déchiqueteuse thermique', ahv: 6 },
+            'vibrateur-beton': { name: 'Vibrateur à béton', ahv: 9 },
+            'perforateur': { name: 'Perforateur rotatif', ahv: 11 },
+            'cloueuse-pneumatique': { name: 'Cloueuse pneumatique', ahv: 3 }
+        };
+
+        function addTool() {
+            toolCounter++;
+            const toolsContainer = document.getElementById('tools-container');
+            const toolRow = document.createElement('div');
+            toolRow.className = 'tool-row';
+            toolRow.id = `tool-${toolCounter}`;
+
+            toolRow.innerHTML = `
+                <div class="input-group">
+                    <label for="toolType-${toolCounter}">Type d'Outil</label>
+                    <select id="toolType-${toolCounter}" onchange="updateToolAhv(${toolCounter})">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="marteau-piqueur">Marteau-piqueur électrique (12 m/s²)</option>
+                        <option value="marteau-piqueur-pneumatique">Marteau-piqueur pneumatique (15 m/s²)</option>
+                        <option value="meuleuse-angle">Meuleuse d'angle pneumatique (7 m/s²)</option>
+                        <option value="meuleuse-angle-electrique">Meuleuse d'angle électrique (4,5 m/s²)</option>
+                        <option value="perceuse-percussion">Perceuse à percussion (8 m/s²)</option>
+                        <option value="ponceuse-orbitale">Ponceuse orbitale (6 m/s²)</option>
+                        <option value="tronconneuse">Tronçonneuse thermique (5 m/s²)</option>
+                        <option value="tronconneuse-electrique">Tronçonneuse électrique (3,5 m/s²)</option>
+                        <option value="burineur">Burineur pneumatique (10 m/s²)</option>
+                        <option value="demolisseur">Démolisseur électrique (13 m/s²)</option>
+                        <option value="scie-circulaire">Scie circulaire portative (4 m/s²)</option>
+                        <option value="dechiqueteuse">Déchiqueteuse thermique (6 m/s²)</option>
+                        <option value="vibrateur-beton">Vibrateur à béton (9 m/s²)</option>
+                        <option value="perforateur">Perforateur rotatif (11 m/s²)</option>
+                        <option value="cloueuse-pneumatique">Cloueuse pneumatique (3 m/s²)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="ahv-${toolCounter}">ahv (m/s²)</label>
+                    <input type="number" id="ahv-${toolCounter}" placeholder="Ex: 7" step="0.1" min="0" max="20">
+                </div>
+                <div class="input-group">
+                    <label for="time-${toolCounter}">Temps (heures)</label>
+                    <input type="number" id="time-${toolCounter}" placeholder="Ex: 3" step="0.1" min="0" max="8">
+                </div>
+                <button class="btn btn-danger" onclick="removeTool(${toolCounter})">🗑️</button>
+            `;
+
+            toolsContainer.appendChild(toolRow);
+        }
+
+        function updateToolAhv(toolId) {
+            const toolSelect = document.getElementById(`toolType-${toolId}`);
+            const ahvInput = document.getElementById(`ahv-${toolId}`);
+            const selectedTool = toolSelect.value;
+
+            if (selectedTool && toolDatabase[selectedTool]) {
+                ahvInput.value = toolDatabase[selectedTool].ahv;
+            }
+        }
+
+        function removeTool(toolId) {
+            const toolRow = document.getElementById(`tool-${toolId}`);
+            if (toolRow) {
+                toolRow.remove();
+            }
+        }
+
+        function calculateA8() {
+            const toolRows = document.querySelectorAll('.tool-row');
+            if (toolRows.length === 0) {
+                alert('⚠️ Veuillez ajouter au moins un outil avant de calculer.');
+                return;
+            }
+
+            let sumAhvSquaredTime = 0;
+            let toolsData = [];
+            let hasError = false;
+
+            toolRows.forEach(row => {
+                const toolId = row.id.split('-')[1];
+                const toolTypeSelect = document.getElementById(`toolType-${toolId}`);
+                const ahvInput = document.getElementById(`ahv-${toolId}`);
+                const timeInput = document.getElementById(`time-${toolId}`);
+
+                const toolType = toolTypeSelect.options[toolTypeSelect.selectedIndex].text || 'Outil inconnu';
+                const ahv = parseFloat(ahvInput.value);
+                const time = parseFloat(timeInput.value);
+
+                if (isNaN(ahv) || isNaN(time) || ahv <= 0 || time <= 0) {
+                    hasError = true;
+                    return;
+                }
+
+                sumAhvSquaredTime += (ahv * ahv * time);
+                toolsData.push({ name: toolType, ahv, time });
+            });
+
+            if (hasError) {
+                alert('⚠️ Veuillez remplir tous les champs avec des valeurs valides (ahv > 0, temps > 0).');
+                return;
+            }
+
+            // Calcul A(8) selon ISO 5349-1
+            const T0 = 8; // 8 heures
+            const A8 = Math.sqrt(sumAhvSquaredTime / T0);
+
+            // Détermination du statut
+            let status, statusColor, statusIcon, recommendation;
+            if (A8 >= 5.0) {
+                status = 'CRITIQUE - Valeur limite DÉPASSÉE';
+                statusColor = '#ef4444';
+                statusIcon = '🚨';
+                recommendation = 'Arrêt immédiat du travail requis ! Dépassement de la valeur limite réglementaire (5 m/s²). Risque élevé de syndrome HAVS.';
+            } else if (A8 >= 2.5) {
+                status = 'ALERTE - Valeur d\'action DÉPASSÉE';
+                statusColor = '#f59e0b';
+                statusIcon = '⚠️';
+                recommendation = 'Actions préventives requises : pauses fréquentes, rotation des tâches, surveillance médicale recommandée.';
+            } else {
+                status = 'ACCEPTABLE - Sous les seuils';
+                statusColor = '#22c55e';
+                statusIcon = '✅';
+                recommendation = 'Exposition dans les limites acceptables. Poursuivre la surveillance continue.';
+            }
+
+            // Affichage des résultats
+            const resultDiv = document.getElementById('result');
+            const resultDetailsDiv = document.getElementById('result-details');
+
+            let toolsHTML = toolsData.map((tool, idx) => `
+                <div class="result-row">
+                    <div class="result-label">${idx + 1}. ${tool.name}</div>
+                    <div class="result-value">${tool.ahv} m/s² × ${tool.time}h</div>
+                </div>
+            `).join('');
+
+            resultDetailsDiv.innerHTML = `
+                <h4 style="color: #c4b5fd; margin-bottom: 20px;">🔧 Outils utilisés</h4>
+                ${toolsHTML}
+
+                <div style="margin-top: 30px; padding: 25px; background: rgba(139, 92, 246, 0.15); border-radius: 12px; border: 2px solid rgba(139, 92, 246, 0.4);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <span style="font-size: 3rem;">${statusIcon}</span>
+                        <div>
+                            <div style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 5px;">Exposition Quotidienne A(8)</div>
+                            <div class="result-highlight" style="font-size: 3rem; color: ${statusColor};">
+                                ${A8.toFixed(2)} m/s²
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 20px; background: rgba(15, 23, 42, 0.6); border-radius: 10px; border-left: 5px solid ${statusColor};">
+                        <div style="font-size: 1.3rem; font-weight: 700; color: ${statusColor}; margin-bottom: 10px;">
+                            ${status}
+                        </div>
+                        <div style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;">
+                            ${recommendation}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 20px; background: rgba(15, 23, 42, 0.6); border-radius: 10px;">
+                    <h4 style="color: #c4b5fd; margin-bottom: 15px;">📊 Seuils Réglementaires</h4>
+                    <div style="display: grid; gap: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; border: 1px solid #22c55e;">
+                            <span style="color: #cbd5e1;">✅ Zone Acceptable</span>
+                            <span style="color: #22c55e; font-weight: 700;">< 2,5 m/s²</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid #f59e0b;">
+                            <span style="color: #cbd5e1;">⚠️ Valeur d'Action</span>
+                            <span style="color: #f59e0b; font-weight: 700;">2,5 - 5,0 m/s²</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid #ef4444;">
+                            <span style="color: #cbd5e1;">🚨 Valeur Limite</span>
+                            <span style="color: #ef4444; font-weight: 700;">> 5,0 m/s²</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Ajouter un outil par défaut au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            addTool();
+        });
+    </script>
+</body>
+</html>

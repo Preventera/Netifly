@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-P08: Températures Extrêmes (Hypothermie/Hyperthermie) | AgenticX5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Orbes animés (chaleur & froid) */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            background: #f97316; /* Orange chaleur */
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: #06b6d4; /* Cyan froid */
+            bottom: -150px;
+            left: -150px;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 450px;
+            height: 450px;
+            background: #eab308; /* Jaune avertissement */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            50% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+            75% {
+                transform: translate(30px, 50px) scale(1.05);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .uc-badge {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-badge {
+            background: rgba(234, 179, 8, 0.2);
+            border: 2px solid #eab308;
+            color: #fde047;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(234, 179, 8, 0);
+            }
+        }
+
+        h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #fb923c, #06b6d4, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .nav-btn {
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(71, 85, 105, 0.7);
+            border-color: rgba(148, 163, 184, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            border-color: #f97316;
+            color: white;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .card-icon {
+            font-size: 32px;
+        }
+
+        .card-title {
+            font-size: 28px;
+            color: #fb923c;
+            font-weight: 700;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .data-table th {
+            background: rgba(249, 115, 22, 0.2);
+            color: #fb923c;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .data-table td {
+            padding: 15px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            color: #e2e8f0;
+        }
+
+        .data-table tr:hover {
+            background: rgba(51, 65, 85, 0.3);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #f97316;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        .stat-card.cold:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fb923c, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .stat-value.cold {
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Architecture Cards */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .arch-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s;
+        }
+
+        .arch-card:hover {
+            transform: translateY(-5px);
+            border-color: #f97316;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        .arch-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .arch-icon {
+            font-size: 32px;
+        }
+
+        .arch-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fb923c;
+        }
+
+        .arch-description {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid #f97316;
+        }
+
+        .feature-icon {
+            color: #f97316;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Workflow Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #f97316, #06b6d4);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 19px;
+            width: 24px;
+            height: 24px;
+            background: #f97316;
+            border-radius: 50%;
+            border: 3px solid #0f172a;
+        }
+
+        .timeline-marker.cold {
+            background: #06b6d4;
+        }
+
+        .timeline-content {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fb923c;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Scenario Cards */
+        .scenario-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .scenario-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fb923c;
+        }
+
+        .scenario-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: #fb923c;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .scenario-badge.cold {
+            background: rgba(6, 182, 212, 0.2);
+            color: #22d3ee;
+        }
+
+        /* Demo Interactive */
+        .demo-container {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .temp-display {
+            background: rgba(20, 20, 30, 0.8);
+            border: 3px solid #f97316;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .temp-gauge {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(to top, #06b6d4, #22d3ee, #fbbf24, #fb923c, #dc2626);
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 100px;
+            border: 3px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .temp-indicator {
+            position: absolute;
+            left: -20px;
+            right: -20px;
+            height: 4px;
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            transition: all 0.3s;
+        }
+
+        .temp-value {
+            font-size: 64px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fb923c, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .control-btn.cold {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.4);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .status-label {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .status-value {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .status-safe {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #86efac;
+        }
+
+        .status-warning {
+            background: rgba(234, 179, 8, 0.2);
+            border: 1px solid rgba(234, 179, 8, 0.4);
+            color: #fde047;
+        }
+
+        .status-danger {
+            background: rgba(220, 38, 38, 0.2);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            color: #fca5a5;
+        }
+
+        /* ROI Cards */
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .roi-card {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .roi-value {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #86efac, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .roi-label {
+            color: #cbd5e1;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .roi-desc {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Threshold Cards */
+        .threshold-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .threshold-card {
+            background: rgba(51, 65, 85, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid;
+            transition: all 0.3s;
+        }
+
+        .threshold-card.green {
+            border-color: #22c55e;
+        }
+
+        .threshold-card.yellow {
+            border-color: #eab308;
+        }
+
+        .threshold-card.orange {
+            border-color: #f97316;
+        }
+
+        .threshold-card.red {
+            border-color: #dc2626;
+        }
+
+        .threshold-card:hover {
+            transform: translateX(5px);
+        }
+
+        .threshold-level {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .threshold-value {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .nav {
+                position: static;
+            }
+
+            .arch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .temp-gauge {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orbes animés -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="uc-badge">UC-P08 • PRÉVENTION</div>
+                <div class="priority-badge">
+                    <span>🟡</span>
+                    <span>PRIORITÉ HAUTE</span>
+                </div>
+            </div>
+            <h1>Températures Extrêmes</h1>
+            <h2 style="color: #94a3b8; font-size: 24px; margin-bottom: 15px;">Hypothermie / Hyperthermie</h2>
+            <p class="subtitle">
+                Système intelligent de monitoring température corporelle et conditions environnementales pour prévenir stress thermique • 
+                6.8 accidents/100 travailleurs >28°C • Architecture WEARABLES + AGENTIC + ML + KG • 
+                Conformité ISO 7243 (WBGT), ISO 11079 (IREQ), ACGIH TLVs, NIOSH 2016
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('overview')">📊 Vue d'ensemble</button>
+            <button class="nav-btn" onclick="showSection('standards')">📋 Normes & Standards</button>
+            <button class="nav-btn" onclick="showSection('architecture')">🏗️ Architecture</button>
+            <button class="nav-btn" onclick="showSection('workflow')">⚙️ Workflow</button>
+            <button class="nav-btn" onclick="showSection('scenarios')">🎭 Scénarios</button>
+            <button class="nav-btn" onclick="showSection('demo')">🎮 Démo Interactive</button>
+            <button class="nav-btn" onclick="showSection('roi')">💰 ROI & Impact</button>
+        </div>
+
+        <!-- Section: Vue d'ensemble -->
+        <div id="overview" class="content-section active">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2 class="card-title">Vue d'Ensemble - UC-P08</h2>
+                </div>
+                
+                <table class="data-table">
+                    <tr>
+                        <th style="width: 25%;">Dimension</th>
+                        <th>Détails</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Risque/Problématique</strong></td>
+                        <td>Travail températures extrêmes: <strong>&lt;-25°C (hypothermie)</strong> ou <strong>&gt;28°C (hyperthermie)</strong><br>
+                        Taux: <strong>6.8 accidents/100 travailleurs</strong> en conditions chaudes (référence interne)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Effets Santé</strong></td>
+                        <td>
+                            <strong>Chaleur:</strong> Épuisement, coup de chaleur, déshydratation, crampes, syncope<br>
+                            <strong>Froid:</strong> Engelures, hypothermie, diminution dextérité, troubles cardiovasculaires
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Action/Solution</strong></td>
+                        <td>Monitoring température corporelle temps réel + pauses obligatoires automatiques + rotations orchestrées + coaching hydratation/vêtements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Données Utilisées</strong></td>
+                        <td>
+                            • <strong>Wearables:</strong> Température cutanée (Tskin), Fréquence cardiaque (FC), Accélérométrie (cadence travail)<br>
+                            • <strong>Environnement:</strong> Température air (Ta), Humidité relative (HR), Vitesse vent, Rayonnement solaire<br>
+                            • <strong>Calculs:</strong> WBGT (Wet Bulb Globe Temperature), IREQ (Isolement requis), WCI (Wind Chill Index)<br>
+                            • <strong>Historique:</strong> Incidents thermiques, quasi-accidents, absentéisme, saisonnalité
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>
+                            <strong>WEARABLES + AGENTIC + KG + ML</strong><br>
+                            • Wearables: Tskin + FC monitoring continu (bracelet/patch)<br>
+                            • ML: RiskPredictor-Heat/Cold (WBGT/IREQ + physio + charge travail)<br>
+                            • Agentic: Orchestrateur HUGO (pauses obligatoires, rotations, alertes)<br>
+                            • KG: Graphe météo→risques→secteurs/postes/équipes (SafetyGraph Neo4j)<br>
+                            • BehaviorX: Coaching contextuel hydratation, vêtements, symptômes
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modules SafetyGraph</strong></td>
+                        <td>
+                            • Dashboard Environnementaux (WBGT/IREQ temps réel)<br>
+                            • RiskPredictor Stress Thermique (scoring ML 5 min)<br>
+                            • BehaviorX Module 6 (micro-nudges hydratation/habits)<br>
+                            • Dashboard Saisonnalité (trends mensuel/annuel)<br>
+                            • Orchestration Pauses/Rotations (automatique)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Objectif & ROI</strong></td>
+                        <td>
+                            <strong>Réduction 50% incidents thermiques en 12 mois</strong><br>
+                            Investissement: <strong>23,000$ CAD</strong> (capteurs + licences + déploiement pilote)<br>
+                            Payback: <strong>&lt;9-12 mois</strong> (selon volume exposition)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Priorité</strong></td>
+                        <td><span style="color: #fde047; font-weight: 700;">🟡 HAUTE</span> (variation saisonnière, impact immédiat santé travailleurs)</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">🌡️ Statistiques Clés</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">6.8</div>
+                        <div class="stat-label">Accidents/100 Travailleurs<br>(conditions >28°C)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">50%</div>
+                        <div class="stat-label">Réduction Cible<br>(12 mois)</div>
+                    </div>
+                    <div class="stat-card cold">
+                        <div class="stat-value cold">-25°C</div>
+                        <div class="stat-label">Seuil Froid Critique<br>(hypothermie)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+28°C</div>
+                        <div class="stat-label">Seuil Chaleur Critique<br>(hyperthermie)</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 25px 0 15px 0;">🎯 Objectifs du Système AgenticX5-UC-P08</h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Détection précoce stress thermique:</strong> Scoring ML toutes les 5 min (WBGT/IREQ + FC + Tskin)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Pauses obligatoires automatiques:</strong> Orchestrateur HUGO déclenche pauses 10-15min/h selon niveau alerte</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Rotations intelligentes:</strong> Alternance tâches chaudes/froides basée sur charge travail et exposition cumulée</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Coaching comportemental:</strong> BehaviorX Module 6 (micro-nudges hydratation, vêtements, symptômes)</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Conformité réglementaire:</strong> Seuils ISO 7243/11079, ACGIH TLVs, NIOSH 2016, traçabilité 7 ans</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Amélioration continue:</strong> Ré-entraînement ML hebdo sur incidents/quasi-accidents + saisonnalité</span>
+                    </li>
+                </ul>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">🚦 Seuils d'Alerte (Adaptables par Secteur)</h3>
+                
+                <h4 style="color: #fb923c; margin: 20px 0 15px 0;">🌡️ Chaleur (WBGT - ISO 7243)</h4>
+                <div class="threshold-grid">
+                    <div class="threshold-card green">
+                        <div class="threshold-level" style="color: #86efac;">🟢 NORMAL</div>
+                        <div class="threshold-value">WBGT ≤ 27°C<br>Travail standard</div>
+                    </div>
+                    <div class="threshold-card yellow">
+                        <div class="threshold-level" style="color: #fde047;">🟡 JAUNE</div>
+                        <div class="threshold-value">WBGT 27-29°C<br>Rappel hydratation</div>
+                    </div>
+                    <div class="threshold-card orange">
+                        <div class="threshold-level" style="color: #fb923c;">🟠 ORANGE</div>
+                        <div class="threshold-value">WBGT 29-31°C<br>Pause 10-15 min/h</div>
+                    </div>
+                    <div class="threshold-card red">
+                        <div class="threshold-level" style="color: #fca5a5;">🔴 ROUGE</div>
+                        <div class="threshold-value">WBGT > 31°C<br>Arrêt immédiat</div>
+                    </div>
+                </div>
+
+                <h4 style="color: #22d3ee; margin: 20px 0 15px 0;">❄️ Froid (WCI / IREQ - ISO 11079)</h4>
+                <div class="threshold-grid">
+                    <div class="threshold-card green">
+                        <div class="threshold-level" style="color: #86efac;">🟢 NORMAL</div>
+                        <div class="threshold-value">WCI > -10°C<br>Vêtements standard</div>
+                    </div>
+                    <div class="threshold-card yellow">
+                        <div class="threshold-level" style="color: #fde047;">🟡 JAUNE</div>
+                        <div class="threshold-value">WCI -10 à -25°C<br>Vêtements renforcés</div>
+                    </div>
+                    <div class="threshold-card orange">
+                        <div class="threshold-level" style="color: #fb923c;">🟠 ORANGE</div>
+                        <div class="threshold-value">WCI -25 à -35°C<br>Pauses chauffage 15min/h</div>
+                    </div>
+                    <div class="threshold-card red">
+                        <div class="threshold-level" style="color: #fca5a5;">🔴 ROUGE</div>
+                        <div class="threshold-value">WCI < -35°C<br>Arrêt immédiat</div>
+                    </div>
+                </div>
+
+                <h4 style="color: #fb923c; margin: 20px 0 15px 0;">💓 Paramètres Physiologiques (Wearables)</h4>
+                <div class="threshold-grid">
+                    <div class="threshold-card orange">
+                        <div class="threshold-level" style="color: #fb923c;">🟠 ALERTE CHALEUR</div>
+                        <div class="threshold-value">FC > 85% FCmax OU<br>Tskin > 37.5°C (10 min)</div>
+                    </div>
+                    <div class="threshold-card orange">
+                        <div class="threshold-level" style="color: #22d3ee;">🟠 ALERTE FROID</div>
+                        <div class="threshold-value">Tskin < 28°C (10 min) OU<br>FC < 50 bpm</div>
+                    </div>
+                    <div class="threshold-card red">
+                        <div class="threshold-level" style="color: #fca5a5;">🔴 URGENCE</div>
+                        <div class="threshold-value">Combo multi-critères:<br>WBGT+FC+Tskin > seuil</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Normes & Standards -->
+        <div id="standards" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📋</span>
+                    <h2 class="card-title">Normes & Standards Applicables</h2>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 20px 0 15px 0;">🌡️ Chaleur - Évaluation & Gestion</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🌐</div>
+                            <div class="arch-title">ISO 7243:2017</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>WBGT (Wet Bulb Globe Temperature)</strong></p>
+                            <p style="margin-top: 8px;">Méthode screening simple: température globe noir, température humide naturelle, température air. Seuils travail léger/modéré/lourd. Standard mondial prévention stress thermique.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Utilisé pour seuils vert/jaune/orange/rouge AgenticX5</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🔬</div>
+                            <div class="arch-title">ISO 7933:2023</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>PHS (Predicted Heat Strain)</strong></p>
+                            <p style="margin-top: 8px;">Modèle analytique avancé: calcul élévation température rectale, perte hydrique, temps exposition admissible (D95). Intègre métabolisme, vêtements, acclimatation.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Utilisé pour calculs orange/rouge détaillés</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📏</div>
+                            <div class="arch-title">ACGIH TLVs Heat</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Threshold Limit Values (Chaleur)</strong></p>
+                            <p style="margin-top: 8px;">Tables TLVs travail/repos selon charge métabolique. Facteurs ajustement (acclimatation, vêtements). Référence Canada/USA. Mise à jour annuelle comité experts.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Seuils déclenchement pauses AgenticX5</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🏛️</div>
+                            <div class="arch-title">NIOSH 2016</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Criteria Recommended Standard (Heat)</strong></p>
+                            <p style="margin-top: 8px;">Guide complet: évaluation WBGT, programme surveillance médicale, acclimatation progressive (7-14 jours), hydratation, plan urgence, formation superviseurs/travailleurs.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Base SOP et formations UC-P08</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🏗️</div>
+                            <div class="arch-title">ANSI/ASSP A10.50-2024</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Construction/Démolition (USA)</strong></p>
+                            <p style="margin-top: 8px;">Premier standard consensuel US: programme écrit obligatoire, acclimatation graduelle, surveillance physiologique, zones repos climatisées, formation annuelle. Applicable chantiers.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Checklist déploiement chantiers</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #22d3ee; margin: 25px 0 15px 0;">❄️ Froid - Évaluation & Gestion</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🌐</div>
+                            <div class="arch-title">ISO 11079:2007</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>IREQ (Isolement Requis)</strong></p>
+                            <p style="margin-top: 8px;">Calcul isolement vestimentaire requis (clo) selon température, vent, métabolisme. Évaluation risques refroidissements locaux (mains, visage, pieds). Temps exposition limité (DLE).</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #22d3ee;">➜ Dimensionnement vêtements & seuils froid AgenticX5</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🏗️</div>
+                            <div class="arch-title">ISO 15743:2008</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Postes Travail Froid (Management)</strong></p>
+                            <p style="margin-top: 8px;">Cadre système gestion risque froid: évaluation, mesures contrôle, formation, surveillance médicale, plans urgence (hypothermie). Approche globale organisationnelle.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #22d3ee;">➜ SOP saisonnalité & procédures hiver</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🇬🇧</div>
+                            <div class="arch-title">HSE UK - Cold Stress</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Health & Safety Executive (UK)</strong></p>
+                            <p style="margin-top: 8px;">Guide pratique: référence ISO 15743/11079, WCI (Wind Chill Index), symptômes engelures/hypothermie, vêtements couches, pauses réchauffement, boissons chaudes.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #22d3ee;">➜ Complément pratique terrain froid</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 25px 0 15px 0;">📊 Mesures & Paramètres Physiologiques</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🌡️</div>
+                            <div class="arch-title">ISO 7726 (FDIS 2025)</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Instruments & Méthodes Mesure</strong></p>
+                            <p style="margin-top: 8px;">Spécifications capteurs: température air/rayonnante, humidité, vitesse vent. Classes précision (C, I, P). Protocoles calibration. Révision 2025 en cours (FDIS approuvée).</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Référence qualité capteurs environnementaux</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⚡</div>
+                            <div class="arch-title">ISO 8996:2021</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Métabolisme & Charge Travail</strong></p>
+                            <p style="margin-top: 8px;">Estimation métabolisme (W): tables tâches, mesure FC, mesure O2. Classification charge (repos, léger, modéré, lourd, très lourd). Facteurs correction (sexe, âge, masse).</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Entrée clé modèles WBGT/PHS/IREQ</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">👕</div>
+                            <div class="arch-title">ISO 9920:2007</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Isolation Vêtements (clo/Im)</strong></p>
+                            <p style="margin-top: 8px;">Calcul isolement thermique vestimentaire (clo) et résistance évaporative (Im). Tables ensembles vêtements. EPI thermiques. Facteurs mouvement, vent, humidité.</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Paramètres PHS/IREQ vêtements</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">💓</div>
+                            <div class="arch-title">ISO 9886:2004</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Mesures Physiologiques</strong></p>
+                            <p style="margin-top: 8px;">Protocoles mesure: température centrale (rectale/oesophage/tympan), température peau (sites), fréquence cardiaque, sudation. Critères limites physiologiques (Tcore 38.5°C).</p>
+                            <p style="margin-top: 8px; font-weight: 700; color: #fb923c;">➜ Protocole wearables & seuils alertes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Architecture -->
+        <div id="architecture" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏗️</span>
+                    <h2 class="card-title">Architecture Technique AgenticX5-UC-P08</h2>
+                </div>
+
+                <p style="margin-bottom: 20px; color: #cbd5e1; font-size: 16px;">
+                    Architecture multi-capteurs (wearables + environnement) avec ML scoring stress thermique et orchestration automatique pauses/rotations.
+                </p>
+
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⌚</div>
+                            <div class="arch-title">WEARABLES</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Monitoring Physiologique Continu</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Bracelet/Patch température cutanée (Tskin)</li>
+                                <li>Capteur fréquence cardiaque (FC/FC max)</li>
+                                <li>Accélérométrie (cadence travail, métabolisme)</li>
+                                <li>Localisation UWB/GPS (secteur exposition)</li>
+                                <li>Batterie: autonomie 12-24h rechargeable</li>
+                                <li>Fréquence: 1 mesure/min (alerte temps réel)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🌤️</div>
+                            <div class="arch-title">CAPTEURS ENVIRONNEMENT</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Monitoring Conditions Climatiques</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Stations météo locales (Ta, HR, vent, rayonnement)</li>
+                                <li>Capteur WBGT certifié ISO 7726 (classe I)</li>
+                                <li>Anémomètre (vitesse vent pour WCI/IREQ)</li>
+                                <li>Prévisions météo API (planification préventive)</li>
+                                <li>Logs historiques (saisonnalité, patterns)</li>
+                                <li>Fréquence: 1 mesure/5 min (mise à jour dashboard)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-title">ML RISKPREDICTOR</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Scoring Stress Thermique</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Modèle RiskPredictor-Heat (WBGT + FC + Tskin + métabolisme)</li>
+                                <li>Modèle RiskPredictor-Cold (IREQ/WCI + FC + Tskin + vent)</li>
+                                <li>Algorithme XGBoost (features: 15 variables)</li>
+                                <li>Scoring toutes les 5 min (latence <30s)</li>
+                                <li>Ré-entraînement hebdo (incidents + quasi-accidents)</li>
+                                <li>Prédiction probabilité stress thermique 0-100%</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🧠</div>
+                            <div class="arch-title">AGENTIC ORCHESTRATOR</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Décisions Automatiques (HUGO)</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Policy engine: règles vert/jaune/orange/rouge</li>
+                                <li>Déclenchement pauses obligatoires (10-15 min/h)</li>
+                                <li>Orchestration rotations tâches (chaud↔froid)</li>
+                                <li>Alertes superviseur (SMS + dashboard + wearable)</li>
+                                <li>Protocole secours (arrêt immédiat + appel secouristes)</li>
+                                <li>Traçabilité immutable Neo4j (7 ans conformité)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🗺️</div>
+                            <div class="arch-title">KNOWLEDGE GRAPH</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Ontologie Thermique (SafetyGraph)</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Relations Météo→Risques→Secteurs/Postes</li>
+                                <li>Graphe saisonnalité (patterns mensuel/annuel)</li>
+                                <li>Historique incidents thermiques (causes racines)</li>
+                                <li>Liens travailleurs→équipes→expositions cumulées</li>
+                                <li>Requêtes Cypher temps réel (dashboard)</li>
+                                <li>Immutabilité logs (preuve conformité légale)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🎯</div>
+                            <div class="arch-title">BEHAVIORX MODULE 6</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Coaching Contextuel</strong></p>
+                            <ul style="margin-top: 12px; padding-left: 20px; color: #cbd5e1;">
+                                <li>Micro-nudges hydratation (rappels personnalisés)</li>
+                                <li>Conseils vêtements (couches, coupe-vent, chapeau)</li>
+                                <li>Auto-surveillance symptômes (chaleur: soif, vertiges; froid: frissons, engourdissement)</li>
+                                <li>Gamification (badges "hydratation", "pauses respectées")</li>
+                                <li>Notifications push wearable (vibration + texte)</li>
+                                <li>Feedback positif (renforcement comportements sécuritaires)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">🔄 Flux de Données Intégré</h3>
+                <div style="background: rgba(51, 65, 85, 0.4); border-radius: 12px; padding: 25px; border: 1px solid rgba(148, 163, 184, 0.2);">
+                    <pre style="color: #cbd5e1; font-family: monospace; line-height: 1.8; overflow-x: auto;">
+Capteurs → Ingestion (1 min) → ML Scoring (5 min) → Policy Engine → Actions Automatiques
+
+1. MÉTÉO (5 min)        ──┐
+2. WEARABLES (1 min)    ──┼──> INGESTION → CALCUL WBGT/IREQ/WCI
+3. FC/TSKIN (1 min)     ──┘
+                              ↓
+4. ML SCORING (5 min) ────> RiskPredictor-Heat/Cold (XGBoost 15 features)
+                              ↓
+5. POLICY ENGINE ─────────> Règles vert/jaune/orange/rouge
+                              ↓
+6. ACTIONS ───────────────> Pauses + Rotations + Alertes + Coaching
+                              ↓
+7. TRAÇABILITÉ ───────────> Neo4j (logs 7 ans) + Dashboard Temps Réel
+                              ↓
+8. APPRENTISSAGE ─────────> Ré-entraînement ML hebdo (incidents + saisonnalité)
+
+LATENCE TOTALE: <6 min (détection → action)
+FRÉQUENCE SCORING: Toutes les 5 min (288 évaluations/jour/travailleur)
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Workflow -->
+        <div id="workflow" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚙️</span>
+                    <h2 class="card-title">Workflow Détection Stress Thermique</h2>
+                </div>
+
+                <p style="margin-bottom: 25px; color: #cbd5e1; font-size: 16px;">
+                    Séquence complète monitoring continu → scoring ML → actions automatiques → traçabilité (cycle 5 min).
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Phase 1: Ingestion Données (T+0 → T+1 min)</div>
+                            <div class="timeline-desc">
+                                <strong>Sources:</strong> Météo locale API (Ta=32°C, HR=65%, vent=5 km/h, rayonnement=850 W/m²). 
+                                Wearables travailleurs: Tskin=36.8°C, FC=125 bpm (FCmax=180 → 69% FCmax). Accélérométrie: cadence élevée (métabolisme estimé 250W = lourd).
+                                <br><strong>Calculs:</strong> WBGT = 0.7×Twbn + 0.2×Tg + 0.1×Ta = 29.5°C (zone orange).
+                                <br><strong>Sortie:</strong> Données normalisées stockées TimescaleDB.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Phase 2: Scoring ML (T+1 → T+5 min)</div>
+                            <div class="timeline-desc">
+                                <strong>Modèle RiskPredictor-Heat:</strong> Features = [WBGT=29.5, FC=125, FCmax=180, Tskin=36.8, métabolisme=250W, acclimatation=Oui, vêtements=légers, hydratation_last=45min, exposition_cumulative=2.5h].
+                                <br><strong>XGBoost output:</strong> Probabilité stress thermique = 0.72 (72%).
+                                <br><strong>Seuils:</strong> P<0.30 (vert), 0.30-0.60 (jaune), 0.60-0.80 (orange), >0.80 (rouge).
+                                <br><strong>Classification:</strong> ORANGE (0.72) → Actions préventives requises.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Phase 3: Policy Engine & Décisions (T+5 min)</div>
+                            <div class="timeline-desc">
+                                <strong>Règles ORANGE activées:</strong> 
+                                <ul style="margin-top: 8px; padding-left: 20px;">
+                                    <li>Pause obligatoire 15 min/h (zone climatisée <25°C)</li>
+                                    <li>Réduction cadence travail -20% (métabolisme cible <200W)</li>
+                                    <li>Rappel hydratation (500 mL électrolytes)</li>
+                                    <li>Alerte superviseur (SMS + dashboard)</li>
+                                    <li>Notification wearable (vibration + "PAUSE REQUISE 15 MIN")</li>
+                                </ul>
+                                <strong>Orchestration:</strong> HUGO planifie rotation (tâche intérieure climatisée 30 min).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Phase 4: Exécution Actions (T+5 → T+20 min)</div>
+                            <div class="timeline-desc">
+                                <strong>Travailleur:</strong> Reçoit notification wearable (vibration 3 pulsations). Se dirige zone repos climatisée. Consomme boisson électrolytes (500 mL). Pause 15 min assise.
+                                <br><strong>Monitoring continu:</strong> Tskin descend 36.8°C → 35.2°C. FC descend 125 bpm → 95 bpm.
+                                <br><strong>BehaviorX coaching:</strong> Micro-nudge "Excellent! Pause complétée. Hydratation optimale. Badge 'Pause Santé' débloqué 🏅".
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Phase 5: Traçabilité & Logs (T+20 min)</div>
+                            <div class="timeline-desc">
+                                <strong>Neo4j immutable logs:</strong> 
+                                Event ID: UC-P08-2025-07-15-14h22
+                                <ul style="margin-top: 8px; padding-left: 20px;">
+                                    <li>Timestamp: 2025-07-15 14:22:00 EDT</li>
+                                    <li>Travailleur: ID-45832 (Jean D., 28 ans, acclimaté)</li>
+                                    <li>Conditions: WBGT=29.5°C, Ta=32°C, HR=65%</li>
+                                    <li>Physio: Tskin=36.8°C, FC=125 bpm (69% FCmax)</li>
+                                    <li>ML score: 0.72 (ORANGE)</li>
+                                    <li>Action: Pause 15 min déclenchée (zone climatisée)</li>
+                                    <li>Résultat: Paramètres normalisés (Tskin 35.2°C, FC 95 bpm)</li>
+                                    <li>Signature superviseur: Marie L. (14h38)</li>
+                                </ul>
+                                <strong>Conformité:</strong> Traçabilité 7 ans (CNESST/RSST).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Phase 6: Amélioration Continue (Hebdo)</div>
+                            <div class="timeline-desc">
+                                <strong>ML Pipeline:</strong> Agrégation incidents/quasi-accidents semaine. Patterns identifiés: "Stress thermique élevé entre 13h-15h (pic solaire)". Corrélation: "Travaux extérieurs asphalte + HR >60% = risque ×2.3".
+                                <br><strong>Ré-entraînement:</strong> RiskPredictor-Heat ajusté avec 127 nouveaux événements. Précision: 0.91 → 0.93 (F1-score).
+                                <br><strong>Recommandations auto-générées:</strong> "Décaler tâches lourdes extérieures à 7h-11h (WBGT <27°C)". "Installer brise-soleil temporaires secteur asphalte".
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">📋 SOP Terrain - Procédures Opérationnelles</h3>
+                
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">AVANT POSTE (Préparation)</div>
+                        <div class="scenario-badge">QUOTIDIEN</div>
+                    </div>
+                    <div style="color: #cbd5e1;">
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li>☑ Consultation météo du jour (prévisions WBGT/WCI)</li>
+                            <li>☑ Briefing risques thermiques (superviseur + équipe)</li>
+                            <li>☑ Vérification wearables (charge batterie >80%, couplage app)</li>
+                            <li>☑ Préparation zones repos (climatisées <25°C ou chauffées >18°C)</li>
+                            <li>☑ Eau/boissons électrolytes disponibles (2L/travailleur/jour chaleur)</li>
+                            <li>☑ Boissons chaudes disponibles (thermos café/thé froid)</li>
+                            <li>☑ Vérification vêtements appropriés (légers/respirants chaleur, couches/coupe-vent froid)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">PENDANT POSTE (Surveillance)</div>
+                        <div class="scenario-badge">CONTINU</div>
+                    </div>
+                    <div style="color: #cbd5e1;">
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li>☑ Respect pauses programmées par agent (non négociables)</li>
+                            <li>☑ Rotation tâches chaudes/froides selon planning orchestré</li>
+                            <li>☑ Surveillance pair-à-pair (symptômes: vertiges, frissons, confusion)</li>
+                            <li>☑ Hydratation régulière (250 mL toutes les 20 min chaleur)</li>
+                            <li>☑ Ajustement vêtements selon conditions (retirer/ajouter couches)</li>
+                            <li>☑ Communication immédiate si symptômes (superviseur + secouriste)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">APRÈS POSTE (Récupération)</div>
+                        <div class="scenario-badge">QUOTIDIEN</div>
+                    </div>
+                    <div style="color: #cbd5e1;">
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li>☑ Check rapide symptômes (auto-évaluation + superviseur)</li>
+                            <li>☑ Enregistrement ressenti (RPE thermique échelle 1-10)</li>
+                            <li>☑ Incident log si quasi-accident ou malaise</li>
+                            <li>☑ Recharge wearables (station dédiée)</li>
+                            <li>☑ Feedback système (amélioration continue)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">PROTOCOLE SECOURS (Urgence)</div>
+                        <div class="scenario-badge" style="background: rgba(220, 38, 38, 0.2); color: #fca5a5;">CRITIQUE</div>
+                    </div>
+                    <div style="color: #cbd5e1;">
+                        <p style="margin-bottom: 12px;"><strong>🔴 HYPERTHERMIE (Coup Chaleur):</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>Symptômes: Confusion, peau chaude/sèche, Tcore >40°C, syncope</li>
+                            <li>Action 1: Arrêt immédiat travail, zone ombragée/climatisée</li>
+                            <li>Action 2: Refroidissement progressif (eau fraîche, linges humides, ventilateur)</li>
+                            <li>Action 3: Appel secouristes/ambulance (urgence vitale)</li>
+                            <li>Action 4: Position latérale sécurité si inconscient</li>
+                            <li>⚠️ NE PAS donner aspirine/paracétamol (aggrave)</li>
+                        </ul>
+                        <p style="margin-bottom: 12px;"><strong>🔵 HYPOTHERMIE (Froid Extrême):</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>Symptômes: Frissons incontrôlables, confusion, Tcore <35°C, peau pâle/froide</li>
+                            <li>Action 1: Déplacement zone chauffée (>20°C)</li>
+                            <li>Action 2: Réchauffement progressif (couvertures, boissons chaudes NON alcoolisées)</li>
+                            <li>Action 3: Retrait vêtements humides, séchage</li>
+                            <li>Action 4: Appel secouristes si Tcore <34°C ou confusion</li>
+                            <li>⚠️ NE PAS réchauffer trop vite (choc thermique)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Scénarios -->
+        <div id="scenarios" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎭</span>
+                    <h2 class="card-title">Scénarios Réalistes UC-P08</h2>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">Scénario 1: Vague Chaleur Extrême - Chantier Asphalte</div>
+                        <div class="scenario-badge">CHALEUR</div>
+                    </div>
+                    <div style="color: #cbd5e1; line-height: 1.8;">
+                        <p style="margin-bottom: 12px;"><strong>Contexte:</strong> Juillet 2025, canicule (Ta=35°C, HR=70%, rayonnement=950 W/m²). Chantier réfection route asphalte (température surface >50°C). Travailleur expérimenté (8 ans), acclimaté, 42 ans.</p>
+                        
+                        <p style="margin-bottom: 12px;"><strong>⚠️ Situation Dangereuse:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>13:30 - Travailleur pose asphalte (métabolisme élevé ~300W)</li>
+                            <li>13:45 - Wearable détecte Tskin=37.2°C, FC=155 bpm (86% FCmax)</li>
+                            <li>13:50 - WBGT calculé=31.5°C (seuil rouge >31°C)</li>
+                            <li>13:52 - ML scoring: P=0.88 (88% risque stress thermique = ROUGE)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>🤖 Intervention AgenticX5:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>T+0min: Policy engine détecte seuil rouge → ARRÊT IMMÉDIAT</li>
+                            <li>T+1min: Alerte superviseur (SMS prioritaire + appel vocal)</li>
+                            <li>T+1min: Notification wearable (vibration forte + "ARRÊT IMMÉDIAT - ZONE CLIMATISÉE")</li>
+                            <li>T+2min: Orchestrateur réassigne tâche à travailleur acclimaté remplaçant</li>
+                            <li>T+5min: Travailleur en zone climatisée (18°C), hydratation 500 mL, repos 30 min</li>
+                            <li>T+35min: Paramètres normalisés (Tskin 35.8°C, FC 92 bpm) → retour progressif</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>✅ Résultat:</strong> <strong>Coup de chaleur évité</strong>. Sans intervention, risque syncope/hospitalisation (coût médical 8K$ + arrêt 2 semaines).</p>
+
+                        <p style="margin-bottom: 12px;"><strong>📋 Actions Post-Incident:</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>Log Neo4j immutable (preuve conformité)</li>
+                            <li>ML Pipeline ajuste seuils (asphalte >50°C = facteur risque ×1.8)</li>
+                            <li>Recommandation auto: "Décaler tâches asphalte à 7h-11h (WBGT <28°C)"</li>
+                            <li>Formation générée: "Symptômes coup chaleur & premiers secours"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">Scénario 2: Froid Extrême - Maintenance Extérieure Hiver</div>
+                        <div class="scenario-badge cold">FROID</div>
+                    </div>
+                    <div style="color: #cbd5e1; line-height: 1.8;">
+                        <p style="margin-bottom: 12px;"><strong>Contexte:</strong> Janvier 2025, vague froid polaire (Ta=-32°C, vent=30 km/h, WCI=-48°C). Maintenance charpente métallique extérieure. Travailleur 5 ans expérience, 35 ans, non acclimaté froid extrême.</p>
+                        
+                        <p style="margin-bottom: 12px;"><strong>⚠️ Situation Dangereuse:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>10:15 - Travailleur serre boulons (dextérité requise, gants minces)</li>
+                            <li>10:35 - Wearable détecte Tskin=26.5°C (doigts), FC=58 bpm</li>
+                            <li>10:40 - IREQ calculé=4.2 clo (isolation actuelle 2.8 clo = insuffisante)</li>
+                            <li>10:42 - ML scoring: P=0.79 (79% risque hypothermie/engelures = ORANGE)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>🤖 Intervention AgenticX5:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>T+0min: Policy engine détecte seuil orange → PAUSE CHAUFFAGE REQUISE</li>
+                            <li>T+1min: Notification wearable ("PAUSE 20 MIN - ROULOTTE CHAUFFÉE")</li>
+                            <li>T+2min: Alerte superviseur (dashboard + SMS)</li>
+                            <li>T+5min: Travailleur roulotte chauffée (22°C), boisson chaude (café), retrait gants humides</li>
+                            <li>T+25min: Paramètres normalisés (Tskin 32.5°C, FC 72 bpm)</li>
+                            <li>T+25min: BehaviorX recommande gants isolation supérieure (mitaines + doublure)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>✅ Résultat:</strong> <strong>Engelures doigts évitées</strong>. Sans intervention, risque engelures 2e degré (traitement médical + arrêt 1 semaine = 3K$).</p>
+
+                        <p style="margin-bottom: 12px;"><strong>📋 Amélioration Équipement:</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>Système identifie EPI inadéquat (isolation 2.8 clo vs 4.2 clo requis)</li>
+                            <li>Commande automatique gants isolation élevée (4.5 clo)</li>
+                            <li>Formation "Choix EPI froid selon IREQ" générée</li>
+                            <li>Modification procédure: vérification isolation AVANT sortie (checklist)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <div class="scenario-title">Scénario 3: Stress Thermique Mixte - Soudure Intérieur/Extérieur</div>
+                        <div class="scenario-badge">MIXTE</div>
+                    </div>
+                    <div style="color: #cbd5e1; line-height: 1.8;">
+                        <p style="margin-bottom: 12px;"><strong>Contexte:</strong> Mars 2025, printemps variable. Soudure tuyauterie (intérieur non climatisé 28°C + extérieur froid 5°C avec vent). Rotation tâches intérieur/extérieur. Travailleur 15 ans expérience, 48 ans.</p>
+                        
+                        <p style="margin-bottom: 12px;"><strong>⚠️ Défi Thermorégulation:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>09:00 - Soudure intérieur (chaleur radiante + EPI lourds = WBGT 30°C)</li>
+                            <li>09:45 - Rotation extérieur (Ta=5°C, vent=20 km/h, WCI=-3°C)</li>
+                            <li>10:15 - Wearable détecte variation rapide Tskin (37.5°C → 31.2°C en 20 min)</li>
+                            <li>10:20 - ML scoring détecte pattern "choc thermique répété" (risque cardiovasculaire)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>🤖 Intervention AgenticX5:</strong></p>
+                        <ul style="padding-left: 20px; margin-bottom: 12px;">
+                            <li>T+0min: Orchestrateur identifie pattern dangereux (variations Tskin >6°C/30min)</li>
+                            <li>T+2min: Recommandation superviseur: "Augmenter temps transition (pause 10 min entre rotations)"</li>
+                            <li>T+5min: Ajustement planning: rotation 90 min intérieur → pause 10 min → 60 min extérieur</li>
+                            <li>T+10min: BehaviorX coaching: "Retirer couche isolation AVANT soudure intérieur"</li>
+                            <li>Résultat: Variations Tskin réduites (amplitude <4°C/30min = acceptable)</li>
+                        </ul>
+
+                        <p style="margin-bottom: 12px;"><strong>✅ Résultat:</strong> <strong>Stress cardiovasculaire évité</strong> (risque arythmie pour travailleurs 45+ ans avec chocs thermiques répétés).</p>
+
+                        <p style="margin-bottom: 12px;"><strong>📋 Optimisation Procédure:</strong></p>
+                        <ul style="padding-left: 20px;">
+                            <li>ML Pipeline identifie "transitions thermiques rapides" comme facteur risque</li>
+                            <li>Nouvelle SOP: pauses tampon 10 min (température intermédiaire 15-20°C)</li>
+                            <li>Vestiaire "zone transition" créée (ni chaud ni froid, ajustement EPI)</li>
+                            <li>Formation "Thermorégulation & risques cardiovasculaires" générée</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Démo Interactive -->
+        <div id="demo" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🎮</span>
+                    <h2 class="card-title">Démo Interactive - Monitoring Température</h2>
+                </div>
+
+                <div class="demo-container">
+                    <h3 style="color: #fb923c; margin-bottom: 15px;">🌡️ Simulateur Stress Thermique</h3>
+                    <p style="color: #cbd5e1; margin-bottom: 20px;">
+                        Ajustez la température corporelle (Tskin) et observez la réponse du système AgenticX5 en temps réel.
+                    </p>
+
+                    <div class="temp-display">
+                        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: center;">
+                            <div>
+                                <h4 style="color: #22d3ee; margin-bottom: 15px;">❄️ FROID</h4>
+                                <div class="temp-gauge">
+                                    <div class="temp-indicator" id="tempIndicator" style="bottom: 50%;"></div>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 14px; color: #94a3b8;">
+                                    < 28°C<br>Hypothermie
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="temp-value" id="tempValue">35.5°C</div>
+                                <div style="color: #cbd5e1; font-weight: 600; margin-bottom: 20px;">Température Cutanée (Tskin)</div>
+                                <input type="range" id="tempSlider" min="25" max="40" value="35.5" step="0.5" 
+                                       style="width: 100%; cursor: pointer;" onchange="updateTemp(this.value)">
+                            </div>
+                            <div>
+                                <h4 style="color: #fb923c; margin-bottom: 15px;">🔥 CHALEUR</h4>
+                                <div class="temp-gauge">
+                                    <div class="temp-indicator" id="tempIndicator2" style="bottom: 50%;"></div>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 14px; color: #94a3b8;">
+                                    > 37.5°C<br>Hyperthermie
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="control-btn cold" onclick="setTemp(27)">❄️ Hypothermie (27°C)</button>
+                        <button class="control-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a);" onclick="setTemp(35.5)">🟢 Normal (35.5°C)</button>
+                        <button class="control-btn" onclick="setTemp(38.5)">🔥 Hyperthermie (38.5°C)</button>
+                        <button class="control-btn" style="background: linear-gradient(135deg, #64748b, #475569);" onclick="resetDemo()">🔄 Réinitialiser</button>
+                    </div>
+
+                    <div class="status-display">
+                        <h4 style="color: #fb923c; margin-bottom: 15px;">📊 État Système Temps Réel</h4>
+                        <div class="status-item">
+                            <span class="status-label">Température Cutanée (Tskin):</span>
+                            <span id="tskinStatus" class="status-value status-safe">35.5°C - Normal</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">ML RiskPredictor Score:</span>
+                            <span id="riskScore" class="status-value status-safe">15% - Risque Faible</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Niveau Alerte:</span>
+                            <span id="alertLevel" class="status-value status-safe">🟢 VERT - Surveillance Normale</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Action Requise:</span>
+                            <span id="actionRequired" class="status-value status-safe">✓ Aucune</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">BehaviorX Coaching:</span>
+                            <span id="coaching" class="status-value status-safe">✓ Continuez - Hydratation régulière</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border-left: 3px solid #3b82f6;">
+                        <p style="color: #93c5fd; font-size: 14px;">
+                            <strong>💡 Instructions:</strong> Cette démo simule le système de monitoring température corporelle AgenticX5. 
+                            Déplacez le curseur ou utilisez les boutons pour tester différents scénarios thermiques. 
+                            Le système détecte automatiquement le stress thermique et déclenche les actions appropriées selon les seuils ISO 7243/11079.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: ROI & Impact -->
+        <div id="roi" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💰</span>
+                    <h2 class="card-title">ROI & Impact Économique UC-P08</h2>
+                </div>
+
+                <h3 style="color: #fb923c; margin-bottom: 20px;">💵 Analyse Financière (Usine 200 Travailleurs)</h3>
+                
+                <div class="roi-grid">
+                    <div class="roi-card">
+                        <div class="roi-value">+287%</div>
+                        <div class="roi-label">ROI sur 3 ans</div>
+                        <div class="roi-desc">Retour sur investissement: 3.87x</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-value">9.3 mois</div>
+                        <div class="roi-label">Payback Period</div>
+                        <div class="roi-desc">Seuil rentabilité atteint</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-value">186K$</div>
+                        <div class="roi-label">Économies Annuelles</div>
+                        <div class="roi-desc">Total bénéfices CAD/an</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">📊 Détail Économies Annuelles</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">105K$</div>
+                        <div class="stat-label">Réduction Incidents<br>(-50% stress thermique)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">42K$</div>
+                        <div class="stat-label">Absentéisme<br>(-30% jours perdus)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">25K$</div>
+                        <div class="stat-label">Productivité<br>(rotations optimisées)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">14K$</div>
+                        <div class="stat-label">Primes Assurance<br>(-12% CNESST)</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">💼 Détail Investissement (3 ans)</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>Composante</th>
+                        <th>Coût</th>
+                        <th>Détail</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Wearables</strong></td>
+                        <td>35K$ CAD</td>
+                        <td>200 bracelets/patchs (Tskin + FC + UWB): 175$/unité</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capteurs Environnement</strong></td>
+                        <td>18K$ CAD</td>
+                        <td>Stations météo (8×1.5K$), Capteurs WBGT certifiés ISO (4×2K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Licences Logicielles</strong></td>
+                        <td>42K$ CAD</td>
+                        <td>AgenticX5 (18K$), RiskPredictor ML (12K$), BehaviorX (8K$), Neo4j (4K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zones Repos</strong></td>
+                        <td>28K$ CAD</td>
+                        <td>Climatisation portable (12K$), Roulottes chauffées (10K$), Équipement (6K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Déploiement & Formation</strong></td>
+                        <td>22K$ CAD</td>
+                        <td>Ingénierie (10K$), Formation superviseurs/travailleurs (8K$), Docs (4K$)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Maintenance Annuelle</strong></td>
+                        <td>15K$ CAD</td>
+                        <td>Support technique (8K$), Calibration capteurs (4K$), Consommables (3K$)</td>
+                    </tr>
+                    <tr style="background: rgba(249, 115, 22, 0.1); font-weight: 700;">
+                        <td><strong>TOTAL INVESTISSEMENT (An 1)</strong></td>
+                        <td><strong>145K$ CAD</strong></td>
+                        <td>Capex (130K$) + Opex An 1 (15K$)</td>
+                    </tr>
+                    <tr style="background: rgba(249, 115, 22, 0.1); font-weight: 700;">
+                        <td><strong>TOTAL 3 ANS</strong></td>
+                        <td><strong>175K$ CAD</strong></td>
+                        <td>Capex (130K$) + Opex 3 ans (45K$)</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">🎯 Métriques de Performance (Cible 12 mois)</h3>
+                <div class="arch-grid">
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📉</div>
+                            <div class="arch-title">-50%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Incidents Thermiques</strong></p>
+                            <p style="margin-top: 8px;">De 14 incidents/an à 7 incidents/an. Prévention: 7 coups chaleur/hypothermies évités (105K$ économisés).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">⏱️</div>
+                            <div class="arch-title">5 min</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Fréquence Scoring ML</strong></p>
+                            <p style="margin-top: 8px;">Évaluation risque toutes les 5 min (288 évaluations/jour/travailleur). Détection précoce stress thermique.</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🎯</div>
+                            <div class="arch-title">95%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Pauses Respectées</strong></p>
+                            <p style="margin-top: 8px;">95% conformité pauses obligatoires (vs 60% manuel). Orchestration automatique HUGO élimine "oublis".</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">📈</div>
+                            <div class="arch-title">-80%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Exposition Zone Rouge</strong></p>
+                            <p style="margin-top: 8px;">Temps cumulé WBGT >31°C ou WCI <-35°C réduit 80% (rotations intelligentes + arrêts automatiques).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">💧</div>
+                            <div class="arch-title">90%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Port Wearables</strong></p>
+                            <p style="margin-top: 8px;">Adoption spontanée 90% travailleurs (acceptabilité élevée: bracelets légers, autonomie 12h, non intrusifs).</p>
+                        </div>
+                    </div>
+                    <div class="arch-card">
+                        <div class="arch-card-header">
+                            <div class="arch-icon">🔄</div>
+                            <div class="arch-title">-30%</div>
+                        </div>
+                        <div class="arch-description">
+                            <p><strong>Absentéisme Thermique</strong></p>
+                            <p style="margin-top: 8px;">Jours perdus liés stress thermique réduits 30% (prévention malaises, récupération optimisée, coaching).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #fb923c; margin: 30px 0 20px 0;">🌟 Bénéfices Intangibles</h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Bien-être travailleurs:</strong> Réduction stress physiologique (+28% satisfaction sondages). Perception système comme "garde-fou bienveillant".</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Adaptation climatique:</strong> Résilience aux vagues chaleur/froid extrêmes (changements climatiques). Continuité opérationnelle conditions difficiles.</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Conformité CNESST:</strong> Démonstration due diligence (traçabilité 7 ans). Protection juridique accidents thermiques (-90% risque condamnation).</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Attraction talents:</strong> Image employeur responsable (technologie santé de pointe). Argument recrutement jeunes diplômés SST.</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Scalabilité saisonnière:</strong> Système adapte automatiquement seuils selon saison. ROI améliore avec expansion (économies échelle wearables).</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-icon">▸</span>
+                        <span><strong>Apprentissage continu:</strong> ML Pipeline affine seuils selon population (acclimatation, âge, condition physique). Précision améliore +15%/an.</span>
+                    </li>
+                </ul>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15)); border-radius: 12px; border: 2px solid #22c55e;">
+                    <h4 style="color: #86efac; margin-bottom: 15px; font-size: 20px;">✅ Conclusion ROI UC-P08</h4>
+                    <p style="color: #cbd5e1; line-height: 1.8; margin-bottom: 12px;">
+                        <strong>Investissement AgenticX5-UC-P08 est rentable:</strong> payback 9.3 mois, ROI +287% sur 3 ans (3.87x). 
+                        Investissement initial modeste (145K$ An 1) pour économies substantielles (186K$/an).
+                    </p>
+                    <p style="color: #cbd5e1; line-height: 1.8;">
+                        Au-delà finances, système sauve vies (7 incidents thermiques graves évités/an) et améliore bien-être travailleurs (+28% satisfaction). 
+                        Conformité réglementaire totale (ISO 7243/11079, ACGIH, NIOSH) + traçabilité immutable = protection juridique maximale. 
+                        <strong>Recommandation:</strong> déploiement prioritaire UC-P08 pour tous secteurs exposés températures extrêmes (construction, manufacturier, extérieur).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation entre sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Démo Interactive - Température
+        function updateTemp(temp) {
+            temp = parseFloat(temp);
+            
+            // Mise à jour affichage
+            document.getElementById('tempValue').textContent = temp.toFixed(1) + '°C';
+            document.getElementById('tempSlider').value = temp;
+            
+            // Calcul position indicateur (25-40°C → 0-100%)
+            const position = ((temp - 25) / 15) * 100;
+            document.getElementById('tempIndicator').style.bottom = position + '%';
+            document.getElementById('tempIndicator2').style.bottom = position + '%';
+            
+            // Calcul score risque (simplifié)
+            let riskScore = 0;
+            let alertLevel = '';
+            let alertColor = '';
+            let tskinStatus = '';
+            let actionRequired = '';
+            let coaching = '';
+            
+            if (temp < 28) {
+                // Hypothermie
+                riskScore = (28 - temp) * 8;
+                alertLevel = '🔴 ROUGE - HYPOTHERMIE CRITIQUE';
+                alertColor = 'status-danger';
+                tskinStatus = temp.toFixed(1) + '°C - HYPOTHERMIE';
+                actionRequired = '🛑 ARRÊT IMMÉDIAT - Zone Chauffée';
+                coaching = '⚠️ Réchauffement progressif + Boissons chaudes';
+            } else if (temp < 30) {
+                // Froid
+                riskScore = 35 + (30 - temp) * 10;
+                alertLevel = '🟠 ORANGE - Risque Froid';
+                alertColor = 'status-warning';
+                tskinStatus = temp.toFixed(1) + '°C - Froid';
+                actionRequired = '⏸️ Pause Chauffage 15 min/h';
+                coaching = '❄️ Vêtements isolation + Boissons chaudes';
+            } else if (temp < 34) {
+                // Léger froid
+                riskScore = 20 + (34 - temp) * 5;
+                alertLevel = '🟡 JAUNE - Surveillance';
+                alertColor = 'status-warning';
+                tskinStatus = temp.toFixed(1) + '°C - Légèrement Froid';
+                actionRequired = '✓ Surveillance - Vêtements Renforcés';
+                coaching = '👕 Vérifier isolation vêtements';
+            } else if (temp < 37) {
+                // Normal
+                riskScore = 10 + Math.abs(temp - 35.5) * 3;
+                alertLevel = '🟢 VERT - Surveillance Normale';
+                alertColor = 'status-safe';
+                tskinStatus = temp.toFixed(1) + '°C - Normal';
+                actionRequired = '✓ Aucune';
+                coaching = '✓ Continuez - Hydratation régulière';
+            } else if (temp < 37.5) {
+                // Légère chaleur
+                riskScore = 30 + (temp - 37) * 10;
+                alertLevel = '🟡 JAUNE - Surveillance';
+                alertColor = 'status-warning';
+                tskinStatus = temp.toFixed(1) + '°C - Légèrement Élevée';
+                actionRequired = '💧 Hydratation Renforcée';
+                coaching = '💧 Boire 250 mL toutes les 20 min';
+            } else if (temp < 38.5) {
+                // Chaleur
+                riskScore = 55 + (temp - 37.5) * 15;
+                alertLevel = '🟠 ORANGE - Risque Chaleur';
+                alertColor = 'status-warning';
+                tskinStatus = temp.toFixed(1) + '°C - Élevée';
+                actionRequired = '⏸️ Pause Zone Fraîche 15 min/h';
+                coaching = '🌡️ Hydratation + Zone climatisée';
+            } else {
+                // Hyperthermie
+                riskScore = 80 + (temp - 38.5) * 10;
+                if (riskScore > 100) riskScore = 100;
+                alertLevel = '🔴 ROUGE - HYPERTHERMIE CRITIQUE';
+                alertColor = 'status-danger';
+                tskinStatus = temp.toFixed(1) + '°C - HYPERTHERMIE';
+                actionRequired = '🛑 ARRÊT IMMÉDIAT - Zone Climatisée';
+                coaching = '⚠️ Refroidissement progressif + Hydratation';
+            }
+            
+            // Mise à jour statuts
+            document.getElementById('tskinStatus').textContent = tskinStatus;
+            document.getElementById('tskinStatus').className = 'status-value ' + alertColor;
+            
+            document.getElementById('riskScore').textContent = Math.round(riskScore) + '% - Risque ' + (riskScore < 30 ? 'Faible' : riskScore < 60 ? 'Modéré' : riskScore < 80 ? 'Élevé' : 'Critique');
+            document.getElementById('riskScore').className = 'status-value ' + alertColor;
+            
+            document.getElementById('alertLevel').textContent = alertLevel;
+            document.getElementById('alertLevel').className = 'status-value ' + alertColor;
+            
+            document.getElementById('actionRequired').textContent = actionRequired;
+            document.getElementById('actionRequired').className = 'status-value ' + alertColor;
+            
+            document.getElementById('coaching').textContent = coaching;
+            document.getElementById('coaching').className = 'status-value ' + alertColor;
+        }
+
+        function setTemp(temp) {
+            updateTemp(temp);
+        }
+
+        function resetDemo() {
+            updateTemp(35.5);
+        }
+
+        // Initialisation
+        window.addEventListener('load', function() {
+            updateTemp(35.5);
+        });
+    </script>
+</body>
+</html>

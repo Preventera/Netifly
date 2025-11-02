@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC-C04 : Amiante - Décontamination | AgenticX5 SafetyGraph</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           WOPE PREMIUM STYLE
+           ========================= */
+        
+        :root {
+            /* Colors */
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --light: #ffffff;
+            --gray: #a0a0b0;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--gray);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            bottom: -250px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            top: -200px;
+            right: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--accent), transparent);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+            border: 1px solid var(--danger);
+            border-radius: 50px;
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-number {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 25px 0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .card-content {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Info Box */
+        .info-box {
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-left: 4px solid;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid;
+            position: relative;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .info-box.critical {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .info-box.critical::before {
+            background: var(--danger);
+        }
+
+        .info-box.warning {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .info-box.warning::before {
+            background: var(--warning);
+        }
+
+        .info-box.success {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .info-box.success::before {
+            background: var(--success);
+        }
+
+        .info-box.info {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .info-box.info::before {
+            background: var(--accent);
+        }
+
+        .info-box h3 {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 15px 0;
+            padding-left: 35px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li:hover {
+            color: var(--light);
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+            border: 1px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge.critical {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .badge.primary {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge.success {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .badge.warning {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table th {
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--light);
+        }
+
+        .data-table td {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .data-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table code {
+            background: rgba(139, 92, 246, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        /* Architecture Diagram */
+        .architecture-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .architecture-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .architecture-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .architecture-item {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .architecture-item:hover {
+            transform: translateY(-5px);
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+        }
+
+        .architecture-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .architecture-item h4 {
+            font-size: 1.1rem;
+            color: var(--light);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .architecture-item p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.5;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 50px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 19px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 4px solid var(--dark);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-content {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 10px;
+        }
+
+        /* Stat Box */
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .architecture-flow {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 12px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">AgenticX5</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Vue d'ensemble</a></li>
+                <li><a href="#risk">Risque</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#workflow">Workflow</a></li>
+                <li><a href="#data">Données</a></li>
+                <li><a href="#standards">Normes</a></li>
+                <li><a href="#deployment">Déploiement</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="priority-badge">🔴 PRIORITÉ CRITIQUE</div>
+            <h1 class="hero-title">UC-C04 : Amiante<br>Décontamination</h1>
+            <p class="hero-subtitle">
+                Protection absolue contre les fibres cancérigènes avec confinement strict, monitoring temps réel
+                et traçabilité permanente (≥40 ans) conforme RSST, CSTC 3.23, OSHA, EPA
+            </p>
+            <div class="grid grid-3" style="margin-top: 50px;">
+                <div class="stat-box">
+                    <div class="stat-number">0.1</div>
+                    <div class="stat-label">f/cc VEMP Québec</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">20-40</div>
+                    <div class="stat-label">ans délai mésothéliome</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">≥30</div>
+                    <div class="stat-label">ans conservation dossiers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Overview -->
+    <section id="overview" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 01</div>
+                <h2 class="section-title">Vue d'Ensemble</h2>
+                <p class="section-description">
+                    Gestion intelligente de la décontamination amiante : confinement, monitoring continu,
+                    traçabilité permanente et conformité multi-juridictionnelle
+                </p>
+            </div>
+
+            <div class="info-box critical">
+                <h3>☠️ Risque Principal : Cancer Certain</h3>
+                <p>
+                    <strong>Toutes les formes d'amiante sont cancérigènes (C1 CIRC).</strong>
+                    Inhalation de fibres → mésothéliome pleural (mortel, délai 20-40 ans), cancer du poumon,
+                    asbestose. <strong>Aucun seuil sécuritaire connu</strong> : l'exposition doit être réduite
+                    au minimum absolu (principe ALARA).
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Objectifs de la Solution</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="feature-list">
+                        <li>Maintenir concentration fibres sous VEMP/PEL (0.1 f/cc TWA 8h) pendant décontamination</li>
+                        <li>Assurer confinement hermétique sous pression négative (-5 à -10 Pa) avec filtration HEPA</li>
+                        <li>Monitoring continu fibres + pression différentielle + alarmes automatiques</li>
+                        <li>Traçabilité permanente expositions individuelles (≥40 ans) pour surveillance médicale</li>
+                        <li>Conformité multi-juridictionnelle : RSST, CSTC 3.23, OSHA 1926.1101/1910.1001, EPA AHERA</li>
+                        <li>Clearance post-décontamination (0.01 f/cc EPA) avant libération zone</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">Architecture Recommandée</h3>
+                <div class="architecture-flow">
+                    <div class="architecture-item">
+                        <div class="icon">📡</div>
+                        <h4>IoT Sensors</h4>
+                        <p>Compteurs fibres continu + pression différentielle + HEPA status</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🤖</div>
+                        <h4>Agentic</h4>
+                        <p>Alarmes auto + gestion confinement + orchestration clearance</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🧠</div>
+                        <h4>Knowledge Graph</h4>
+                        <p>Registre expositions 40 ans + normes RSST/CSTC/OSHA/EPA</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">📋</div>
+                        <h4>Context Agent</h4>
+                        <p>Traçabilité complète + rapports conformité + audit ready</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">Modules SafetyGraph</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge primary">SafetyOntology (CSTC 3.23)</div>
+                        <div class="badge primary">Dashboard Conformité</div>
+                        <div class="badge primary">Context Agent</div>
+                        <div class="badge primary">Neo4j (Registre 40 ans)</div>
+                        <div class="badge primary">Analytics Dashboard</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <h3 class="card-title">Actions Critiques</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="badge critical">Confinement hermétique</div>
+                        <div class="badge critical">Pression négative -5 Pa min</div>
+                        <div class="badge critical">Filtration HEPA continue</div>
+                        <div class="badge critical">Monitoring fibres temps réel</div>
+                        <div class="badge critical">Clearance < 0.01 f/cc</div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">Priorité & Impact</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">CRITIQUE</span>
+                        </p>
+                        <p>
+                            Cancer certain (mésothéliome mortel délai 20-40 ans).
+                            Conformité réglementaire absolue. Conservation dossiers ≥40 ans.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Risk & Problématique -->
+    <section id="risk" class="section" style="background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 02</div>
+                <h2 class="section-title">Risque & Problématique</h2>
+                <p class="section-description">
+                    Comprendre la toxicité de l'amiante, les mécanismes pathologiques et l'impact sanitaire
+                </p>
+            </div>
+
+            <div class="info-box critical">
+                <h3>☠️ Amiante : Cancérigène Avéré (C1 CIRC)</h3>
+                <p>
+                    <strong>Toutes les formes d'amiante (chrysotile, amosite, crocidolite, etc.) sont des cancérigènes avérés.</strong>
+                    L'inhalation de fibres d'amiante provoque des pathologies graves et souvent mortelles :
+                    mésothéliome pleural (cancer rare et incurable), cancer du poumon, asbestose (fibrose pulmonaire).
+                </p>
+                <p style="margin-top: 15px;">
+                    <strong>Latence très longue :</strong> 20-40 ans entre première exposition et diagnostic du mésothéliome.
+                    <strong>Aucun seuil sécuritaire connu</strong> : principe ALARA (As Low As Reasonably Achievable)
+                    - réduire l'exposition au minimum absolu, même sous les limites réglementaires.
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🫁</div>
+                        <h3 class="card-title">Pathologies Liées à l'Amiante</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Maladies Respiratoires Graves</h4>
+                        <ul class="feature-list">
+                            <li><strong>Mésothéliome pleural</strong> : cancer rare et mortel de la plèvre, délai 20-40 ans, taux survie < 10% à 5 ans</li>
+                            <li><strong>Cancer du poumon</strong> : risque multiplié x2-5 selon exposition, synergie avec tabagisme (x50)</li>
+                            <li><strong>Asbestose</strong> : fibrose pulmonaire irréversible, essoufflement progressif, invalidité</li>
+                            <li><strong>Plaques pleurales</strong> : épaississement plèvre, marqueur exposition, possibles douleurs thoraciques</li>
+                            <li><strong>Cancer larynx/ovaire</strong> : association établie (CIRC)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔬</div>
+                        <h3 class="card-title">Mécanisme Toxicologique</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Pourquoi l'Amiante est-il si Dangereux ?</h4>
+                        <ul class="feature-list">
+                            <li><strong>Fibres respirables</strong> : longueur > 5 µm, diamètre < 3 µm → pénètrent profondément poumons</li>
+                            <li><strong>Biopersistance</strong> : fibres non biodégradables, restent à vie dans tissus pulmonaires</li>
+                            <li><strong>Inflammation chronique</strong> : phagocytose impossible (trop longues) → inflammation permanente</li>
+                            <li><strong>Stress oxydatif</strong> : fibres génèrent radicaux libres → dommages ADN → cancer</li>
+                            <li><strong>Aucune détoxification</strong> : corps ne peut éliminer les fibres</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🏗️</div>
+                    <h3 class="card-title">Contextes d'Exposition Professionnelle</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Travaux à Risque Élevé</h4>
+                            <ul class="feature-list">
+                                <li><strong>Désamiantage</strong> : retrait calorifugeage, flocage, tuiles, toitures</li>
+                                <li><strong>Démolition/rénovation</strong> : bâtiments pré-1990 (amiante présumé)</li>
+                                <li><strong>Entretien/réparation</strong> : systèmes CVAC, tuyauterie isolée amiante</li>
+                                <li><strong>Découpage/perçage</strong> : matériaux amiantés sans précautions</li>
+                                <li><strong>Nettoyage/balayage</strong> : poussières contaminées remises en suspension</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Matériaux Amiantés Courants (Pré-1990)</h4>
+                            <ul class="feature-list">
+                                <li><strong>Flocage</strong> : isolation thermique/acoustique (plafonds, murs)</li>
+                                <li><strong>Calorifugeage</strong> : isolation tuyauterie vapeur, chaudières</li>
+                                <li><strong>Amiante-ciment</strong> : toitures, bardages, tuyaux, plaques</li>
+                                <li><strong>Dalles de sol</strong> : vinyle-amiante (VAT), colle</li>
+                                <li><strong>Joints/garnitures</strong> : étanchéité, freins, embrayages</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box critical">
+                <h3>⏱️ Timeline Pathologique : De l'Exposition au Décès</h3>
+                <div class="grid grid-4" style="margin-top: 20px;">
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Années 0-10</h4>
+                        <p>Inhalation fibres. Accumulation poumons. Inflammation chronique débute. Aucun symptôme.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Années 10-20</h4>
+                        <p>Fibrose progressive (asbestose). Plaques pleurales visibles. Essoufflement léger à l'effort.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Années 20-40</h4>
+                        <p>Période d'incubation mésothéliome/cancer. Mutations cellulaires s'accumulent. Détection souvent tardive.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Diagnostic tardif</h4>
+                        <p>Mésothéliome déclaré (stade avancé). Survie médiane 12-18 mois. Traitement palliatif uniquement.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Impact Organisationnel & Légal</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 10px;">Santé Travailleurs</h4>
+                            <p>Décès prématuré (mésothéliome mortel), invalidité permanente (asbestose), qualité vie dégradée, surveillance médicale à vie.</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 10px;">Coûts Employeur</h4>
+                            <p>Indemnisations CNESST massives (cancer professionnel), poursuites civiles, arrêts chantier, pénalités réglementaires, réputation.</p>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 10px;">Obligations Légales</h4>
+                            <p>RSST VEMP 0.1 f/cc, CSTC 3.23 (confinement/sas/décontamination), conservation dossiers ≥30 ans, surveillance médicale obligatoire.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Solution AgenticX5 -->
+    <section id="solution" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 03</div>
+                <h2 class="section-title">Solution AgenticX5</h2>
+                <p class="section-description">
+                    Orchestration intelligente du confinement, monitoring temps réel et traçabilité permanente
+                </p>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🎯 Approche AgenticX5 : Contrôle Total & Traçabilité</h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 30px;">
+                    Combinaison IoT (compteurs fibres + pression différentielle), règles agentiques (alarmes auto + confinement),
+                    knowledge graph (registre 40 ans + normes) pour conformité absolue
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 1 : Monitoring Continu Fibres + Alarmes</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">IoT Sensors</span>
+                            <span class="badge primary">Compteurs Fibres</span>
+                        </p>
+                        <p>
+                            Compteurs de fibres en continu (optiques ou laser) installés dans l'enceinte de confinement.
+                            <strong>Attention :</strong> Ces capteurs donnent une indication proxy. Toute dérive déclenche
+                            un prélèvement personnel (NIOSH 7400 PCM) pour quantification officielle.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if IoT_fibres_alert ⇒ arrêter_travaux(); prélèvement_personnel(NIOSH_7400); if TWA8 ≥ 0.1 f/cc ⇒ renforcer_confinement(); EPR_upgrade();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 2 : Confinement Hermétique & Pression Négative</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">Pression -5 à -10 Pa</span>
+                            <span class="badge critical">Filtration HEPA</span>
+                        </p>
+                        <p>
+                            Enceinte de confinement sous pression négative (-5 à -10 Pa minimum) avec filtration HEPA continue.
+                            Capteurs pression différentielle (ΔP) monitoring temps réel. Alarme si ΔP insuffisante.
+                            Test fumigène avant travaux critiques (CSTC 3.23).
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>monitor(ΔP); if ΔP > -5 Pa ⇒ alarme_critique(); arrêter_travaux(); inspection_confinement(); require_smoke_test();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 3 : Identification & Confirmation Fibres (TEM)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">NIOSH 7400 (PCM)</span>
+                            <span class="badge warning">NIOSH 7402 (TEM)</span>
+                        </p>
+                        <p>
+                            Prélèvement personnel zone respiratoire (NIOSH 7400 PCM) quantifie les fibres totales.
+                            Si doute sur nature fibres (non-amiante suspecté), confirmation par TEM (NIOSH 7402) pour typage.
+                            TEM identifie chrysotile, amosite, crocidolite, etc.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>sample_personal(NIOSH_7400); if fibers_non_asbestos_suspect ⇒ confirm_TEM(NIOSH_7402); update_KG(fiber_type); adapt_controls();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 4 : Hygiène & Décontamination Strictes</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Sas</span>
+                            <span class="badge success">Douches</span>
+                            <span class="badge success">Nettoyage HEPA</span>
+                        </p>
+                        <p>
+                            Aire réglementée délimitée. Sas d'entrée/sortie avec vestiaires. Douches obligatoires en sortie.
+                            Procédures d'enlèvement EPI (retrait lent, humidification, sac étanche). Nettoyage humide + aspiration HEPA.
+                            Élimination déchets amiantés (sacs étiquetés, traçabilité enfouissement).
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>require_regulated_area(); verify_sas_showers(); enforce_PPE_removal_protocol(); track_waste_disposal(); log_events(CSTC_3.23);</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 5 : Clearance Post-Décontamination (EPA 0.01 f/cc)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">EPA AHERA</span>
+                            <span class="badge success">TEM/ISO 10312</span>
+                        </p>
+                        <p>
+                            Après décontamination complète, test de l'air ambiant (clearance) avant démontage enceinte.
+                            Critère EPA AHERA : < 0.01 f/cc (contexte scolaire, souvent utilisé comme référence).
+                            Méthodes : TEM (NIOSH 7402, ISO 10312) pour clearance environnemental.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>if post_cleaning && sector=school ⇒ require_clearance(TEM/ISO10312); if air ≥ 0.01 f/cc ⇒ reclean(); retest(); else ⇒ dismantle_enclosure();</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Règle 6 : Traçabilité Permanente (≥40 ans) & Surveillance Médicale</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">Registre 40 ans</span>
+                            <span class="badge primary">Surveillance Médicale</span>
+                        </p>
+                        <p>
+                            Conservation dossiers exposition + médical ≥30 ans (OSHA/COHSR), viser 40 ans à titre conservatoire
+                            compte tenu délai mésothéliome (20-40 ans). Surveillance médicale obligatoire (radiographie thoracique,
+                            spirométrie) pour travailleurs exposés. Traçabilité complète dans knowledge graph Neo4j.
+                        </p>
+                        <div class="info-box info" style="margin-top: 15px;">
+                            <h3>Règle Agentic</h3>
+                            <p>
+                                <code>archive_exposure(worker_id, exposure_data, duration=40y); trigger_medical_surveillance(); generate_compliance_reports(CNESST, OSHA);</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">✨</div>
+                    <h3 class="card-title">Bénéfices Clés de l'Approche AgenticX5</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3">
+                        <div class="info-box success">
+                            <h3>Protection Absolue Travailleurs</h3>
+                            <p>Confinement hermétique + monitoring continu + alarmes auto. Prévention exposition chronique menant au cancer.</p>
+                        </div>
+                        <div class="info-box success">
+                            <h3>Conformité Multi-Juridictionnelle</h3>
+                            <p>Respect automatique RSST, CSTC 3.23, OSHA 1926.1101/1910.1001, EPA AHERA. Audit-ready.</p>
+                        </div>
+                        <div class="info-box success">
+                            <h3>Traçabilité Permanente</h3>
+                            <p>Registre expositions 40 ans dans KG Neo4j. Surveillance médicale déclenchée auto. Rapports conformité CNESST/OSHA.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Workflow Agentique -->
+    <section id="workflow" class="section" style="background: linear-gradient(180deg, transparent, rgba(236, 72, 153, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 04</div>
+                <h2 class="section-title">Workflow Agentique</h2>
+                <p class="section-description">
+                    Cycle opérationnel : préparation → confinement → monitoring → clearance → traçabilité
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 1 : Préparation & Établissement Confinement</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Inventaire MCA</span>
+                            <span class="badge primary">Construction Enceinte</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Inventaire matériaux</strong> : identification matériaux contenant amiante (MCA) ≥1%</li>
+                            <li><strong>Classe travaux</strong> : détermination classe risque (CSTC 3.23) → niveau confinement requis</li>
+                            <li><strong>Construction enceinte</strong> : poly éthylène 6 mil min., joints étanches, cadres rigides</li>
+                            <li><strong>Installation sas</strong> : sas d'entrée/sortie, vestiaires propres/sales, douches</li>
+                            <li><strong>Pression négative</strong> : ventilation HEPA, ΔP -5 à -10 Pa, test fumigène</li>
+                            <li><strong>Signalisation</strong> : aire réglementée, accès restreint, procédures affichées</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 2 : Monitoring Continu Pendant Travaux</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">IoT Temps Réel</span>
+                            <span class="badge warning">Alarmes Auto</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Compteurs fibres</strong> : monitoring continu enceinte + zones adjacentes</li>
+                            <li><strong>Pression différentielle</strong> : ΔP continu, alarme si ΔP > -5 Pa</li>
+                            <li><strong>Flux HEPA</strong> : vérification débit filtration, alarme si défaillance</li>
+                            <li><strong>Prélèvements personnels</strong> : NIOSH 7400 PCM quotidien/hebdomadaire selon classe travaux</li>
+                            <li><strong>Règles agentic</strong> : <code>if alerte_IoT ⇒ arrêt_travaux + prélèvement_personnel + investigation</code></li>
+                            <li><strong>Logs temps réel</strong> : journalisation tous événements (ΔP, fibres, alarmes, actions)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 3 : Gestion Exposition & Rotation</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge critical">TWA 8h</span>
+                            <span class="badge warning">Rotation Auto</span>
+                        </p>
+                        <div class="info-box info">
+                            <h3>Formule TWA 8h</h3>
+                            <p>
+                                <strong>TWA8 = (Σ C<sub>i</sub> × T<sub>i</sub>) / 8h</strong><br>
+                                où C<sub>i</sub> = concentration fibres (f/cc) pour tâche <em>i</em>, T<sub>i</sub> = durée tâche <em>i</em> (heures)
+                            </p>
+                        </div>
+                        <ul class="feature-list" style="margin-top: 15px;">
+                            <li><strong>Calcul dose</strong> : TWA 8h par travailleur basé prélèvements personnels</li>
+                            <li><strong>Seuil VEMP/PEL</strong> : 0.1 f/cc (RSST, OSHA)</li>
+                            <li><strong>Seuil Excursion (OSHA)</strong> : 1.0 f/cc sur 30 min → évacuation immédiate</li>
+                            <li><strong>Rotation préventive</strong> : si TWA ≥ 80% limite → rotation vers tâches moins exposées</li>
+                            <li><strong>EPR obligatoire</strong> : demi-masque P100 min. (FP 50), masque complet si concentration élevée</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 4 : Clearance Post-Décontamination</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">EPA AHERA</span>
+                            <span class="badge success">TEM/ISO 10312</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Nettoyage final</strong> : aspiration HEPA complète, nettoyage humide surfaces, inspection visuelle</li>
+                            <li><strong>Test air ambiant</strong> : prélèvements air enceinte post-nettoyage (TEM NIOSH 7402 / ISO 10312)</li>
+                            <li><strong>Critère clearance</strong> : < 0.01 f/cc (EPA AHERA écoles) ou selon spécifications projet</li>
+                            <li><strong>Si échec</strong> : <code>if air ≥ 0.01 f/cc ⇒ re_nettoyage_complet(); re_test();</code></li>
+                            <li><strong>Si succès</strong> : démontage enceinte autorisé, libération zone, rapport final</li>
+                            <li><strong>Traçabilité</strong> : tous résultats archivés dans KG (≥40 ans)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Étape 5 : Archivage Permanent & Surveillance Médicale</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Neo4j KG</span>
+                            <span class="badge critical">40 ans min</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Registre expositions</strong> : chaque travailleur → durée, concentration, TWA cumulé, dates</li>
+                            <li><strong>Conservation ≥40 ans</strong> : compte tenu délai mésothéliome (20-40 ans), viser 40 ans min.</li>
+                            <li><strong>Dossiers médicaux</strong> : radiographies thoraciques, spirométries, suivi longitudinal</li>
+                            <li><strong>Surveillance déclenchée</strong> : si exposition ≥ seuil réglementaire (variable selon juridiction)</li>
+                            <li><strong>Rapports conformité</strong> : exports CNESST, OSHA, audits annuels</li>
+                            <li><strong>Knowledge graph</strong> : liens Travailleur ↔ Projet ↔ Exposition ↔ Médical ↔ Normes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🔄 Modes d'Intervention Agentique</h3>
+                <div class="grid grid-3">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🟢</div>
+                            <h3 class="card-title">Mode Normal</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> TWA8 < 0.1 f/cc ET ΔP < -5 Pa</p>
+                            <p style="margin-top: 10px;">
+                                Monitoring continu. Confinement intègre. Travaux peuvent se poursuivre normalement.
+                                Prélèvements personnels périodiques.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🟡</div>
+                            <h3 class="card-title">Mode Alerte</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> IoT dérive OU ΔP > -5 Pa</p>
+                            <p style="margin-top: 10px;">
+                                Alerte automatique. Investigation immédiate. Prélèvement personnel urgent (7400).
+                                Travaux suspendus jusqu'à résolution.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-icon">🔴</div>
+                            <h3 class="card-title">Mode Urgence</h3>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Condition :</strong> TWA8 ≥ 0.1 f/cc OU Excursion ≥ 1.0 f/cc (30 min)</p>
+                            <p style="margin-top: 10px;">
+                                Évacuation immédiate. Arrêt travaux. Investigation cause racine. Renforcement confinement.
+                                Upgrade EPR. Déclaration réglementaire.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Données & Architecture -->
+    <section id="data" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 05</div>
+                <h2 class="section-title">Données & Architecture Technique</h2>
+                <p class="section-description">
+                    Sources de données, capteurs IoT, méthodes analytiques et stack technologique
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📡</div>
+                        <h3 class="card-title">1. IoT Sensors (Monitoring Continu)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Capteurs Temps Réel</h4>
+                        <ul class="feature-list">
+                            <li><strong>Compteurs fibres</strong> : optiques/laser, indicateur proxy (déclencheur prélèvement personnel)</li>
+                            <li><strong>Pression différentielle</strong> : manomètres digitaux, ΔP cible -5 à -10 Pa, alarme si dérive</li>
+                            <li><strong>Flux HEPA</strong> : débitmètres, vérification filtration continue, alarme défaillance</li>
+                            <li><strong>Température/humidité</strong> : conditions ambiantes (influence prélèvements)</li>
+                            <li><strong>Fréquence</strong> : temps réel (1-5 min), logs permanents</li>
+                            <li><strong>Localisation</strong> : enceinte confinement + zones adjacentes (surveillance migration fibres)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔬</div>
+                        <h3 class="card-title">2. Prélèvements Personnels (Quantification Officielle)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">NIOSH 7400 (PCM) / 7402 (TEM)</h4>
+                        <ul class="feature-list">
+                            <li><strong>NIOSH 7400 (PCM)</strong> : microscopie contraste phase, quantification fibres respirables (> 5 µm, Ø < 3 µm)</li>
+                            <li><strong>NIOSH 7402 (TEM)</strong> : microscopie électronique transmission, identification/typage fibres amiante</li>
+                            <li><strong>Prélèvement</strong> : zone respiratoire travailleur, pompe 1-2 L/min, filtre membrane cellul., durée shift</li>
+                            <li><strong>Fréquence</strong> : quotidien/hebdomadaire selon classe travaux, après toute alerte IoT</li>
+                            <li><strong>Utilité PCM</strong> : conformité VEMP/PEL (0.1 f/cc), calcul TWA 8h</li>
+                            <li><strong>Utilité TEM</strong> : confirmation nature fibres (asbestiformes vs non-asbestiformes), clearance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🧪</div>
+                        <h3 class="card-title">3. Clearance Environnementale (Post-Décontamination)</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">TEM / ISO 10312</h4>
+                        <ul class="feature-list">
+                            <li><strong>ISO 10312:2019</strong> : méthode TEM air ambiant, détermination/typage fibres</li>
+                            <li><strong>Prélèvement</strong> : air enceinte post-nettoyage, grille TEM, haut volume (1200-3000 L)</li>
+                            <li><strong>Critère EPA AHERA</strong> : < 0.01 f/cc (contexte scolaire, référence clearance)</li>
+                            <li><strong>Fréquence</strong> : après nettoyage final complet, avant démontage enceinte</li>
+                            <li><strong>Si échec</strong> : re-nettoyage HEPA + humide, re-test jusqu'à succès</li>
+                            <li><strong>Traçabilité</strong> : tous résultats clearance archivés ≥40 ans dans KG</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">4. Formulaires & Procédures Terrain</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Saisie Manuelle Superviseurs</h4>
+                        <ul class="feature-list">
+                            <li><strong>Inspections quotidiennes</strong> : intégrité enceinte, sas, douches, signalisation</li>
+                            <li><strong>Tests fumigènes</strong> : vérification confinement avant travaux critiques</li>
+                            <li><strong>Procédures décontamination</strong> : enlèvement EPI, douche, vestiaires</li>
+                            <li><strong>Élimination déchets</strong> : sacs étiquetés, traçabilité enfouissement agréé</li>
+                            <li><strong>Incidents</strong> : alarmes, pannes HEPA, ruptures confinement</li>
+                            <li><strong>Formation</strong> : attestations formation amiante (classe A/B/C selon juridiction)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture-box">
+                <h3 class="architecture-title">🏗️ Architecture Système AgenticX5 - UC-C04</h3>
+                <div class="architecture-flow">
+                    <div class="architecture-item">
+                        <div class="icon">📊</div>
+                        <h4>Ingestion Layer</h4>
+                        <p>IoT → MQTT → Kafka<br>Labo → API REST<br>Terrain → Mobile apps</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🤖</div>
+                        <h4>Agentic Layer</h4>
+                        <p>Alarmes auto<br>Règles conformité<br>Orchestration clearance<br>ML prédiction</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">🧠</div>
+                        <h4>Knowledge Graph</h4>
+                        <p>Neo4j registre 40 ans<br>Normes RSST/CSTC/OSHA<br>MCA/Procédés<br>Traçabilité complète</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="architecture-item">
+                        <div class="icon">📱</div>
+                        <h4>Interface Layer</h4>
+                        <p>Dashboard temps réel<br>Alertes push<br>Rapports CNESST/OSHA<br>Surveillance médicale</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <div class="card-icon">🔐</div>
+                    <h3 class="card-title">Confidentialité & Sécurité Données</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Protection Données Santé</h4>
+                            <ul class="feature-list">
+                                <li>Anonymisation données médicales (Loi 25 QC, HIPAA USA)</li>
+                                <li>Chiffrement bout-en-bout AES-256</li>
+                                <li>Accès restrictif RBAC : médecin, RH, SST, régulateurs uniquement</li>
+                                <li>Stockage Canada (souveraineté données)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--light); margin-bottom: 15px;">Conformité Réglementaire</h4>
+                            <ul class="feature-list">
+                                <li>Conservation ≥40 ans (délai mésothéliome 20-40 ans)</li>
+                                <li>Audits traçables (logs immuables blockchain-like)</li>
+                                <li>Exports conformité (CNESST, OSHA, ISO 45001)</li>
+                                <li>Consentement éclairé travailleurs (surveillance médicale)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Standards & Normes -->
+    <section id="standards" class="section" style="background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03));">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 06</div>
+                <h2 class="section-title">Standards & Normes</h2>
+                <p class="section-description">
+                    Conformité multi-juridictionnelle : Québec, Canada, USA, normes analytiques
+                </p>
+            </div>
+
+            <div class="info-box info">
+                <h3>📜 Cadre Réglementaire Multi-Juridictionnel</h3>
+                <p>
+                    La gestion de l'amiante est encadrée par des normes strictes au Québec (RSST, CSTC 3.23),
+                    Canada (COHSR), USA (OSHA 1926.1101/1910.1001, EPA AHERA) et normes analytiques internationales
+                    (NIOSH, ISO). Le système AgenticX5 intègre automatiquement toutes ces exigences.
+                </p>
+            </div>
+
+            <!-- TABLEAU FOURNI PAR L'UTILISATEUR -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Norme / Standard</th>
+                        <th>Juridiction</th>
+                        <th>Limite / Seuil</th>
+                        <th>Portée & Exigences (FR / EN)</th>
+                        <th>Règle Agentic (pseudo-code)</th>
+                        <th>Référence (titre)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Québec -->
+                    <tr>
+                        <td><strong>RSST – Annexe 1 (VEMP)</strong></td>
+                        <td>Québec</td>
+                        <td><strong>0,1 fibre/cm³ (8 h TWA)</strong></td>
+                        <td>FR: OEL amiante; réduire l'exposition au minimum.<br>EN: Québec OEL 0.1 f/cc (8-h TWA).</td>
+                        <td><code>if TWA8 ≥ 0.1 ⇒ stop(); controls++; respirators(); resample();</code></td>
+                        <td>RSST – Annexe 1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSTC – Sous-section 3.23 Amiante</strong></td>
+                        <td>Québec (construction)</td>
+                        <td>—</td>
+                        <td>FR: Classes de travaux, confinement, sas, douches, décontamination, procédures.<br>EN: Work classes, enclosures, hygiene units, decon procedures.</td>
+                        <td><code>require enclosure&negative_pressure; log inspections; verify smoke test;</code></td>
+                        <td>Code de sécurité – 3.23</td>
+                    </tr>
+
+                    <!-- Canada (fédéral) -->
+                    <tr>
+                        <td><strong>COHSR / Programme amiante (guides)</strong></td>
+                        <td>Canada (fédéral)</td>
+                        <td>Dossiers ≥ <strong>30 ans</strong></td>
+                        <td>FR: Écritures, échantillonnage, conservation expositions/médical ≥30 ans.<br>EN: Written program; keep exposure/medical records ≥30 yrs.</td>
+                        <td><code>archive(exposure_records, ≥30y); archive(medical, ≥30y);</code></td>
+                        <td>COHSR / Tech. Guide</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CCOHS – Asbestos (overview)</strong></td>
+                        <td>Canada (guide)</td>
+                        <td>—</td>
+                        <td>FR: Bonnes pratiques, EPI, contrôle à la source.<br>EN: Best practices, respirators, source control.</td>
+                        <td><code>coach(hygiene, wet methods, HEPA cleanup);</code></td>
+                        <td>CCOHS – Asbestos</td>
+                    </tr>
+
+                    <!-- USA -->
+                    <tr>
+                        <td><strong>OSHA 1926.1101 / 1910.1001</strong></td>
+                        <td>USA (construction / industrie)</td>
+                        <td><strong>PEL 0.1 f/cc (8 h)</strong> ; <strong>EL 1.0 f/cc (30 min)</strong></td>
+                        <td>FR: Regulated areas, hygiène, décontamination, surveillance médicale, registres.<br>EN: Regulated areas, hygiene/decon, medical surveillance, records.</td>
+                        <td><code>if 30min ≥ 1.0 ⇒ evacuate(); upgrade controls&EPR;</code></td>
+                        <td>OSHA Asbestos Standards</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EPA AHERA – Clearance</strong></td>
+                        <td>USA (écoles) / référence</td>
+                        <td><strong>0,01 f/cc</strong> (post-décontamination)</td>
+                        <td>FR: Critère de libération d'air post-désamiantage (courant comme cible de fin de travaux).<br>EN: Post-abatement air clearance target.</td>
+                        <td><code>if post_cleaning && air ≥ 0.01 ⇒ reclean & retest;</code></td>
+                        <td>EPA AHERA Clearance</td>
+                    </tr>
+
+                    <!-- Méthodes analytiques -->
+                    <tr>
+                        <td><strong>NIOSH 7400 (PCM) / 7402 (TEM)</strong></td>
+                        <td>Méthodes labo (personnel)</td>
+                        <td>—</td>
+                        <td>FR: Prélèvement personnel respirable; 7400 quantifie; 7402 identifie (TEM).<br>EN: Personal sampling; 7400 counts; 7402 confirms asbestos.</td>
+                        <td><code>if IoT_alert ⇒ sample(7400); if fibers_non_asbestos? ⇒ confirm(7402);</code></td>
+                        <td>NIOSH Methods 7400/7402</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ISO 10312 (TEM, air ambiant)</strong></td>
+                        <td>ISO</td>
+                        <td>—</td>
+                        <td>FR: Détermination/typage des fibres dans l'air ambiant (clearance env.).<br>EN: Ambient TEM method (often for environmental clearance).</td>
+                        <td><code>use TEM for clearance/proof of control per spec;</code></td>
+                        <td>ISO 10312:2019</td>
+                    </tr>
+
+                    <!-- Confinement & pression -->
+                    <tr>
+                        <td><strong>Confinement & pression différentielle</strong></td>
+                        <td>Bonnes pratiques</td>
+                        <td>ΔP cible (ex.): −5 à −10 Pa</td>
+                        <td>FR: Enceinte sous pression négative, filtration HEPA, journal ΔP en continu.<br>EN: Negative pressure enclosure, HEPA filtration, ΔP continuous log.</td>
+                        <td><code>monitor(ΔP); if ΔP>-5Pa ⇒ alarm(); hold_work(); fix_enclosure();</code></td>
+                        <td>Spécifications de chantier / plans d'hygiène</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="6" style="padding: 25px; background: rgba(139, 92, 246, 0.05);">
+                            <strong style="font-size: 1.1rem; color: var(--light);">Formules & Flux</strong><br>
+                            <div style="margin-top: 15px; line-height: 2;">
+                                • <em>TWA 8h</em> : <code>TWA8 = (Σ C<sub>i</sub> × T<sub>i</sub>) / 8h</code> (C en f/cc, T en h).<br>
+                                • <em>Chaîne décisionnelle</em> : <code>IoT_alert → personal_sampling(7400) → if unclear ⇒ 7402(TEM) → update_KG → agentic_actions</code>.<br>
+                                • <em>Registre expositions</em> : conserver expositions & médical ≥ <strong>30 ans</strong> (viser 40 ans à titre conservatoire).
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="grid grid-2" style="margin-top: 40px;">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">✅</div>
+                        <h3 class="card-title">Conformité Automatique via KG</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            Le <strong>Knowledge Graph Neo4j</strong> AgenticX5 encode toutes les normes ci-dessus sous forme de graphe :
+                        </p>
+                        <ul class="feature-list">
+                            <li>Nœuds : Normes (RSST, CSTC, OSHA, EPA) ↔ Limites (VEMP, PEL, Clearance) ↔ Juridictions</li>
+                            <li>Relations : "s'applique_à" (QC, USA), "exige" (confinement, sas, douches)</li>
+                            <li>Propriétés : Seuils (0.1 f/cc, 0.01 f/cc), méthodes (7400/7402/10312), conservation (≥30-40 ans)</li>
+                            <li>Inférence : Si MCA identifié ET juridiction = QC → appliquer CSTC 3.23 + RSST Annexe 1</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔄</div>
+                        <h3 class="card-title">Mise à Jour Automatique Normes</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 15px;">
+                            Les normes évoluent (ex: décret 645-2022 QC). AgenticX5 permet :
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Veille réglementaire</strong> : monitoring sites CNESST, OSHA, EPA</li>
+                            <li><strong>Injection automatique</strong> : nouvelles règles dans KG sans redéploiement code</li>
+                            <li><strong>Notification équipes</strong> : alertes proactives avant entrée en vigueur</li>
+                            <li><strong>Rétrocompatibilité</strong> : historique règles pour audits passés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Déploiement -->
+    <section id="deployment" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">Section 07</div>
+                <h2 class="section-title">Déploiement & Implémentation</h2>
+                <p class="section-description">
+                    Roadmap déploiement, prérequis techniques, formation et support
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 1 : Audit & Préparation (Semaines 1-4)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Inventaire MCA</span>
+                            <span class="badge primary">Formation</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Inventaire exhaustif MCA</strong> : identification tous matériaux contenant amiante ≥1% (bâtiments pré-1990)</li>
+                            <li><strong>Classification travaux</strong> : détermination classe risque (CSTC 3.23) par zone/matériau</li>
+                            <li><strong>Audit contrôles actuels</strong> : confinement, EPR, procédures décontamination (gap analysis)</li>
+                            <li><strong>Formation équipes</strong> : certification amiante (classe A/B/C), procédures CSTC, risques santé</li>
+                            <li><strong>Sélection labo accrédité</strong> : analyses NIOSH 7400/7402, ISO 10312, délais < 48h</li>
+                            <li><strong>Validation technique</strong> : infrastructure IoT, réseau, alimentation, zones installation capteurs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 2 : Installation & Calibration (Semaines 5-8)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">IoT</span>
+                            <span class="badge success">KG Neo4j</span>
+                            <span class="badge success">Intégration</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Installation compteurs fibres</strong> : enceintes + zones adjacentes, calibration vs labo accrédité</li>
+                            <li><strong>Installation capteurs ΔP</strong> : manomètres digitaux, alarmes -5 Pa min, tests fumigènes</li>
+                            <li><strong>Configuration réseau</strong> : MQTT/Kafka, connectivité temps réel (WiFi/4G/Ethernet)</li>
+                            <li><strong>Setup KG Neo4j</strong> : registre expositions 40 ans, injection normes RSST/CSTC/OSHA/EPA</li>
+                            <li><strong>Configuration règles agentic</strong> : alarmes auto, seuils 0.1/1.0 f/cc, clearance 0.01 f/cc</li>
+                            <li><strong>Dashboards temps réel</strong> : superviseurs + mobile apps terrain + rapports conformité</li>
+                            <li><strong>Tests end-to-end</strong> : simulation alarmes, clearance, traçabilité, exports CNESST/OSHA</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 3 : Pilote & Validation (Semaines 9-16)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge warning">Pilote</span>
+                            <span class="badge warning">Validation</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Lancement pilote</strong> : 1-2 projets désamiantage contrôlés (MCA ≥1%, classe B/C)</li>
+                            <li><strong>Monitoring continu</strong> : 8 semaines IoT + prélèvements personnels (7400) quotidiens/hebdomadaires</li>
+                            <li><strong>Validation confinement</strong> : tests fumigènes, ΔP stable < -5 Pa, aucune migration fibres</li>
+                            <li><strong>Corrélation IoT/Labo</strong> : ajuster seuils alarmes compteurs fibres vs résultats 7400 PCM</li>
+                            <li><strong>Tests clearance</strong> : TEM/ISO 10312 post-nettoyage, vérifier critère < 0.01 f/cc atteint</li>
+                            <li><strong>Ajustements règles</strong> : affiner alarmes, rotations, procédures selon feedback terrain</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 4 : Déploiement Complet (Semaines 17-24)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge success">Production</span>
+                            <span class="badge primary">Scaling</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Roll-out complet</strong> : extension tous projets désamiantage/rénovation bâtiments MCA</li>
+                            <li><strong>Formation généralisée</strong> : tous superviseurs, opérateurs, préventionnistes, RH</li>
+                            <li><strong>Procédures opérationnelles</strong> : SOP documentés (confinement, prélèvements, clearance, archivage)</li>
+                            <li><strong>Audits conformité</strong> : vérifications CNESST/OSHA readiness, simulations inspections</li>
+                            <li><strong>Rapports automatiques</strong> : exports mensuels/trimestriels (exposition, alarmes, clearances)</li>
+                            <li><strong>Amélioration continue</strong> : cycle feedback → ajustements règles → déploiement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Phase 5 : Maintenance & Évolution (Continu)</h3>
+                        <p style="margin-bottom: 15px;">
+                            <span class="badge primary">Support 24/7</span>
+                            <span class="badge primary">Évolution</span>
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Support 24/7</strong> : hotline urgence désamiantage, maintenance préventive capteurs</li>
+                            <li><strong>Calibration périodique</strong> : validation semestrielle compteurs fibres vs labo accrédité</li>
+                            <li><strong>Veille réglementaire</strong> : mise à jour normes (RSST, CSTC, OSHA, EPA) dans KG</li>
+                            <li><strong>Surveillance médicale</strong> : déclenchement auto radiographies/spirométries, suivi longitudinal</li>
+                            <li><strong>Archivage permanent</strong> : registre KG Neo4j 40 ans, backups multiples, conservation légale</li>
+                            <li><strong>Revue annuelle</strong> : audit performance, traçabilité, conformité, ROI prévention cancer</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">🛠️</div>
+                        <h3 class="card-title">Prérequis Techniques</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Infrastructure Minimale</h4>
+                        <ul class="feature-list">
+                            <li><strong>Connectivité</strong> : WiFi/Ethernet/4G chantiers, bande passante ≥ 10 Mbps</li>
+                            <li><strong>Alimentation</strong> : 110-240V AC, UPS (onduleurs) pour capteurs critiques</li>
+                            <li><strong>Serveurs</strong> : Cloud AWS/Azure/GCP (régions Canada) ou on-premise sécurisé</li>
+                            <li><strong>Stockage</strong> : PostgreSQL (relationnel) + Neo4j (KG registre 40 ans) + InfluxDB (timeseries IoT)</li>
+                            <li><strong>Sécurité</strong> : VPN, chiffrement AES-256, RBAC, audits logs immuables, backups 3-2-1</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-icon">👥</div>
+                        <h3 class="card-title">Formation & Support</h3>
+                    </div>
+                    <div class="card-content">
+                        <h4 style="color: var(--light); margin-bottom: 15px;">Programme Complet</h4>
+                        <ul class="feature-list">
+                            <li><strong>Formation initiale</strong> : 3 jours (risques amiante, confinement, dashboards, procédures)</li>
+                            <li><strong>Certification utilisateurs</strong> : opérateurs classe A/B/C, superviseurs, préventionnistes</li>
+                            <li><strong>Documentation</strong> : manuels terrain, vidéos procédures, FAQ, troubleshooting</li>
+                            <li><strong>Hotline technique</strong> : 24/7, SLA < 2h (urgences désamiantage)</li>
+                            <li><strong>Webinaires réguliers</strong> : mises à jour normes, nouvelles fonctionnalités, best practices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <h3>✅ Checklist Déploiement Réussi</h3>
+                <div class="grid grid-3" style="margin-top: 20px;">
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Technique</h4>
+                        <ul class="feature-list">
+                            <li>IoT installé & calibré (fibres, ΔP, HEPA)</li>
+                            <li>KG Neo4j opérationnel (registre 40 ans)</li>
+                            <li>Dashboards temps réel + alarmes auto</li>
+                            <li>Intégration labo accrédité (7400/7402/10312)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Organisationnel</h4>
+                        <ul class="feature-list">
+                            <li>Équipes formées & certifiées amiante</li>
+                            <li>SOP confinement/clearance documentés</li>
+                            <li>Protocoles alarme/évacuation définis</li>
+                            <li>Partenariat labo (< 48h délai résultats)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--light); margin-bottom: 10px;">Conformité</h4>
+                        <ul class="feature-list">
+                            <li>Normes QC/CA/USA intégrées (KG)</li>
+                            <li>Traçabilité 40 ans CNESST/OSHA ready</li>
+                            <li>Surveillance médicale déclenchée auto</li>
+                            <li>Rapports conformité automatisés</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">AgenticX5 SafetyGraph</div>
+                <p class="footer-text">
+                    Intelligence agentique au service de la sécurité et santé au travail.<br>
+                    Protection absolue, conformité automatique, traçabilité permanente.
+                </p>
+                <p style="color: var(--gray); margin-top: 30px; font-size: 0.9rem;">
+                    UC-C04 : Amiante - Décontamination © 2025 GenAISafety | Preventera<br>
+                    Conformité : RSST (QC), CSTC 3.23 (QC), OSHA 1926.1101/1910.1001 (USA), EPA AHERA, NIOSH 7400/7402, ISO 10312
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Génération particules animées
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Navigation smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Effet parallax léger sur orbes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const orbs = document.querySelectorAll('.orb');
+            orbs.forEach((orb, index) => {
+                const speed = 0.05 + (index * 0.02);
+                orb.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
