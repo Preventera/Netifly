@@ -485,6 +485,16 @@
         .use-case-card {
             animation: fadeIn 0.5s ease-out;
         }
+
+        .external-link {
+            position: relative;
+        }
+
+        .external-link::after {
+            content: '🔗';
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
@@ -506,7 +516,7 @@
 
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-number" id="totalCases">42</div>
+                <div class="stat-number" id="totalCases">38</div>
                 <div class="stat-label">Cas d'Usage IA</div>
             </div>
             <div class="stat-card">
@@ -589,16 +599,6 @@
                 link: './1000 Use Cases IA-SST Enrichis avec KG/index.html'
             },
             {
-                icon: '🚨',
-                title: 'Accès d\'Urgence et Évacuation',
-                category: 'securite',
-                description: 'Gestion intelligente des accès d\'urgence et optimisation des procédures d\'évacuation avec IA prédictive.',
-                roi: '88%',
-                implementation: '4-6 mois',
-                tags: ['Urgence', 'Évacuation', 'IoT'],
-                link: './acces-urgence/index.html'
-            },
-            {
                 icon: '📋',
                 title: 'Audits, Conformité & Traçabilité',
                 category: 'conformite',
@@ -669,16 +669,6 @@
                 link: './Harcèlement psychologique/index.html'
             },
             {
-                icon: '🔥',
-                title: 'Incendie et Évacuation',
-                category: 'securite',
-                description: 'Système intelligent de prévention incendie et gestion optimale des évacuations.',
-                roi: '89%',
-                implementation: '5-8 mois',
-                tags: ['Incendie', 'Évacuation', 'Urgence'],
-                link: './incendie-evacuation/index.html'
-            },
-            {
                 icon: '👥',
                 title: 'Reconnaissance Insuffisante au Travail',
                 category: 'sante',
@@ -719,16 +709,6 @@
                 link: './Nouvelle Ère de l ergonomie de bureau/index.html'
             },
             {
-                icon: '📅',
-                title: 'Optimisation de Planning',
-                category: 'gestion',
-                description: 'Planification intelligente tenant compte des contraintes HSE.',
-                roi: '88%',
-                implementation: '3-5 mois',
-                tags: ['Planning', 'Organisation', 'Charge'],
-                link: './optimisation-planning/index.html'
-            },
-            {
                 icon: '🧘',
                 title: 'Postures Prolongées Statiques',
                 category: 'ergonomie',
@@ -737,16 +717,6 @@
                 implementation: '2-3 mois',
                 tags: ['Posture', 'Station debout', 'Circulation'],
                 link: './Postures Prolongées Statiques/index.html'
-            },
-            {
-                icon: '🥽',
-                title: 'Protection Oculaire',
-                category: 'securite',
-                description: 'Gestion et conformité des équipements de protection oculaire.',
-                roi: '85%',
-                implementation: '3-4 mois',
-                tags: ['EPI', 'Yeux', 'Vision'],
-                link: './protection-oculaire/index.html'
             },
             {
                 icon: '👁️',
@@ -769,16 +739,6 @@
                 link: './Températures Extrêmes/index.html'
             },
             {
-                icon: '💨',
-                title: 'UC C02 - Poussières Silice Cristalline',
-                category: 'environnement',
-                description: 'Surveillance de l\'exposition à la silice cristalline.',
-                roi: '91%',
-                implementation: '4-6 mois',
-                tags: ['Silice', 'Poussières', 'Respiratoire'],
-                link: './UC C02  Poussières Silice Cristalline/index.html'
-            },
-            {
                 icon: '☢️',
                 title: 'UC C04 - Amiante et Décontamination',
                 category: 'environnement',
@@ -787,16 +747,6 @@
                 implementation: '5-8 mois',
                 tags: ['Amiante', 'Décontamination', 'Blockchain'],
                 link: './UC C04  Amiante decontamination/index.html'
-            },
-            {
-                icon: '🔥',
-                title: 'UC C05 - Fumées de Soudage',
-                category: 'environnement',
-                description: 'Surveillance des fumées de soudage et ventilation adaptative.',
-                roi: '84%',
-                implementation: '4-6 mois',
-                tags: ['Soudage', 'Fumées', 'Ventilation'],
-                link: './UC C05  Fumées de soudage/index.html'
             },
             {
                 icon: '🔧',
@@ -922,11 +872,12 @@
                 icon: '🔨',
                 title: 'UC-P17 - LOTO (Lock Out Tag Out)',
                 category: 'securite',
-                description: 'Protocoles avancés de consignation digitale.',
+                description: 'Protocoles avancés de consignation digitale - Solution complète hébergée.',
                 roi: '94%',
                 implementation: '4-6 mois',
-                tags: ['LOTO', 'Consignation', 'Blockchain'],
-                link: './UC-P17 LOTO/index.html'
+                tags: ['LOTO', 'Consignation', 'Blockchain', 'SaaS'],
+                link: 'https://poc01agenticx5loto.netlify.app/',
+                external: true
             },
             {
                 icon: '🌊',
@@ -1023,7 +974,7 @@
             noResults.classList.remove('show');
             
             grid.innerHTML = cases.map((useCase, index) => `
-                <a href="${useCase.link}" class="use-case-card" data-category="${useCase.category}" style="animation-delay: ${index * 0.05}s">
+                <a href="${useCase.link}" class="use-case-card ${useCase.external ? 'external-link' : ''}" data-category="${useCase.category}" ${useCase.external ? 'target="_blank" rel="noopener noreferrer"' : ''} style="animation-delay: ${index * 0.05}s">
                     <div class="use-case-header">
                         <div class="use-case-icon">${useCase.icon}</div>
                         <div class="use-case-title-section">
