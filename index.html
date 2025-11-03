@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SquadrAI - Intelligence Artificielle HSE | GenAISafety & Preventera</title>
+    <meta name="description" content="Solutions d'IA générative pour la prévention et la sécurité au travail - C-25 Standards">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #a855f7;
+            --dark: #0f0f1e;
+            --darker: #08081a;
+            --light: #f8fafc;
+            --border: #1e1e3f;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --card-bg: rgba(15, 15, 30, 0.6);
+            --card-hover: rgba(99, 102, 241, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: var(--light);
+            background: var(--darker);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1e1b4b 0%, var(--darker) 50%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Stars Animation */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #9ca3af;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .badge {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 2px solid var(--border);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .badge:hover {
+            border-color: var(--primary);
+            background: var(--card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #9ca3af;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* Search */
+        .search-box {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            font-size: 1.1rem;
+            border: 2px solid var(--border);
+            border-radius: 60px;
+            outline: none;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            color: var(--light);
+            transition: all 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        #searchInput::placeholder {
+            color: #6b7280;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--border);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            color: var(--light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Use Cases Grid */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .use-case-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .use-case-card:hover::before {
+            opacity: 1;
+        }
+
+        .use-case-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .use-case-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+        }
+
+        .use-case-title-section {
+            flex: 1;
+        }
+
+        .use-case-category {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-ergonomie { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+        .category-securite { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .category-sante { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .category-environnement { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .category-gestion { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+        .category-conformite { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+        .category-formation { background: linear-gradient(135deg, #f97316, #ea580c); color: white; }
+
+        .use-case-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--light);
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .use-case-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .use-case-description {
+            color: #9ca3af;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .metric-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .use-case-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #9ca3af;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .use-case-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">⚡ SquadrAI</div>
+            <h1>Intelligence Artificielle<br>pour la Santé & Sécurité</h1>
+            <p class="subtitle">Plateforme IA générative de prévention et gestion HSE conforme aux standards C-25 | GenAISafety & Preventera</p>
+            <div class="header-badges">
+                <span class="badge">🤖 IA Générative</span>
+                <span class="badge">🛡️ C-25 Standards</span>
+                <span class="badge">📊 Knowledge Graph</span>
+                <span class="badge">⚡ Temps Réel</span>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCases">50+</div>
+                <div class="stat-label">Cas d'Usage IA</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Catégories HSE</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Prévention Proactive</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Surveillance IA</div>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Rechercher un cas d'usage, scénario ou risque...">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">Tous les cas</button>
+            <button class="filter-btn" data-category="ergonomie">Ergonomie & TMS</button>
+            <button class="filter-btn" data-category="securite">Sécurité</button>
+            <button class="filter-btn" data-category="sante">Santé</button>
+            <button class="filter-btn" data-category="environnement">Environnement</button>
+            <button class="filter-btn" data-category="gestion">Gestion</button>
+            <button class="filter-btn" data-category="conformite">Conformité</button>
+            <button class="filter-btn" data-category="formation">Formation</button>
+        </div>
+
+        <div class="use-cases-grid" id="useCasesGrid"></div>
+        
+        <div class="no-results" id="noResults">
+            <h2>😔 Aucun résultat</h2>
+            <p>Essayez d'autres mots-clés ou catégories</p>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <h3>🚀 GenAISafety & Preventera</h3>
+                <p style="color: #9ca3af; font-size: 1.1rem; margin: 20px 0;">
+                    Solutions d'Intelligence Artificielle pour la prévention des risques professionnels<br>
+                    Conformité C-25 | Agents IA SquadrAI | Knowledge Graph HSE
+                </p>
+                <div class="footer-links">
+                    <a href="https://github.com/Preventera/Netifly" class="footer-link" target="_blank">📂 GitHub</a>
+                    <a href="#" class="footer-link">📧 Contact</a>
+                    <a href="#" class="footer-link">📚 Documentation</a>
+                    <a href="#" class="footer-link">🎯 API</a>
+                </div>
+                <p style="margin-top: 30px; color: #6b7280;">
+                    © 2024 GenAISafety & Preventera | Powered by SquadrAI | C-25 Standards Compliant
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const useCases = [
+            {
+                icon: '🏗️',
+                title: '100 Compétences Clés pour Bâtir une Culture HSE',
+                category: 'formation',
+                description: 'Développement systématique des compétences essentielles pour établir et maintenir une culture de santé et sécurité au travail robuste.',
+                roi: '85%',
+                implementation: '3-6 mois',
+                tags: ['Culture SST', 'Leadership', 'Formation'],
+                link: './100 Compétences Clés pour Bâtir une/index.html'
+            },
+            {
+                icon: '📊',
+                title: '1000 Use Cases IA-SST Enrichis avec Knowledge Graph',
+                category: 'gestion',
+                description: 'Collection exhaustive de cas d\'usage enrichis par IA et graphe de connaissances pour une meilleure prise de décision.',
+                roi: '92%',
+                implementation: '2-4 mois',
+                tags: ['IA', 'Knowledge Graph', 'Big Data'],
+                link: './1000 Use Cases IA-SST Enrichis avec KG/index.html'
+            },
+            {
+                icon: '🚨',
+                title: 'Accès d\'Urgence et Évacuation',
+                category: 'securite',
+                description: 'Gestion intelligente des accès d\'urgence et optimisation des procédures d\'évacuation avec IA prédictive.',
+                roi: '88%',
+                implementation: '4-6 mois',
+                tags: ['Urgence', 'Évacuation', 'IoT'],
+                link: './acces-urgence/index.html'
+            },
+            {
+                icon: '📋',
+                title: 'Audits, Conformité & Traçabilité',
+                category: 'conformite',
+                description: 'Automatisation des audits HSE, suivi de conformité réglementaire et traçabilité complète des actions.',
+                roi: '95%',
+                implementation: '3-5 mois',
+                tags: ['Audit', 'Conformité', 'Réglementation'],
+                link: './Audits, Conformité & Traçabilité/index.html'
+            },
+            {
+                icon: '🏢',
+                title: 'BIM 4D-5D pour HSE',
+                category: 'gestion',
+                description: 'Intégration du Building Information Modeling avec planification temporelle et budgétaire pour la gestion HSE.',
+                roi: '88%',
+                implementation: '4-8 mois',
+                tags: ['BIM', 'Construction', 'Planification'],
+                link: './bim-4d-5d/index.html'
+            },
+            {
+                icon: '🧠',
+                title: 'Charge Mentale Excessive',
+                category: 'sante',
+                description: 'Détection et prévention de la surcharge mentale au travail via analyse comportementale.',
+                roi: '90%',
+                implementation: '2-4 mois',
+                tags: ['Mental', 'Burnout', 'Bien-être'],
+                link: './Charge Mentale Excessive/index.html'
+            },
+            {
+                icon: '⚙️',
+                title: 'Écrasement et Coincement par Machines',
+                category: 'securite',
+                description: 'Prévention des accidents de coincement par surveillance intelligente des machines.',
+                roi: '93%',
+                implementation: '4-7 mois',
+                tags: ['Machines', 'Sécurité', 'Prévention'],
+                link: './Écrasement Coincement Machines/index.html'
+            },
+            {
+                icon: '🦾',
+                title: 'Ergonomie, TMS & Exosquelettes',
+                category: 'ergonomie',
+                description: 'Analyse ergonomique, prévention des TMS et optimisation de l\'usage d\'exosquelettes.',
+                roi: '87%',
+                implementation: '3-6 mois',
+                tags: ['TMS', 'Posture', 'Exosquelettes'],
+                link: './Ergonomie, TMS & Exosquelettes/index.html'
+            },
+            {
+                icon: '💪',
+                title: 'Fatigue Musculaire Générale',
+                category: 'sante',
+                description: 'Monitoring de la fatigue musculaire et recommandations pour prévenir l\'épuisement physique.',
+                roi: '82%',
+                implementation: '2-4 mois',
+                tags: ['Fatigue', 'Récupération', 'Performance'],
+                link: './Fatigue Musculaire Générale/index.html'
+            },
+            {
+                icon: '🛡️',
+                title: 'Harcèlement Psychologique',
+                category: 'sante',
+                description: 'Détection précoce et gestion des situations de harcèlement psychologique.',
+                roi: '91%',
+                implementation: '3-5 mois',
+                tags: ['Harcèlement', 'Santé mentale', 'RH'],
+                link: './Harcèlement psychologique/index.html'
+            },
+            {
+                icon: '🔥',
+                title: 'Incendie et Évacuation',
+                category: 'securite',
+                description: 'Système intelligent de prévention incendie et gestion optimale des évacuations.',
+                roi: '89%',
+                implementation: '5-8 mois',
+                tags: ['Incendie', 'Évacuation', 'Urgence'],
+                link: './incendie-evacuation/index.html'
+            },
+            {
+                icon: '👥',
+                title: 'Reconnaissance Insuffisante au Travail',
+                category: 'sante',
+                description: 'Solutions pour améliorer la reconnaissance et l\'engagement des employés.',
+                roi: '86%',
+                implementation: '2-3 mois',
+                tags: ['Reconnaissance', 'Motivation', 'QVT'],
+                link: './Insuffisant recognition-reconnaissan/index.html'
+            },
+            {
+                icon: '🌦️',
+                title: 'Intempéries - Travail Extérieur',
+                category: 'environnement',
+                description: 'Prévision et gestion des risques liés aux conditions météorologiques.',
+                roi: '84%',
+                implementation: '1-3 mois',
+                tags: ['Météo', 'Extérieur', 'Climat'],
+                link: './Intempéries travail extérieurSev W/index.html'
+            },
+            {
+                icon: '🔒',
+                title: 'Lockout/Tagout (Cadenassage)',
+                category: 'securite',
+                description: 'Gestion digitale des procédures de cadenassage avec blockchain et AR.',
+                roi: '94%',
+                implementation: '4-6 mois',
+                tags: ['LOTO', 'Blockchain', 'Traçabilité'],
+                link: './Lockout-tagout/index.html'
+            },
+            {
+                icon: '💺',
+                title: 'Nouvelle Ère de l\'Ergonomie de Bureau',
+                category: 'ergonomie',
+                description: 'Solutions ergonomiques innovantes pour les espaces de travail modernes.',
+                roi: '81%',
+                implementation: '2-4 mois',
+                tags: ['Bureau', 'Télétravail', 'Posture'],
+                link: './Nouvelle Ère de l\'ergonomie de bureau/index.html'
+            },
+            {
+                icon: '📅',
+                title: 'Optimisation de Planning',
+                category: 'gestion',
+                description: 'Planification intelligente tenant compte des contraintes HSE.',
+                roi: '88%',
+                implementation: '3-5 mois',
+                tags: ['Planning', 'Organisation', 'Charge'],
+                link: './optimisation-planning/index.html'
+            },
+            {
+                icon: '🧘',
+                title: 'Postures Prolongées Statiques',
+                category: 'ergonomie',
+                description: 'Détection et prévention des risques liés aux postures statiques.',
+                roi: '79%',
+                implementation: '2-3 mois',
+                tags: ['Posture', 'Station debout', 'Circulation'],
+                link: './Postures Prolongées Statiques/index.html'
+            },
+            {
+                icon: '🥽',
+                title: 'Protection Oculaire',
+                category: 'securite',
+                description: 'Gestion et conformité des équipements de protection oculaire.',
+                roi: '85%',
+                implementation: '3-4 mois',
+                tags: ['EPI', 'Yeux', 'Vision'],
+                link: './protection-oculaire/index.html'
+            },
+            {
+                icon: '👁️',
+                title: 'Santé Visuelle Numérique',
+                category: 'sante',
+                description: 'Prévention de la fatigue visuelle liée aux écrans.',
+                roi: '77%',
+                implementation: '1-2 mois',
+                tags: ['Écrans', 'Fatigue visuelle', 'Lumière bleue'],
+                link: './Santé Visuelle Numérique/index.html'
+            },
+            {
+                icon: '🌡️',
+                title: 'Températures Extrêmes',
+                category: 'environnement',
+                description: 'Monitoring et prévention des risques thermiques.',
+                roi: '86%',
+                implementation: '3-5 mois',
+                tags: ['Température', 'Chaleur', 'Froid'],
+                link: './Températures Extrêmes/index.html'
+            },
+            {
+                icon: '💨',
+                title: 'UC C02 - Poussières Silice Cristalline',
+                category: 'environnement',
+                description: 'Surveillance de l\'exposition à la silice cristalline.',
+                roi: '91%',
+                implementation: '4-6 mois',
+                tags: ['Silice', 'Poussières', 'Respiratoire'],
+                link: './UC C02  Poussières Silice Cristal/index.html'
+            },
+            {
+                icon: '☢️',
+                title: 'UC C04 - Amiante et Décontamination',
+                category: 'environnement',
+                description: 'Gestion des risques amiante avec blockchain.',
+                roi: '93%',
+                implementation: '5-8 mois',
+                tags: ['Amiante', 'Décontamination', 'Blockchain'],
+                link: './UC C04  Amiante décontaminat/index.html'
+            },
+            {
+                icon: '🔥',
+                title: 'UC C05 - Fumées de Soudage',
+                category: 'environnement',
+                description: 'Surveillance des fumées de soudage et ventilation adaptative.',
+                roi: '84%',
+                implementation: '4-6 mois',
+                tags: ['Soudage', 'Fumées', 'Ventilation'],
+                link: './UC C05  Fumées de soudage Wope_COMPLET.html/index.html'
+            },
+            {
+                icon: '🔧',
+                title: 'UC E01 TMS - Lombalgies',
+                category: 'ergonomie',
+                description: 'Prévention spécifique des lombalgies et TMS du dos.',
+                roi: '88%',
+                implementation: '3-5 mois',
+                tags: ['Lombalgie', 'Dos', 'TMS'],
+                link: './UC E01 TMS - Lombalgies/index.html'
+            },
+            {
+                icon: '📦',
+                title: 'UC E06 - Manutention Manuelle Répétitive',
+                category: 'ergonomie',
+                description: 'Optimisation des tâches de manutention répétitive.',
+                roi: '86%',
+                implementation: '3-4 mois',
+                tags: ['Manutention', 'Répétitif', 'NIOSH'],
+                link: './UC E06  Manutention Manuelle Répét/index.html'
+            },
+            {
+                icon: '⛰️',
+                title: 'UC E08 - Travail en Altitude',
+                category: 'securite',
+                description: 'Gestion des risques spécifiques au travail en hauteur.',
+                roi: '92%',
+                implementation: '4-6 mois',
+                tags: ['Hauteur', 'Altitude', 'Chutes'],
+                link: './UC E08  Travail en Altitude/index.html'
+            },
+            {
+                icon: '🪜',
+                title: 'UC P01 - Chutes de Hauteur',
+                category: 'securite',
+                description: 'Prévention des chutes avec IA et réalité augmentée.',
+                roi: '92%',
+                implementation: '4-6 mois',
+                tags: ['Chutes', 'Hauteur', 'Protection'],
+                link: './UC P01  Chutes de Hauteur/index.html'
+            },
+            {
+                icon: '⚡',
+                title: 'UC P02 - Électrocution',
+                category: 'securite',
+                description: 'Prévention des risques électriques avec blockchain.',
+                roi: '94%',
+                implementation: '4-7 mois',
+                tags: ['Électricité', 'Habilitation', 'Consignation'],
+                link: './UC P02  Électrocution/index.html'
+            },
+            {
+                icon: '🔊',
+                title: 'UC P05 - Bruit Excessif',
+                category: 'environnement',
+                description: 'Surveillance du bruit et protection auditive adaptative.',
+                roi: '87%',
+                implementation: '3-5 mois',
+                tags: ['Bruit', 'Audition', 'Dosimétrie'],
+                link: './UC P05  Bruit Excessif/index.html'
+            },
+            {
+                icon: '🏃',
+                title: 'UC P09 - Espaces Clos',
+                category: 'securite',
+                description: 'Gestion sécurisée des interventions en espaces confinés.',
+                roi: '91%',
+                implementation: '5-7 mois',
+                tags: ['Confinés', 'Atmosphère', 'Permis'],
+                link: './UC P09  Espaces Clos/index.html'
+            },
+            {
+                icon: '💣',
+                title: 'UC P11 - Incendie et Explosion',
+                category: 'securite',
+                description: 'Prévention ATEX avec détection ultra-précoce.',
+                roi: '95%',
+                implementation: '6-9 mois',
+                tags: ['ATEX', 'Explosion', 'Prévention'],
+                link: './UC P11  Incendie  Explosion/index.html'
+            },
+            {
+                icon: '🦶',
+                title: 'UC P12 - Chutes de Plain-Pied et Glissades',
+                category: 'securite',
+                description: 'Analyse des surfaces et détection des risques de glissades.',
+                roi: '83%',
+                implementation: '3-4 mois',
+                tags: ['Glissades', 'Sols', 'Vision'],
+                link: './UC P12  chutes plain pied  glissades B/index.html'
+            },
+            {
+                icon: '⚗️',
+                title: 'UC P13 - Projection de Particules',
+                category: 'securite',
+                description: 'Protection contre les projections avec analyse de trajectoires.',
+                roi: '81%',
+                implementation: '3-5 mois',
+                tags: ['Projections', 'EPI', 'Protection'],
+                link: './UC P13  Projection de Particules  \\303\\211clats/index.html'
+            },
+            {
+                icon: '✂️',
+                title: 'UC P16 - Coupures et Lacérations',
+                category: 'securite',
+                description: 'Gestion intelligente des risques de coupure.',
+                roi: '78%',
+                implementation: '2-4 mois',
+                tags: ['Coupures', 'Gants', 'Protection'],
+                link: './UC P16  Coupures  Lac\\303\\251rations/index.html'
+            },
+            {
+                icon: '📳',
+                title: 'UC-E07 - Vibrations Main-Bras (HAV)',
+                category: 'sante',
+                description: 'Surveillance des vibrations HAV avec dosimétrie.',
+                roi: '85%',
+                implementation: '3-5 mois',
+                tags: ['Vibrations', 'HAV', 'Outils'],
+                link: './UC-E07  Vibrations Main-Bras (HAV)/index.html'
+            },
+            {
+                icon: '🔨',
+                title: 'UC-P17 - LOTO (Lock Out Tag Out)',
+                category: 'securite',
+                description: 'Protocoles avancés de consignation digitale.',
+                roi: '94%',
+                implementation: '4-6 mois',
+                tags: ['LOTO', 'Consignation', 'Blockchain'],
+                link: './UC-P17  LOTO/index.html'
+            },
+            {
+                icon: '🌊',
+                title: 'UCE02 - TMS - Troubles Main-Bras',
+                category: 'ergonomie',
+                description: 'Prévention des TMS des membres supérieurs.',
+                roi: '86%',
+                implementation: '3-5 mois',
+                tags: ['TMS', 'Main', 'Bras'],
+                link: './UCE02  TMS  Troubles \\303\\211paule Cou/index.html'
+            },
+            {
+                icon: '⚕️',
+                title: 'UCE03 - TMS - Canal Carpien',
+                category: 'sante',
+                description: 'Détection et prévention du syndrome du canal carpien.',
+                roi: '84%',
+                implementation: '2-4 mois',
+                tags: ['Canal carpien', 'Poignet', 'TMS'],
+                link: './UCE03  TMS  Canal Carpien/index.html'
+            },
+            {
+                icon: '🚗',
+                title: 'UCP04 - Port d\'EPI',
+                category: 'securite',
+                description: 'Gestion automatisée du port des EPI par vision IA.',
+                roi: '88%',
+                implementation: '3-5 mois',
+                tags: ['EPI', 'Conformité', 'Vision'],
+                link: './UCP04  Port d\'EPI/index.html'
+            },
+            {
+                icon: '🚛',
+                title: 'UCP10 - Heavy Vehicles (Véhicules Lourds)',
+                category: 'securite',
+                description: 'Système anti-collision pour véhicules lourds.',
+                roi: '89%',
+                implementation: '4-6 mois',
+                tags: ['Véhicules', 'Collision', 'Détection'],
+                link: './UCP10  Heavy Vehicles/index.html'
+            },
+            {
+                icon: '🚶',
+                title: 'UCP12 - Chutes Plain-Pied et Glissades B',
+                category: 'securite',
+                description: 'Programme avancé de prévention des chutes.',
+                roi: '83%',
+                implementation: '3-4 mois',
+                tags: ['Glissades', 'Sol', 'Prévention'],
+                link: './UCP12  chutes plain pied  glissades B/index.html'
+            },
+            {
+                icon: '⚙️',
+                title: 'Workflow Agentique Collision',
+                category: 'gestion',
+                description: 'Orchestration multi-agents pour coordination HSE.',
+                roi: '87%',
+                implementation: '4-6 mois',
+                tags: ['Agents', 'Workflow', 'Coordination'],
+                link: './Workflow Agentique collision/index.html'
+            }
+        ];
+
+        // Generate stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        let filteredCases = [...useCases];
+        let currentCategory = 'all';
+
+        function renderUseCases(cases) {
+            const grid = document.getElementById('useCasesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (cases.length === 0) {
+                grid.style.display = 'none';
+                noResults.classList.add('show');
+                return;
+            }
+
+            grid.style.display = 'grid';
+            noResults.classList.remove('show');
+            
+            grid.innerHTML = cases.map((useCase, index) => `
+                <a href="${useCase.link}" class="use-case-card" data-category="${useCase.category}" style="animation-delay: ${index * 0.05}s">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">${useCase.icon}</div>
+                        <div class="use-case-title-section">
+                            <div class="use-case-category category-${useCase.category}">
+                                ${useCase.category.charAt(0).toUpperCase() + useCase.category.slice(1)}
+                            </div>
+                            <div class="use-case-title">${useCase.title}</div>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="use-case-description">${useCase.description}</div>
+                        
+                        <div class="metrics">
+                            <div class="metric-item">
+                                <span class="metric-value">${useCase.roi}</span>
+                                <span class="metric-label">ROI Moyen</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value">${useCase.implementation}</span>
+                                <span class="metric-label">Déploiement</span>
+                            </div>
+                        </div>
+                        
+                        <div class="use-case-tags">
+                            ${useCase.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filtered = useCases;
+            
+            if (category !== 'all') {
+                filtered = filtered.filter(uc => uc.category === category);
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(uc => 
+                    uc.title.toLowerCase().includes(searchTerm) ||
+                    uc.description.toLowerCase().includes(searchTerm) ||
+                    uc.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            filteredCases = filtered;
+            renderUseCases(filtered);
+        }
+
+        function filterBySearch(searchTerm) {
+            searchTerm = searchTerm.toLowerCase();
+            
+            let filtered = useCases;
+            
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(uc => uc.category === currentCategory);
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(uc => 
+                    uc.title.toLowerCase().includes(searchTerm) ||
+                    uc.description.toLowerCase().includes(searchTerm) ||
+                    uc.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            filteredCases = filtered;
+            renderUseCases(filtered);
+        }
+
+        // Event Listeners
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                filterByCategory(e.target.dataset.category);
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterBySearch(e.target.value);
+        });
+
+        // Initialize
+        document.getElementById('totalCases').textContent = useCases.length;
+        renderUseCases(useCases);
+    </script>
+</body>
+</html>
